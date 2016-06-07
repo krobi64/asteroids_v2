@@ -1,0 +1,898 @@
+<!-- custom version of all.css file so don't overwrite bootstrap -->
+<link media="all" rel="stylesheet" href="/css/all-ae-control-panel.css">
+
+<link href="/css/css.css" rel="stylesheet" type="text/css">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.min.js"></script>
+
+<!-- font awesome -->
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- our css -->
+<link rel="stylesheet" href="/css/asteroid-explorers.css">
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+    trigger: 'hover',
+        'placement': 'top'
+    });
+    $('[data-toggle="tooltip"]').tooltip({
+    trigger: 'hover',
+        'placement': 'top',
+        container: 'body'
+    });
+     $('.ae-impact-popover-main').popover({
+    html : true,
+    placement: 'top',
+    trigger: 'hover',
+    container: 'body',
+    content: function() {
+      return $('#ae_impact_content_wrapper').html();
+    }
+    });
+});
+</script>
+
+
+<!-- START AE content -->
+
+<a name="top_page"></a>
+
+<div class="ae-main">
+
+  <div class="ae-header">
+
+  <div id="ae-nav">
+   <div id="ae-nav-header">
+      <h1 class="ae-title"><i class="fa fa-compass"></i>&nbsp;MPC&nbsp;Asteroid&nbsp;Data&nbsp;Explorer</h1>
+      <div class="btn-group ae-nav-btn-group" role="group">
+        <a type="button" class="btn ae-nav-btn" href="/asteroid_explorers/index.html">Discover</a>
+        <a type="button" class="btn ae-nav-btn" href="/asteroid_explorers/about.html">About</a>
+        <a type="button" class="active btn ae-nav-btn" href="#">Explore</a>
+      </div>
+    </div>
+
+        <div id="ae-header-detail">
+              <h2 class="ae-asteroid-title">Finding Asteroids Before They Find Us!</h2>
+
+              <div id="ae-header-actions-2nd">
+              <a href="https://twitter.com/intent/tweet?text=Explore+%23asteroids+with+@MinorPlanetCtr+Asteroid+Data+Explorer+Project:&url=http://minorplanetcenter.net/asteroid_explorers/&hashtags=AsteroidExplorers" class="btn ae-btn-default" role="button"><i class="fa fa-twitter"></i>&nbsp;Share</a>
+               </div>
+               <br/><br/><br/>
+                <div class="ae-slogan">
+                   <span class="ae-highlight-big">Discover, Explore, and Share</span> information about asteroids to increase awareness about asteroids and their impact and risks to the world.<br/>
+               </div>
+        </div>
+    </div>
+  </div>
+
+
+ <!-- START Ground Control -->
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Control Panel</h3>
+      </div>
+
+    <div class="panel-body clearfix">
+     <p class="ae-slogan-instruction">Select a question to discover more about asteroids.<br/>You can then <span class="ae-slogan-instruction-hightlight">adjust the filters</span> to refine and craft your own asteroid exploration by clicking and dragging on the bar charts below.</p>
+      <br/>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Start Discovering Asteroids...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchQuestion(1)">Which asteroids have the highest risk of impacting Earth?</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchQuestion(2)">Which are the biggest asteroids?</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchQuestion(3)">Which asteroids are flying by the earth this month?</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchQuestion(4)">Which asteroids are easisest to travel to?</a></li>
+              </ul>
+            </div>
+
+
+<!-- charts START -->
+  <div id="charts">
+
+    <div id="speed-chart" class="chart"><div class="title">Size (meters)&nbsp;&nbsp;|&nbsp;&nbsp; <div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Size (meters)" data-content="Approximate dimension of asteroids">&nbsp;<span class="fa fa-info-circle fa-lg"></span>&nbsp;</div></div></div>
+
+    <div id="size-chart" class="chart"><div class="title">Next Close Approach Distance (LD)&nbsp;&nbsp;|&nbsp;&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Next Close Approach Distance (LD)" data-content="LD stands for Lunar Distance. How close the asteroid will come on its next flyby of Earth (1 LD = 384,401 km)">&nbsp;<span class="fa fa-info-circle fa-lg"></span>&nbsp;</div></div></div>
+
+    <div id="perihelion-distance-chart" class="chart"><div class="title">Orbital Period (years)&nbsp;&nbsp;|&nbsp;&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Orbital Period (years)" data-content="How long it takes the asteroid to complete one trip around the Sun">&nbsp;<span class="fa fa-info-circle fa-lg">&nbsp;</span></div></div></div>
+
+    <div id="earth-moid-chart" class="chart"><div class="title">&#916;v (km/s)&nbsp;&nbsp;|&nbsp;&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="&#916;v (km/s)" data-content="Approximate change in speed required to reach the asteroid; the more speed required, the harder it is to get to it.">&nbsp;<span class="fa fa-info-circle fa-lg">&nbsp;</span></div></div></div>
+
+  </div>
+<!-- charts END -->
+
+
+<!-- search results -->
+<div class="panel panel-default">
+
+     <div class="panel-heading clearfix"><h4 class="panel-title ae-data-table-title">Asteroids<span class="pull-right ae-table-total">
+      <div class="btn-group" role="group"><button id="toggle_table_view" type="button" class="btn ae-table-toggle" data-toggle="tooltip" data-placement="top" title="Table View" onclick="toggleAsteroidView(0);">&nbsp;<i class="fa fa-table fa-lg"></i>&nbsp;</button><button id="toggle_chart_view" type="button" class="btn ae-table-toggle" data-toggle="tooltip" data-placement="top" title="Chart View" onclick="toggleAsteroidView(1);">&nbsp;<i class="fa fa-area-chart fa-lg"></i>&nbsp;</button></div>&nbsp;&nbsp;|&nbsp;&nbsp;<span id="active">-</span> of <span id="total">-</span> Asteroids Displayed</span></h4></div>
+
+
+  <div class="panel-body">
+      <table id="table_content" class="table table-condensed">
+
+      <thead class="ae-data-table">
+
+      <tr>
+
+
+               <th id="ae-col-1" class="ae-data-table-header">Asteroid<br/>Designation&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="bottom" title="Asteroid Designation" data-content="Name that astronomers refer to the asteroid by"><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+              <th class="ae-data-table-header">Size (meters)&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Size (meters)" data-content="Approximate dimension of asteroids"><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+              <th class="ae-data-table-header">Next Close<br/>Approach Date&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Next Close Approach Date" data-content="When the asteroid will next flyby Earth"><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+              <th class="ae-data-table-header">Next Close<br/>Approach Distance (LD)&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Next Close Approach Distance (LD)" data-content="LD stands for Lunar Distance. How close the asteroid will come on its next flyby of Earth (1 LD = 384,401 km)"><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+              <th class="ae-data-table-header">Orbital<br>Period (years)&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Orbital Period (years)" data-content="How long it takes the asteroid to complete one trip around the Sun"><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+              <th class="ae-data-table-header">&#916;v (km/s)&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="&#916;v (km/s)" data-content="Approximate change in speed required to reach the asteroid; the more speed required, the harder it is to get to it."><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+              <th class="ae-data-table-header">Impact<br>Probability&nbsp;<div href="#" class="label label-info ae-impact-popover-main" data-placement="above" title="" data-original-title="Impact Probability"><span class="fa fa-info-circle fa-lg"></span></div>
+
+
+                  <!-- start ae impact opop up -->
+                        <div id="ae_impact_content_wrapper" style="display: none;">
+                           <div class="ae-impact-popover">This is the probability that the asteroid will impact Earth, calculated by NASA's Jet Propulsion Laboratory</div>
+                                <table class="table small table-bordered" style="align:center; width:150px;">
+                                   <tbody>
+                                    <tr><td>In the Clear!</td></tr>
+                                    <tr class="minimal-danger"><td>Minimal</td></tr>
+                                    <tr class="low-danger"><td>Low</td></tr>
+                                    <tr class="med-danger"><td>Medium</td></tr>
+                                    <tr class="high-danger"><td>High</td></tr>
+                                    </tbody>
+                          </table>
+                        </div>
+                  <!-- ae impact popp up -->
+
+              </th>
+
+               <th class="ae-data-table-header">PHA&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="PHA (Potentially Hazardous Asteroid)" data-content="This asteroid is large enough and its orbit is close enough to Earth's that one day it might pose an impact hazard"><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+              <th class="ae-data-table-header">Share&nbsp;<div href="#" class="label label-info" data-toggle="popover" data-placement="above" title="Share with the World!" data-content="Share information about this asteroid!"><span class="fa fa-info-circle fa-lg"></span></div></th>
+
+          </tr>
+
+      <br/>
+
+      </thead>
+
+      <tbody class="list">
+  <!-- render via javascript -->
+      </tbody>
+
+    </table>
+
+  </div>
+
+            <div id="axis_choice" class="dropdown ae-graph-dropdown" style="display:none;">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Select Asteroid Data (X-Axis)...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchAxis(0)">Next Close Approach Date</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchAxis(1)">Asteroid Size (x100 meters)</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchAxis(2)">Orbital Period (years)</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:switchAxis(3)">&#916;v (km/s)</a></li>
+              </ul>
+            </div>
+            <br/>
+
+  <div id="highchart_content" class="highchart" style="height: 560px; min-width: 960px; max-width: 960px; margin: 0 auto"></div>
+  <br/><br/>
+</div>
+<!-- END search results -->
+
+
+<!-- closing of Ground Control-->
+  </div>
+ </div>
+<!-- closing of Ground Control-->
+
+<a href="#top_page" class="btn pull-right ae-btn-top bottom-button" role="button"><i class="fa fa-caret-up"></i>&nbsp;Top&nbsp;</a>
+
+  <!-- CLOSE of ae-main div-->
+  </div>
+  <!-- CLOSE of ae-main div-->
+
+  <!-- CLOSE of MPC Wrapper-->
+</div>
+  <!-- CLOSE of MPC Wrapper-->
+
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<script>
+var twitter_share = function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}};
+twitter_share(document, 'script', 'twitter-wjs');
+d3.json("/asteroid_explorers/asteroid_data.json", function(error, asteroids_temp) {
+  // Various formatters.
+  var formatNumber = d3.format(",d"),
+      formatChange = d3.format("+,d");
+  window.filter = function(filters) {
+    filters.forEach(function(d, i) { charts[i].filter(d); });
+    impact2.filter(null);
+    close_date.filter(null);
+    renderAll();
+  };
+  window.reset = function(i) {
+    charts[i].filter(null);
+    impact2.filter(null);
+    close_date.filter(null);
+    renderAll();
+  };
+  window.resetAll = function() {
+    charts[0].filter(null);
+    charts[1].filter(null);
+    charts[2].filter(null);
+    charts[3].filter(null);
+    impact2.filter(null);
+    close_date.filter(null);
+  };
+  window.danger = function() {
+    //Most dangerous:       impact_prob_float > 0.00009
+    window.resetAll();
+    impact2.filterRange([0.00009, 1.0]);
+    renderAll();
+  };
+  window.flyby = function() {
+    var currentDate = new Date();
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth();
+    var year = currentDate.getFullYear();
+    var date1 = Date.UTC(year,month, day);
+    //var date2 = Date.UTC(year, month+1, day);
+    var date2 = date1 + 2592000000;  // milliseconds for 30 days
+    // alert( date1 + ' ' + date2);
+    window.resetAll();
+    // close_date.filterRange([today1, day2]);
+    close_date.filterRange([date1, date2]);
+
+    renderAll();
+  }
+  window.switchQuestion = function(num) {
+    if( num == 1 ) {
+      asteroidSortingDimension = impact2;
+      window.danger();
+    }
+    else if( num == 2 ) {
+      asteroidSortingDimension = size;
+      window.filter([[3500,100000],null,null,null]);
+    }
+    else if( num == 3 ) {
+      asteroidSortingDimension = close_date;
+      window.flyby();
+    }
+    else if( num == 4 ) {
+      asteroidSortingDimension = energy;
+      window.filter([null, null, null, [0.0,4.2]]);
+    }
+  }
+  var axisFlag = 0;
+  window.switchAxis = function(flag) {
+    axisFlag = flag;
+    highChart.each(render);
+  };
+  window.toggleAsteroidView = function(tableOrHighChart) {
+    if( tableOrHighChart == 1 ) {
+      $('#toggle_table_view').removeClass("active");
+      //$('#toggle_chart_view').removeClass("inactive");
+      $('#toggle_chart_view').addClass("active");
+      //$('#toggle_table_view').addClass("inactive");
+      $('#table_content').hide();
+      $('#highchart_content').show();
+      $('#axis_choice').show();
+    }
+    else if( tableOrHighChart == 0 ) {
+      $('#toggle_chart_view').removeClass("active");
+      //$('#toggle_table_view').removeClass("inactive");
+      $('#toggle_table_view').addClass("active");
+      //$('#toggle_chart_view').addClass("inactive");
+      $('#table_content').show();
+      $('#highchart_content').hide();
+      $('#axis_choice').hide();
+    }
+    // toggleFlag = tableOrHighChart;
+  }
+  var asteroids = [];
+  // // A little coercion, since the CSV is untyped.
+  asteroids_temp.forEach(function(d, i) {
+    d.index = i;
+    if(d.close_app_dist != null) {
+      asteroids.push(d)
+    }
+  });
+  //RXIE
+  console.log("total count of asteroids: " + asteroids.length)
+/***
+// FIELD CHANGES
+absolute_magnitude      :       21.4
+aphelion_distance       :       2.738
+designation     :       2013 GF
+delta_v :       6.38464
+earth_moid      :       0.05096
+id      :       5819910
+km_neo  :       false
+mean_daily_motion       :       0.3805738
+n_or_d  :       K13G00F
+name    :       null
+neo     :       true
+number  :       null
+perihelion_distance     :       1.033777023
+period  :       2.59
+pha     :       true
+torino  :       null
+==============
+New JSON fields:
+designation     :       2009 UK
+close_app_date  :       2023 12 12
+close_app_dist  :       83
+impact_prob     :       0
+taxonomy_class  :
+pha     :       false
+size    :       372
+spin_period     :
+delta_v :       5.8
+period  :       2.78
+url     :       http://minorplanetcenter.net/db_search/show_object?object_id=2009 UK
+***/
+  // Create the crossfilter for the relevant dimensions and groups.
+  var asteroid = crossfilter(asteroids),
+      all = asteroid.groupAll(),
+      size = asteroid.dimension(function(d) { return Math.max(0, Math.min(100000, +d.size)); }),
+      sizes = size.group(function(d) { return Math.floor(d/100) * 100.0; }),
+      earth_distance = asteroid.dimension(function(d) { return Math.max(0, +d.close_app_dist); }),
+      earth_distances = earth_distance.group(function(d) { return Math.floor(d / 25)  * 25.0; }),
+      period = asteroid.dimension(function(d) { return Math.min(100, +d.period); }),
+      periods = period.group(function(d) { return Math.floor(d * 4) / 4.0; }),
+      energy = asteroid.dimension(function(d) { return Math.min(1000, +d.delta_v); }),
+      energys = energy.group(function(d) { return Math.floor(d) / 100 * 100.0; }),
+      // demision for filtering of "danger"...
+      pha = asteroid.dimension(function(d) { return d.pha}),
+      impact = asteroid.dimension(function(d) { return d.impact_prob}),
+      impact2 = asteroid.dimension(function(d) { return d.impact_prob_float}),
+      // dimension for filtering of "fly by this next month"
+      close_date = asteroid.dimension(function(d) {
+        if( d.close_app_date == null ) {
+          return null;
+        }
+        var dateStr = d.close_app_date.split(' ');
+        var m = parseInt(dateStr[1], 10) - 1;
+        var date = Date.UTC(dateStr[0], ''+m, dateStr[2]);
+        return date;
+      }),
+      designation = asteroid.dimension(function(d) { return d.designation});
+  var charts = [
+    barChart()
+        .dimension(size)
+        .group(sizes)
+      .x(d3.scale.linear()
+        .domain([1, 4000])
+        .rangeRound([0, 10 * 40])),
+    barChart()
+        .dimension(earth_distance)
+        .group(earth_distances)
+      .x(d3.scale.linear()
+        .domain([0, 750])
+        .rangeRound([0, 10 * 30])),
+    barChart()
+        .dimension(period)
+        .group(periods)
+      .x(d3.scale.linear()
+        .domain([0, 7.5])
+        .rangeRound([0, 10 * 30])),
+    barChart()
+        .dimension(energy)
+        .group(energys)
+      .x(d3.scale.linear()
+        .domain([0, 30])
+        .rangeRound([0, 10 * 30])),
+    // barChart()
+    //     .dimension(date)
+    //     .group(dates)
+    //     .round(d3.time.day.round)
+    //   .x(d3.time.scale()
+    //     .domain([new Date(2001, 0, 1), new Date(2001, 3, 1)])
+    //     .rangeRound([0, 10 * 90]))
+    //     .filter([new Date(2001, 1, 1), new Date(2001, 2, 1)])
+  ];
+  // Given our array of charts, which we assume are in the same order as the
+  // .chart elements in the DOM, bind the charts to the DOM and render them.
+  // We also listen to the chart's brush events to update the display.
+  var chart = d3.selectAll(".chart")
+      .data(charts)
+      .each(function(chart) { chart.on("brush", renderAll).on("brushend", renderAll); });
+  // Render the initial lists.
+  var list = d3.selectAll(".list")
+      .data([asteroidList]);
+  // RXIE Render the initial high charts
+  var highChart = d3.selectAll(".highchart")
+      .data([asteroidHighchart]);
+  // Render the total.
+  d3.selectAll("#total")
+      .text(formatNumber(asteroid.size()));
+  // apply preset filter with following rule
+  /*
+  Most dangerous:       impact_prob_float > 0.00009
+  Easiest to get to:    delta_v < 4.2
+  Biggest:              size > 3500
+  Flying by this month: "2015 06 08" < close_app_date < "2015 07 08"
+  */
+  console.log("apply filter: <%= @filter_type %>");
+  // start with showing table list, hiding highchart
+  // var toggleFlag = 0;
+  toggleAsteroidView(0);
+  // select the sorting column
+  var asteroidSortingDimension = designation;
+  <% if @filter_type=="hazard" %>
+    asteroidSortingDimension = impact2;
+    window.danger();
+  <% elsif @filter_type=="size"  %>
+    asteroidSortingDimension = size;
+    window.filter([[3500,100000],null,null,null]);
+  <% elsif @filter_type=="near"  %>
+    asteroidSortingDimension = close_date;
+    window.flyby();
+  <% elsif @filter_type=="easy"  %>
+    asteroidSortingDimension = energy;
+    window.filter([null, null, null, [0.0,4.2]]);
+  <% else %>
+    asteroidSortingDimension = designation;
+    window.filter([null, null, null, null]);
+  <% end %>
+
+  // Renders the specified chart or list.
+  function render(method) {
+    d3.select(this).call(method);
+  }
+  // Whenever the brush moves, re-rendering everything.
+  function renderAll() {
+    chart.each(render);
+    list.each(render);
+    highChart.each(render);
+    d3.select("#active").text(formatNumber(all.value()));
+  }
+
+  function asteroidList(div) {
+    // var asteroidsByDate = nestByDate.entries(date.top(40));
+    // div.each(function() {
+    //   var date = d3.select(this).selectAll(".date")
+    //       .data(asteroidsByDate, function(d) { return d.key; });
+    //   date.enter().append("div")
+    //       .attr("class", "date")ƒ
+    //     .append("div")
+    //       .attr("class", "day")
+    //       .text(function(d) { return formatDate(d.values[0].date); });
+    //   date.exit().remove();
+    div.each(function() {
+      var sortedDataSet = null;
+      if( asteroidSortingDimension === close_date || asteroidSortingDimension === energy) {
+        // ascending
+        sortedDataSet = asteroidSortingDimension.bottom(20);
+      }
+      else {
+        //descending
+        sortedDataSet = asteroidSortingDimension.top(20);
+      }
+
+      var asteroid = d3.select(this).selectAll(".asteroid")
+          .data(sortedDataSet, function(d) {
+              return d.index;
+          });
+      var asteroidEnter = asteroid.enter().append("tr")
+                                  .attr("class", function(d) {
+                                    if (d.impact_prob_float == null) {
+                                      return "asteroid";
+                                    } else if (+d.impact_prob_float <= 0.0) {
+                                      return "asteroid";
+                                    } else if (+d.impact_prob_float > 0.0 && +d.impact_prob_float <= 0.00001 ) {
+                                      return "asteroid minimal-danger";
+                                    } else if (+d.impact_prob_float > 0.00001 && +d.impact_prob_float <= 0.0001 ) {
+                                      return "asteroid low-danger";
+                                    } else if (+d.impact_prob_float > 0.0001 && +d.impact_prob_float <= 0.001 ) {
+                                      return "asteroid med-danger";
+                                    } else if (+d.impact_prob_float > 0.001 ) {
+                                      return "asteroid high-danger"
+                                    }
+                                  });
+      // asteroidEnter.append("td")
+      //     .text(function(d) { return d.name; });
+      asteroidEnter.append("td")
+          .append("a")
+          .attr("href", function(d) { return "/asteroid_explorers/show/" + d.designation; })
+          .attr("target", "_blank")
+          .text(function(d) { return d.designation; });
+      asteroidEnter.append("td")
+          .text(function(d) { return d.size });
+      asteroidEnter.append("td")
+          .text(function(d) { return d.close_app_date; });
+      asteroidEnter.append("td")
+          .text(function(d) { return d.close_app_dist; });
+      asteroidEnter.append("td")
+          .text(function(d) { return d.period; });
+      asteroidEnter.append("td")
+          .text(function(d) { return d.delta_v; });
+      asteroidEnter.append("td")
+          .text(function(d) { return d.impact_prob; });
+      asteroidEnter.append("td")
+          .text(function(d) { return d.pha; });
+// <a href="https://twitter.com/share" class="twitter-share-button"
+// data-url="https://asteriod-explorers.herokuapp.com/adetail.html"
+// data-text="Check out this Asteriod!"
+// data-via=user_id
+// data-related="asteriodexplore"
+// data-count="none"
+// data-hashtags="asteriodexplore, asteroids, nasa, seti">Tweet</a>
+      asteroidEnter.append("td")
+      .append("a")
+           .attr("href", function(d) { return "https://twitter.com/intent/tweet?text=Check+out+Near+Earth+%23Asteroid+" + d.designation + "!+Via+@MinorPlanetCtr+%23AsteroidExplorers+" + encodeURI("http://minorplanetcenter.net/asteroid_explorers/show/" + d.designation.replace(' ', '%20'));
+         })
+      .attr("target", "_blank")
+      .attr("class", "btn btn-default btn-sm")
+      .html("<span class='fa fa-twitter'></span> Tweet");
+      asteroid.exit().remove();
+      asteroid.order();
+    });
+    // alert("series size: " +  sizeSeries.length);
+    // asteroidHighchart(sizeSeries);
+  }
+
+  function asteroidHighchart(div) {
+    var useBubble = true;
+    var options = {
+        chart: {
+            // type: 'scatter',
+            type: 'bubble',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Asteroids Chart'
+        },
+        xAxis: {
+            title: {
+                enabled: true,
+                style: 'bold',
+                margin: 20,
+                text: 'Approach date'
+            },
+            startOnTick: false,
+            endOnTick: false,
+            showLastLabel: true
+        },
+        yAxis: {
+            title: {
+                enabled: true,
+                style: 'bold',
+                margin: 20,
+            },
+            allowDecimals: true
+        },
+        series: []
+    };
+    var distanceSeries = [];
+    var periodSeries = [];
+    var sizeSeries = [];
+    var energySeries = [];
+    var impactSeries = [];
+
+    div.each(function() {
+    // $(function(){
+        // seems it remembers the dimension data being fetched already in earlier call.
+        var sortedDataSet = null;
+        if( asteroidSortingDimension === close_date || asteroidSortingDimension === energy) {
+          // ascending
+          sortedDataSet = asteroidSortingDimension.bottom(20);
+        }
+        else {
+          // descending
+          sortedDataSet = asteroidSortingDimension.top(20);
+        }
+
+        var asteroid = d3.select(this).selectAll(".asteroid")
+          .data(sortedDataSet, function(d) {
+            var dateStr = d.close_app_date.split(' ');
+            // javascript month starts with 0
+            var m = parseInt(dateStr[1], 10) - 1;
+            var date = Date.UTC(dateStr[0], ''+m, dateStr[2]);
+            var size = d.size/100;
+            var baseAxis = date;
+            if( axisFlag == 0 ) {
+              // Date
+              baseAxis = date;
+            }
+            else if( axisFlag == 1 ) {
+              // Size
+              baseAxis = d.size/100;
+            }
+            else if( axisFlag == 2 ) {
+              // Orbital period
+              // baseAxis = Math.round(d.period);
+              baseAxis = parseFloat(d.period);
+            }
+            else if( axisFlag == 3 ) {
+              // Energy
+              // baseAxis = Math.round(d.delta_v);
+              baseAxis = parseFloat(d.delta_v);
+            }
+            //RXIE: ploting note: x-axis can have float, but y-axis seems to require whole number
+            var tmpDist = [];
+            tmpDist.push(baseAxis);
+            tmpDist.push(parseFloat(d.close_app_dist));
+//            tmpDist.push(d.close_app_dist);
+            if( useBubble ) {
+              tmpDist.push(size);
+            }
+            distanceSeries.push(tmpDist);
+          if( axisFlag != 1 ) {
+            var tmpSize = [];
+            tmpSize.push(baseAxis);
+            tmpSize.push(d.size/100);
+            if( useBubble ) {
+              tmpSize.push(size);
+            }
+            sizeSeries.push(tmpSize);
+          }
+          if( axisFlag != 2 ) {
+            var tmpPeriod = [];
+            tmpPeriod.push(baseAxis);
+            tmpPeriod.push(parseFloat(d.period));
+//            tmpPeriod.push(d.period);
+            if( useBubble ) {
+              tmpPeriod.push(size);
+            }
+            periodSeries.push(tmpPeriod);
+          }
+          if( axisFlag != 3 ) {
+            var tmpEnergy = [];
+            tmpEnergy.push(baseAxis);
+            // tmpEnergy.push(Math.round(d.delta_v));
+            tmpEnergy.push(parseFloat(d.delta_v));
+            if( useBubble ) {
+              tmpEnergy.push(size);
+            }
+            energySeries.push(tmpEnergy);
+          }
+            var tmpImpact = [];
+            tmpImpact.push(baseAxis);
+            var probLog = -14;
+            if( d.impact_prob_float > 0 ) {
+              probLog = Math.log10(d.impact_prob_float);
+            }
+            tmpImpact.push(probLog);
+            if( useBubble ) {
+              tmpImpact.push(size);
+            }
+            impactSeries.push(tmpImpact);
+            return d.index;
+        });
+    });
+      if( axisFlag == 0 ) {
+        // Date
+        options.xAxis.title.text = 'Next Close Approach Date';
+        options.xAxis.type = 'datetime';
+      }
+      else if( axisFlag == 1 ) {
+        // Size
+        options.xAxis.title.text = 'Size (x100 meters)';
+        options.xAxis.type = '';
+      }
+      else if( axisFlag == 2 ) {
+        // Size
+        options.xAxis.title.text = 'Orbital Period (years)';
+        options.xAxis.type = '';
+      }
+      else if( axisFlag == 3 ) {
+        // Size
+        options.xAxis.title.text = 'Δv (km/s)';
+        options.xAxis.type = '';
+      }
+      options.series.push({color: "#AAAAFF", name: "Next Close Approach Distance<br/>(LD)", data: distanceSeries});
+      options.series.push({color: "#FFAABB", name: "Impact Probability<br/>(in log scale)", data: impactSeries});
+      if( axisFlag != 1 ) {
+        options.series.push({color: "#66A2D4", name: "Size<br/>(x100 meters)", data: sizeSeries});
+      }
+      if( axisFlag != 2 ) {
+        options.series.push({color: "#FFE246", name: "Orbital Period<br/>(years)", data: periodSeries});
+      }
+      if( axisFlag != 3 ) {
+        options.series.push({color: "#20E7AC", name: "Δv (km/s)", data: energySeries});
+      }
+      // old orbital color #FFF730. Others tyring out: #ffeb84
+      // alert("data series size: " + distanceSeries.length);
+      // reference size to influence the bubble size
+      // options.series.push(name: "RefSize", data: [[Date.UTC(2034,6,3),0,500],[Date.UTC(2034,03,09),0,50], [Date.UTC(2034,05,18),0,5000]]);
+      $('#highchart_content').highcharts( options );
+  }
+  function barChart() {
+    if (!barChart.id) barChart.id = 0;
+    var margin = {top: 10, right: 20, bottom: 20, left: 10},
+        x,
+        y = d3.scale.linear().range([100, 0]),
+        id = barChart.id++,
+        axis = d3.svg.axis().orient("bottom"),
+        brush = d3.svg.brush(),
+        brushDirty,
+        dimension,
+        group,
+        round;
+    function chart(div) {
+      var width = x.range()[1],
+          height = y.range()[0];
+      y.domain([0, group.top(1)[0].value]);
+      div.each(function() {
+        var div = d3.select(this),
+            g = div.select("g");
+        // Create the skeletal chart.
+        if (g.empty()) {
+          div.select(".title").append("a")
+              .attr("href", "javascript:reset(" + id + ")")
+              .attr("class", "label label-default reset")
+              .text("reset")
+              .style("display", "none");
+          g = div.append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          g.append("clipPath")
+              .attr("id", "clip-" + id)
+            .append("rect")
+              .attr("width", width)
+              .attr("height", height);
+          g.selectAll(".bar")
+              .data(["background", "foreground"])
+            .enter().append("path")
+              .attr("class", function(d) { return d + " bar"; })
+              .datum(group.all());
+          g.selectAll(".foreground.bar")
+              .attr("clip-path", "url(#clip-" + id + ")");
+          g.append("g")
+              .attr("class", "axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(axis);
+          // Initialize the brush component with pretty resize handles.
+          var gBrush = g.append("g").attr("class", "brush").call(brush);
+          gBrush.selectAll("rect").attr("height", height);
+          gBrush.selectAll(".resize").append("path").attr("d", resizePath);
+        }
+        // Only redraw the brush if set externally.
+        if (brushDirty) {
+          brushDirty = false;
+          g.selectAll(".brush").call(brush);
+          div.select(".title a").style("display", brush.empty() ? "none" : null);
+          if (brush.empty()) {
+            g.selectAll("#clip-" + id + " rect")
+                .attr("x", 0)
+                .attr("width", width);
+          } else {
+            var extent = brush.extent();
+            g.selectAll("#clip-" + id + " rect")
+                .attr("x", x(extent[0]))
+                .attr("width", x(extent[1]) - x(extent[0]));
+          }
+        }
+        g.selectAll(".bar").attr("d", barPath);
+      });
+      function barPath(groups) {
+        var path = [],
+            i = -1,
+            n = groups.length,
+            d;
+        while (++i < n) {
+          d = groups[i];
+          path.push("M", x(d.key), ",", height, "V", y(d.value), "h9V", height);
+        }
+        return path.join("");
+      }
+      function resizePath(d) {
+        var e = +(d == "e"),
+            x = e ? 1 : -1,
+            y = height / 3;
+        return "M" + (.5 * x) + "," + y
+            + "A6,6 0 0 " + e + " " + (6.5 * x) + "," + (y + 6)
+            + "V" + (2 * y - 6)
+            + "A6,6 0 0 " + e + " " + (.5 * x) + "," + (2 * y)
+            + "Z"
+            + "M" + (2.5 * x) + "," + (y + 8)
+            + "V" + (2 * y - 8)
+            + "M" + (4.5 * x) + "," + (y + 8)
+            + "V" + (2 * y - 8);
+      }
+    }
+    brush.on("brushstart.chart", function() {
+      var div = d3.select(this.parentNode.parentNode.parentNode);
+      div.select(".title a").style("display", null);
+    });
+    brush.on("brush.chart", function() {
+      var g = d3.select(this.parentNode),
+          extent = brush.extent();
+      if (round) g.select(".brush")
+          .call(brush.extent(extent = extent.map(round)))
+        .selectAll(".resize")
+          .style("display", null);
+      g.select("#clip-" + id + " rect")
+          .attr("x", x(extent[0]))
+          .attr("width", x(extent[1]) - x(extent[0]));
+      dimension.filterRange(extent);
+    });
+    brush.on("brushend.chart", function() {
+      if (brush.empty()) {
+        var div = d3.select(this.parentNode.parentNode.parentNode);
+        div.select(".title a").style("display", "none");
+        div.select("#clip-" + id + " rect").attr("x", null).attr("width", "100%");
+        dimension.filterAll();
+      }
+    });
+    chart.margin = function(_) {
+      if (!arguments.length) return margin;
+      margin = _;
+      return chart;
+    };
+    chart.x = function(_) {
+      if (!arguments.length) return x;
+      x = _;
+      axis.scale(x);
+      brush.x(x);
+      return chart;
+    };
+    chart.y = function(_) {
+      if (!arguments.length) return y;
+      y = _;
+      return chart;
+    };
+    chart.dimension = function(_) {
+      if (!arguments.length) return dimension;
+      dimension = _;
+      return chart;
+    };
+    chart.filter = function(_) {
+      if (_) {
+        brush.extent(_);
+        dimension.filterRange(_);
+      } else {
+        brush.clear();
+        dimension.filterAll();
+      }
+      brushDirty = true;
+      return chart;
+    };
+    chart.group = function(_) {
+      if (!arguments.length) return group;
+      group = _;
+      return chart;
+    };
+    chart.round = function(_) {
+      if (!arguments.length) return round;
+      round = _;
+      return chart;
+    };
+    return d3.rebind(chart, brush, "on");
+  }
+});
+</script>
+
