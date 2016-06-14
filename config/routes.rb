@@ -5,6 +5,16 @@ Mpc::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  resource :editions, only: [:index, :create, :edit, :update, :show] do
+    collection do
+      get :current
+    end
+    member do
+      put :share
+      put :publish
+    end
+  end
+
   #z++
   root :to => 'mpc#index'
   get 'mpc' => 'mpc#index'
