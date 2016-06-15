@@ -21,11 +21,13 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'active_model_serializers'
+gem 'activeadmin'
+gem 'better_errors'
 gem 'cancancan', '~> 1.10'
 gem 'high_voltage'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'activeadmin'
 gem 'multi_json', '~> 1.12.1'
 
 # To use ActiveModel has_secure_password

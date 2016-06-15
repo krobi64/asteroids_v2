@@ -4,11 +4,15 @@ class EditionsController < ApplicationController
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
 
   def index
-    respond_with Edition.limit(25)
+    respond_with @editions = Edition.limit(25)
+  end
+
+  def new
+    respond_with @edition = Edition.new
   end
 
   def current
-    respond_with Edition.current
+    respond_with @edition = Edition.current
   end
 
   def show
