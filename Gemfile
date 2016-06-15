@@ -24,6 +24,7 @@ end
 gem 'active_model_serializers'
 gem 'activeadmin'
 gem 'better_errors'
+gem 'binding_of_caller'
 gem 'cancancan', '~> 1.10'
 gem 'high_voltage'
 gem 'jquery-rails'
