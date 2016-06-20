@@ -12,12 +12,14 @@ class Asteroid
     def find(designation)
       list[designation]
     end
-    delegate :[], to: :list
 
     def all
       import unless list.present? && last_read_current?
       list.values
     end
+    delegate :size, to: :all
+    delegate :sample, to: :all
+    delegate :[], to: :all
 
     private
 

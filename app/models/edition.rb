@@ -15,7 +15,7 @@ class Edition < ActiveRecord::Base
 
   default_scope -> { where(state: :published).order('publish_date DESC') }
 
-  scope :current, -> { order(:publish_date).limit(1) }
+  scope :current, -> { limit(1) }
 
   def share(social_type)
     social_engagements.first_or_create(social_type: social_type) do  |record|
