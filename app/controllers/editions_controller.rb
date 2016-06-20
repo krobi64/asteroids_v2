@@ -3,7 +3,6 @@ class EditionsController < ApplicationController
   respond_to :json, :html
 
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
-  before_filter :create_data, only: :index
 
   def index
     respond_with @editions = Edition.limit(25)
