@@ -29,6 +29,7 @@ gem 'cancancan', '~> 1.10'
 gem 'high_voltage'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'lorem_ipsum'
 gem 'multi_json', '~> 1.12.1'
 
 # To use ActiveModel has_secure_password

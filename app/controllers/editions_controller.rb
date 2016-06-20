@@ -1,10 +1,11 @@
 class EditionsController < ApplicationController
+  include LoremIpsum::Base
   respond_to :json, :html
 
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
 
   def index
-    respond_with @editions = Edition.limit(25)
+    respond_with @editions = (1..5).map { |n| sample_data(n) }  #Edition.limit(25)
   end
 
   def new
@@ -42,6 +43,22 @@ class EditionsController < ApplicationController
   end
 
   private
+
+  def sample_data(n=1)
+    {
+        id:  n,
+        title: "News Title for #{n}",
+        flyby_title: "Asteroid M12#{n} is heading toward us",
+        flyby_content: "Check it out #{n} days from now",
+        news_title: "News of #{Date.yesterday + n.days}",
+        news_content: lorem_ipsum('2p').gsub(/<p>/, '').gsub(/<\/p>/, "\n").gsub(/\n\n/, "\n"),
+        orbit_url: sample_orbit
+    }
+  end
+
+  def sample_orbit
+    Asteroid.all.sample['url']
+  end
 
   def load_model
     @edition ||= Edition.find_by_id(Integer(params[:id]))
