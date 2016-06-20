@@ -50,9 +50,10 @@ class EditionsController < ApplicationController
         title: "News Title for #{n}",
         flyby_title: "Asteroid M12#{n} is heading toward us",
         flyby_content: "Check it out #{n} days from now",
-        news_title: "News of #{Date.yesterday + n.days}",
+        news_title: "News of #{Date.yesterday - n.days}",
         news_content: lorem_ipsum('2p').gsub(/<p>/, '').gsub(/<\/p>/, "\n").gsub(/\n\n/, "\n"),
-        orbit_url: sample_orbit
+        orbit_url: sample_orbit,
+        publish_date: Date.yesterday - n.days
     }
   end
 
