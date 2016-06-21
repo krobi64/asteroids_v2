@@ -13,6 +13,8 @@ class Edition < ActiveRecord::Base
   validates :state, presence: true, inclusion: { in: STATE }
   validates :theme, presence: true, inclusion: { in: Theme.all }
 
+  before_validation :to_draft, only: :create
+
   default_scope -> { order('publish_date DESC') }
 
   scope :draft, -> { where(state: 'draft')}
@@ -43,6 +45,10 @@ class Edition < ActiveRecord::Base
         theme: theme.to_json,
         shares: total_shares.nil? ? 0 : total_shares
     }
+  end
+
+  def to_draft
+    self.state = 'draft'
   end
 
 end

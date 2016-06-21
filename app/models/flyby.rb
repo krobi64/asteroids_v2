@@ -3,7 +3,7 @@ class Flyby < ActiveRecord::Base
   belongs_to :updated_by
   attr_accessible :content, :title
 
-  validates :title, :asteroid_id, presence: true
+  validates :title, presence: true
 
   def as_json(options_for_json={})
     {

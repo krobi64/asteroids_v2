@@ -9,8 +9,8 @@ class OrbitDiagram < ActiveRecord::Base
   def as_json(options_for_json={})
     asteroid = Asteroid[asteroid_id]
     {
-        title: title,
-        asteroid_id: asteroid['designation'],
+        title: asteroid['designation'],
+        asteroid_id: asteroid_id,
         url: asteroid['url']
     }
   end

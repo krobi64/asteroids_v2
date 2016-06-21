@@ -29,7 +29,8 @@ class EditionsController < ApplicationController
     @edition.create_news_story news_story_params
     @edition.create_orbit_diagram orbit_diagram_params
     @edition.theme = theme_from_params
-    respond_with @edition.save
+    @edition.save
+    respond_with @edition
   end
 
   def update
@@ -62,22 +63,22 @@ class EditionsController < ApplicationController
   end
 
   def edition_params
-    params.slice(:state, :title, :theme)
+    params.slice(:state, :title)
   end
 
   def flyby_params
-    params.slice(:flyby)
+    params[:flyby]
   end
 
   def news_story_params
-    params.slice(:news_story)
+    params[:news_story]
   end
 
   def orbit_diagram_params
-    params.slice(:orbit_diagram)
+    params[:orbit_diagram]
   end
 
   def theme_from_params
-    params.slice(:theme)[:name] == 'modern' ? Theme.modern : Theme.classic
+    params[:theme][:name] == 'modern' ? Theme.modern : Theme.classic
   end
 end
