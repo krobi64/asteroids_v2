@@ -8,7 +8,7 @@ class EditionsController < ApplicationController
   end
 
   def new
-    respond_with (@edition = model.new)
+    respond_with (@edition = Edition.new)
   end
 
   def current
