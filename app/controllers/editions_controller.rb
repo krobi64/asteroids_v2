@@ -24,11 +24,21 @@ class EditionsController < ApplicationController
   end
 
   def create
-    respond_with Edition.create(edition_params)
+    @edition = Edition.create edition_params
+    @edition.create_flyby flyby_params
+    @edition.create_news_story news_story_params
+    @edition.create_orbit_diagram orbit_diagram_params
+    @edition.theme = theme_from_params
+    respond_with @edition.save
   end
 
   def update
-    respond_with @edition.update_attributes(edition_params)
+    @edition.update_attributes edition_params
+    @edition.flyby = Flyby.first_or_create flyby_params
+    @edition.news_story = NewsStory.first_or_create news_story_params
+    @edition.orbit_diagram = OrbitDiagram.first_or_create orbit_diagram_params
+    @edition.theme = theme_from_params
+    respond_with @edition.save
   end
 
   def share
@@ -52,6 +62,22 @@ class EditionsController < ApplicationController
   end
 
   def edition_params
-    params.slice(:publish_date, :state, :title, :news_story, :flyby, :orbit_diagram, :theme)
+    params.slice(:state, :title, :theme)
+  end
+
+  def flyby_params
+    params.slice(:flyby)
+  end
+
+  def news_story_params
+    params.slice(:news_story)
+  end
+
+  def orbit_diagram_params
+    params.slice(:orbit_diagram)
+  end
+
+  def theme_from_params
+    params.slice(:theme)[:name] == 'modern' ? Theme.modern : Theme.classic
   end
 end
