@@ -1,5 +1,4 @@
 class EditionsController < ApplicationController
-  include LoremIpsum::Base
   respond_to :json, :html
 
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
@@ -13,7 +12,7 @@ class EditionsController < ApplicationController
   end
 
   def current
-    respond_with model.current
+    respond_with model.current.first
   end
 
   def show
