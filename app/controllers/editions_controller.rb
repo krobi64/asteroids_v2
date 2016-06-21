@@ -5,15 +5,15 @@ class EditionsController < ApplicationController
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
 
   def index
-    respond_with @editions = Edition.limit(25)
+    respond_with (@editions = model.limit(25))
   end
 
   def new
-    respond_with @edition = Edition.new
+    respond_with (@edition = model.new)
   end
 
   def current
-    respond_with Edition.current
+    respond_with model.current
   end
 
   def show
@@ -44,9 +44,12 @@ class EditionsController < ApplicationController
 
   private
 
+  def model
+    Edition.includes(:flyby, :orbit_diagram, :news_story, :theme)
+  end
 
   def load_model
-    @edition ||= Edition.find_by_id(Integer(params[:id]))
+    @edition ||= model.find_by_id(Integer(params[:id]))
   end
 
   def edition_params

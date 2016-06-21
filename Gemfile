@@ -21,7 +21,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'active_model_serializers'
 gem 'activeadmin'
 gem 'better_errors'
 gem 'binding_of_caller'
