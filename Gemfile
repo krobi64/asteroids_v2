@@ -21,7 +21,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'active_model_serializers'
 gem 'activeadmin'
 gem 'better_errors'
 gem 'binding_of_caller'
@@ -29,6 +28,7 @@ gem 'cancancan', '~> 1.10'
 gem 'high_voltage'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'lorem_ipsum'
 gem 'multi_json', '~> 1.12.1'
 gem 'test-unit', '~> 3.0'
 

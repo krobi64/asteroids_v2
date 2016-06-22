@@ -14,8 +14,6 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    active_model_serializers (0.9.5)
-      activemodel (>= 3.2)
     activeadmin (0.6.0)
       arbre (>= 1.0.1)
       bourbon (>= 1.0.0)
@@ -99,6 +97,7 @@ GEM
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    lorem_ipsum (0.0.2)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -171,7 +170,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers
   activeadmin
   better_errors
   binding_of_caller
@@ -180,6 +178,7 @@ DEPENDENCIES
   high_voltage
   jquery-rails
   jquery-ui-rails
+  lorem_ipsum
   multi_json (~> 1.12.1)
   mysql2 (~> 0.3.10)
   rails (= 3.2.22.2)

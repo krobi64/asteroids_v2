@@ -4,15 +4,15 @@ class EditionsController < ApplicationController
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
 
   def index
-    respond_with @editions = Edition.limit(25)
+    respond_with (@editions = model.limit(25))
   end
 
   def new
-    respond_with @edition = Edition.new
+    respond_with (@edition = Edition.new)
   end
 
   def current
-    respond_with @edition = Edition.current
+    respond_with model.current.first
   end
 
   def show
@@ -24,11 +24,22 @@ class EditionsController < ApplicationController
   end
 
   def create
-    respond_with Edition.create(edition_params)
+    @edition = Edition.create edition_params
+    @edition.create_flyby flyby_params
+    @edition.create_news_story news_story_params
+    @edition.create_orbit_diagram orbit_diagram_params
+    @edition.theme = theme_from_params
+    @edition.save
+    respond_with @edition
   end
 
   def update
-    respond_with @edition.update_attributes(edition_params)
+    @edition.update_attributes edition_params
+    @edition.flyby = Flyby.first_or_create flyby_params
+    @edition.news_story = NewsStory.first_or_create news_story_params
+    @edition.orbit_diagram = OrbitDiagram.first_or_create orbit_diagram_params
+    @edition.theme = theme_from_params
+    respond_with @edition.save
   end
 
   def share
@@ -43,11 +54,31 @@ class EditionsController < ApplicationController
 
   private
 
+  def model
+    Edition.includes(:flyby, :orbit_diagram, :news_story, :theme)
+  end
+
   def load_model
-    @edition ||= Edition.find_by_id(Integer(params[:id]))
+    @edition ||= model.find_by_id(Integer(params[:id]))
   end
 
   def edition_params
-    params.slice(:publish_date, :state, :title, :news_story, :flyby, :orbit_diagram, :theme)
+    params.slice(:state, :title)
+  end
+
+  def flyby_params
+    params[:flyby]
+  end
+
+  def news_story_params
+    params[:news_story]
+  end
+
+  def orbit_diagram_params
+    params[:orbit_diagram]
+  end
+
+  def theme_from_params
+    params[:theme][:name] == 'modern' ? Theme.modern : Theme.classic
   end
 end
