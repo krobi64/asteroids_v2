@@ -25,7 +25,7 @@ class Edition < ActiveRecord::Base
     end
   end
 
-  def initialize
+  def initialize(*)
     super
   end
 

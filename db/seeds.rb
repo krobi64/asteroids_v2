@@ -1,6 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
+include LoremIpsum::Base
 
 Theme.create name: 'classic'
 Theme.create name: 'modern'
@@ -8,7 +9,7 @@ Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroid
 
   def create_data
     (1..25).each do |n|
-      e = Edition.new sample_edition(n)
+      e = Edition.create sample_edition(n), without_protection: true
       e.create_flyby sample_flyby(n)
       e.create_news_story sample_news(n)
       e.create_orbit_diagram sample_orbit
@@ -18,10 +19,9 @@ Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroid
 
   def sample_edition(n=1)
     {
-        state: 'published',
         title: "News Title for #{n}",
         theme: Theme.all.sample,
-        publish_date: Date.yesterday - n.days
+        total_shares: 0
     }
   end
 
