@@ -30,6 +30,8 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'lorem_ipsum'
 gem 'multi_json', '~> 1.12.1'
+gem 'state_machine'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -43,12 +43,16 @@ class EditionsController < ApplicationController
   end
 
   def share
-    @edition.share(params[:social_type])
+    @edition.share(params[:channel])
     respond_with @edition
   end
 
   def publish
-    @edition.publish
+    if @edition.draft?
+      @edition.publish!
+    else
+      @edition.errors.add(:state, 'Edition already published')
+    end
     respond_with @edition
   end
 
