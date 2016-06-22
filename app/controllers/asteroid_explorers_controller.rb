@@ -23,5 +23,8 @@ class AsteroidExplorersController < ApplicationController
 
   end
 
+  def daily
+
+  end
 
 end
