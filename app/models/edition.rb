@@ -40,10 +40,10 @@ class Edition < ActiveRecord::Base
         title: title,
         publish_date: publish_date,
         state: state,
-        flyby: flyby.to_json,
-        news_story: news_story.to_json,
-        orbit_diagram: orbit_diagram.to_json,
-        theme: theme.to_json,
+        flyby: flyby,
+        news_story: news_story,
+        orbit_diagram: orbit_diagram,
+        theme: theme,
         shares: total_shares.nil? ? 0 : total_shares
     }
   end
