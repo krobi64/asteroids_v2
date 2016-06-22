@@ -36,6 +36,7 @@ class Edition < ActiveRecord::Base
 
   def as_json(options_for_json={})
     {
+        id: id,
         title: title,
         publish_date: publish_date,
         state: state,
