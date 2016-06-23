@@ -206,6 +206,7 @@
 </script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
 <script type="text/javascript" src="/js/rrssb.js"></script>
 <script type="text/javascript" src="/js/validator.js"></script>
 <script type="text/javascript">
@@ -269,24 +270,35 @@ var data = {
 	diagram:"diagram.png"
 };
 
-function data_insertion(data){
+function data_insertion(data, edition){
+    // newspaper fixture
 	$('.tagline').html(data.tagline);
 	$('.est').html(data.est);
 	$('.day').html(data.day);
 	$('.month').html(data.month);
 	$('.year').html(data.year);
-	$('.dayofweek').html(data.dayofweek);
-	$('.numberShares').html(data.numberShares);
-	$('.heroline').html(data.heroline);
-	$('.flybyTitle').html(data.flybytitle);
-	$('.flybyContents').html(data.flybycontents);
-	$('.storyTitle').html(data.storytitle);
-	$('.storyContents').html(data.storycontents);
+    $('.dayofweek').html(data.dayofweek);
+
+    // today's edition
+	$('.numberShares').html(edition.shares);
+	$('.heroline').html(edition.title);
+	// $('.heroline').html(data.heroline);
+	$('.flybyTitle').html(edition.flyby.title);
+	$('.flybyContents').html(edition.flyby.content);
+	$('.storyTitle').html(edition.news_story.title);
+	$('.storyContents').html(edition.news_story.content);
 	$('.diagram').css('background-image','url(./images/'+data.diagram+')');
+	// $('.diagram').css('background-image','url('+ edition.orbit_diagram.url + ')');
 }
 
 $( document ).ready(function() {
-    data_insertion(data);
+
+    //get data from backend
+    d3.json("/editions/25.json", function(error, edition) {
+        console.log( edition );
+        data_insertion(data, edition);
+    });
+
     $('#share-buttons').hide();
   
 });
