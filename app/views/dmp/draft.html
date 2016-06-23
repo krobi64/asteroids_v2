@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="description">
+	<meta name="keywords" content="keywords">
+
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/dmp_style.css" />
+    <link rel="stylesheet" href="/css/rrssb.min.css" />
+
+	<title>Editor View - Daily Minor Planet</title>
+</head>
+<body>
+<form>
+    Scheduled Publication: <input type="text" id="publish_date" placeholder="publish date"/> <br/>
+    Heroline: <input type="text" id="heroline" /> <br/> 
+    Flyby Title: <input type="text" id="flybyTitle" /> <br/>
+    Flyby Content: <input type="textarea" id="flybyContent" rows="4" cols="50"/> <br/>
+    News Title: <input type="text" id="newsTitle" /> <br/>
+    News Content: <input type="textarea" id="newsContent" rows="4" cols="50"/> <br/>
+
+    <input type="button" value="Save" onclick="javascript:saveDraft();" /> <br/>
+    <input type="button" value="Preview" onclick="javascript:previewDraft();" /> <br/>
+    <input type="button" value="Publish" onclick="javascript:publishDraft();" /> <br/>
+
+</form>
+</body>
+</html>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+function populateForm(edition){
+    // today's edition
+    console.log( "populate form: " + edition.title );
+	$('#heroline').val( edition.title );
+	$('#flybyTitle').val( edition.flyby.title );
+	$('#flybyContent').val( edition.flyby.content );
+	$('#newsTitle').val( edition.news_story.title );
+	$('#newsContent').val( edition.news_story.content );
+}
+
+$( document ).ready(function() {
+    //get data from backend
+    d3.json("/editions/25.json", function(error, edition) {
+        console.log( edition );
+        populateForm(edition);
+    });
+  
+});
+</script>
