@@ -5,6 +5,9 @@ Mpc::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe
+  delete 'unsubscribe', controller: :subscriptions, actions: :unsubscribe, as: :unsubscribe
+
   resources :sources, only: [:index] do
     member do
       get :latest
