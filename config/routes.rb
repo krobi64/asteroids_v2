@@ -5,6 +5,12 @@ Mpc::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  resources :sources, only: [:index] do
+    member do
+      get :latest
+    end
+  end
+
   resources :editions, only: [:index, :new, :create, :edit, :update, :show] do
     collection do
       get :current
