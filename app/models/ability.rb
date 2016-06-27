@@ -22,6 +22,7 @@ class Ability
       can :update, Preference
     else
       can :read, Edition, state: :published
+      can :current, Edition, state: :published
       can :share, Edition, state: :published
     end
   end
