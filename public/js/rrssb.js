@@ -353,14 +353,14 @@
 		}
 
 		// resize function
-		$(window).resize(function () {
+		// $(window).resize(function () {
 
-			rrssbMagicLayout(sizeSmallBtns);
+		// 	rrssbMagicLayout(sizeSmallBtns);
 
-			waitForFinalEvent(function(){
-				rrssbMagicLayout(sizeSmallBtns);
-			}, 200, "finished resizing");
-		});
+		// 	waitForFinalEvent(function(){
+		// 		rrssbMagicLayout(sizeSmallBtns);
+		// 	}, 200, "finished resizing");
+		// });
 
 		rrssbInit();
 	});

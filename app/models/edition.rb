@@ -13,7 +13,7 @@ class Edition < ActiveRecord::Base
   validates :theme, presence: true, inclusion: { in: Theme.all }
 
   default_scope -> { order('publish_date DESC') }
-  scope :current, -> { published.limit(1) }
+  scope :current, -> { where(state: 'published').limit(1) }
 
   state_machine :state, initial: :draft do
     after_transition(on: :publish) do |edition, _|

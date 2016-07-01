@@ -4,8 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  has_one :subscription, inverse_of: :user
 
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :subscription, :username
 
   ROLES = %i[admin editor subscriber]
 
@@ -22,5 +23,17 @@ class User < ActiveRecord::Base
 
   def has_role?(role)
     roles.include? role
+  end
+
+  def subscribe!
+    create_subscription
+    self.roles = roles.push('subscriber').uniq
+    save
+  end
+
+  def unsubscribe!
+    subscription.destroy
+    self.roles = roles - ['subscriber']
+    save
   end
 end

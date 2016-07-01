@@ -59,7 +59,7 @@
 #dmp-wrapper #share-buttons{
 	width: 200px; 
 	z-index:999;
-	/*opacity: 0;*/
+	opacity: 0;
 	/*display: none;*/
 }
 #dmp-wrapper #share-buttons.modern{
@@ -77,10 +77,9 @@
 }
 /* MODERN UI */
 #dmp-wrapper #modern{
-	position: absolute;
-	top:0px;
+	position: relative;
 	width:100%;
-	/*display: none;*/
+	margin:0 auto;
 }
 #dmp-wrapper #modern .header{
 	width:100%;
@@ -132,6 +131,15 @@
 	background-size: 100% 100% cover;
 	background-position: 50% 50%;
 }
+#dmp-wrapper #modern .mobile-diagram{
+	display: none;
+	width:100%;
+	height:200px;
+	background-color: #08002A;
+	background-size: 100% 100% cover;
+	background-position: 50% 50%;
+	margin-bottom:20px;
+}
 #dmp-wrapper #modern .contents{
 	vertical-align: top;
 	display: inline-block;
@@ -171,8 +179,7 @@
 /* CLASSIC UI */
 
 #dmp-wrapper #classic{
-	position: absolute;
-	top:0px;
+	margin: 0 auto;
 	background:url('../images/bg.png') repeat;
 	box-shadow: 0 0 10px rgba(0,0,0,0.3);
 	position: relative;
@@ -273,3 +280,58 @@
 #dmp-wrapper #classic .flybyContents, #classic .storyContents{
 	font-size:14px;
 }
+
+@media (max-width: 1024px) 
+{
+	#dmp-wrapper{
+		margin-top:-60px;
+	}
+	#dmp-wrapper #classic{
+		display:none;
+	}
+	#dmp-wrapper #modern{
+		display:block;
+		position: relative;
+		/*width:100%;*/
+	}
+	#dmp-wrapper #modern .header{
+		width:90%;
+		margin:0 auto;
+		padding-bottom:40px;
+	}
+
+	#dmp-wrapper #modern .header img{
+		width:81%;
+	}
+	#dmp-wrapper #modern .est, #dmp-wrapper #modern .shares{
+		top:50px;
+	}
+	#dmp-wrapper #modern .contents, #dmp-wrapper #modern .bodyContainer{
+		width:90%;
+		margin:0 auto;
+	}
+	#dmp-wrapper #modern .diagram{
+		display: none;
+	}
+	#dmp-wrapper #modern .mobile-diagram{
+		display: block;
+	}
+	#dmp-wrapper #modern .contents .heroline{
+		margin-bottom:10px;
+	}
+	#dmp-wrapper #themeToggle{
+		display: none;
+	}
+	#dmp-wrapper #share-buttons.modern{
+	    position: absolute;
+	    right: 7%;
+	    top: 140px;
+	}
+	#dmp-wrapper .ae-btn-blue.modern{
+	    position: absolute;
+	    left: 45%;
+	    top: 150px;
+
+	}
+}
+
