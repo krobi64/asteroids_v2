@@ -261,14 +261,17 @@ var data = {
 	day: "10",
 	month: "June",
 	year: "2016",
+	diagram:"diagram.png"
+};
+
+/*
 	numberShares: "832",
 	heroline: "NEW NEAR EARTH ASTEROID FLYBY!",
 	flybytitle: "New Earth Asteroid 2015 QH3 was found by the Catalina Sky Survey of Tucson, Arizona, on August 20, 2015.",
 	flybycontents: "Fusce vehicula dolor arcu, sit amet blandit dolor mollis nec. Donec viverra eleifend lacus, vitae ullamcorper metus. Sed sollicitudin ipsum quis nunc sollicitudin ultrices. Donec euismod scelerisque ligula. Maecenas eu varius risus, eu aliquet arcu. Curabitur fermentum suscipit est, tincidunt mattis lorem luctus id.",
 	storytitle: "Hella narwhal Cosby sweater McSweeney's, salvia",
 	storycontents:"Aliquam erat volutpat. Integer ut tincidunt orci. Etiam tristique, elit ut consectetur iaculis, metus lectus mattis justo, vel mollis eros neque quis augue. Sed lobortis ultrices lacus, a placerat metus rutrum sit amet. Aenean ut suscipit justo.",
-	diagram:"diagram.png"
-};
+*/
 
 function data_insertion(data, edition){
     // newspaper fixture
@@ -278,11 +281,11 @@ function data_insertion(data, edition){
 	$('.month').html(data.month);
 	$('.year').html(data.year);
     $('.dayofweek').html(data.dayofweek);
+//	$('.heroline').html(data.heroline);
 
     // today's edition
 	$('.numberShares').html(edition.shares);
 	$('.heroline').html(edition.title);
-	// $('.heroline').html(data.heroline);
 	$('.flybyTitle').html(edition.flyby.title);
 	$('.flybyContents').html(edition.flyby.content);
 	$('.storyTitle').html(edition.news_story.title);
