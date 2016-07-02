@@ -208,7 +208,6 @@
 </script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
 <script type="text/javascript" src="/js/rrssb.js"></script>
 <script type="text/javascript" src="/js/validator.js"></script>
 <script type="text/javascript">
@@ -277,26 +276,19 @@ var data = {
 	tagline:"The nerve center of asteroid detection in our Solar System",
 	est:"Est. 1947",
 	dayofweek: "Friday",
-	day: "10",
+	date: "10",
 	month: "June",
 	year: "2016",
 	diagram:"diagram.png"
 };
-
-/*
-	numberShares: "832",
-	heroline: "NEW NEAR EARTH ASTEROID FLYBY!",
-	flybytitle: "New Earth Asteroid 2015 QH3 was found by the Catalina Sky Survey of Tucson, Arizona, on August 20, 2015.",
-	flybycontents: "Fusce vehicula dolor arcu, sit amet blandit dolor mollis nec. Donec viverra eleifend lacus, vitae ullamcorper metus. Sed sollicitudin ipsum quis nunc sollicitudin ultrices. Donec euismod scelerisque ligula. Maecenas eu varius risus, eu aliquet arcu. Curabitur fermentum suscipit est, tincidunt mattis lorem luctus id.",
-	storytitle: "Hella narwhal Cosby sweater McSweeney's, salvia",
-	storycontents:"Aliquam erat volutpat. Integer ut tincidunt orci. Etiam tristique, elit ut consectetur iaculis, metus lectus mattis justo, vel mollis eros neque quis augue. Sed lobortis ultrices lacus, a placerat metus rutrum sit amet. Aenean ut suscipit justo.",
-*/
+var dayOfWeek = ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function data_insertion(data, edition){
     // newspaper fixture
 	$('.tagline').html(data.tagline);
 	$('.est').html(data.est);
-	$('.day').html(data.day);
+	$('.day').html(data.date);
 	$('.month').html(data.month);
 	$('.year').html(data.year);
     $('.dayofweek').html(data.dayofweek);
@@ -309,18 +301,38 @@ function data_insertion(data, edition){
 	$('.flybyContents').html(edition.flyby.content);
 	$('.storyTitle').html(edition.news_story.title);
 	$('.storyContents').html(edition.news_story.content);
-	$('.diagram').css('background-image','url(./images/'+data.diagram+')');
-	$('.mobile-diagram').css('background-image','url(./images/'+data.diagram+')');
+	$('.diagram').css('background-image','url(/images/'+data.diagram+')');
+	$('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
 	// $('.diagram').css('background-image','url('+ edition.orbit_diagram.url + ')');
 }
 
-$( document ).ready(function() {
+
+function getNewspaper() {
+	// today
+	var today = new Date();
+	data.year = today.getFullYear();
+	data.date = today.getDate();
+	data.dayofweek = dayOfWeek[today.getDay()];
+	data.month = monthNames[today.getMonth()];
+
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:3000/editions/" + data.date,
+        contentType: "application/json: charset=UTF-8",
+        success: function(edition, status, error) {
+            console.log( "success ",  edition );
+	        data_insertion(data, edition);
+        },
+        error: function(res, status, error) {
+            console.log( "error: ", error );
+        }
+    });
+}
+
+
+$(document).ready(function() {
     $('#share-buttons').hide();
     //get data from backend
-    d3.json("/editions/25.json", function(error, edition) {
-        console.log( edition );
-        data_insertion(data, edition);
-    });
-  
+	getNewspaper();  
 });
 </script>

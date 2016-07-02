@@ -25,7 +25,9 @@
 <script type="text/javascript">
   <!-- $(document).ready(function() { -->
   $(window).load(function() {
-    $("table").tablesorter();
+      if( $("table").length > 0 ) {
+        $("table").tablesorter();
+      }
   }); 
 </script>
 

@@ -33,13 +33,22 @@
     </ul>
 
 </form>
+
+<div id="toNewWindow">
+    <p>Your content here</p>
+</div>
+
 </body>
 </html>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+  window.jQuery || document.write('<script src="/js/jquery-1.12.4.min.js"><\/script>')
+</script>
 <!--
-<script src="/js/jquery-latest.js"></script>
+<script src="/js/ejs_production.js"></script>
 -->
+
 <script type="text/javascript">
 var draftForm = ( function() {
     var s;
@@ -48,7 +57,6 @@ var draftForm = ( function() {
         // today's edition
         // console.log( "populate form: " + edition.title );
         var today = new Date();
-        debugger;
         console.log( today );
 
 
@@ -60,6 +68,8 @@ var draftForm = ( function() {
     }
 
     function populateDraft() {
+        console.log("get draft content");
+
         $.ajax({
             type: 'GET',
             url: "http://localhost:3000/editions/25",
@@ -74,9 +84,32 @@ var draftForm = ( function() {
         });
     }
 
+    function populateSource() {
+        console.log("TODO: get list of news sources");
+    }
+
     function previewDraft(e) {
         e.preventDefault();
         console.log( "preview draft");
+
+        var draftData = getFormData();
+        var options = {};
+
+        // var template = ejs.compile({url: "preview.ejs"});
+/*
+        ejs.renderFile("preview.ejs", draftData, options, function(err, str){
+            // str => Rendered HTML string 
+            console.log( err );
+            console.log( str );
+
+            var w = window.open();
+            $(w.document.body).html(str);
+        });
+
+        var html = new EJS({url: '/preview.ejs'}).render(draftData);
+            var w = window.open();
+            $(w.document.body).html(html);
+*/
     }
 
     function publishDraft(e) {
@@ -87,7 +120,6 @@ var draftForm = ( function() {
         $.ajax({
             type: 'PUT',
             url: "http://localhost:3000/editions/25/publish",
-            data: publishFlag,
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -157,6 +189,7 @@ var draftForm = ( function() {
             s = this.settings;
             this.bindActions();
             populateDraft();
+            populateSource();
         },
 
         bindActions: function() {
@@ -174,15 +207,7 @@ var draftForm = ( function() {
 
 
 $(document).ready(function() {
-    //get data from backend
-    /*
-    d3.json("/editions/25.json", function(error, edition) {
-        console.log( edition );
-        populateForm(edition);
-    });
-    */
     draftForm.init();
-
 });
 
 </script>
