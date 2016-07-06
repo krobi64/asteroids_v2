@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="description">
+	<meta name="keywords" content="keywords">
+
+    <!-- Latest compiled and minified CSS -->
+    <link media="all" rel="stylesheet" href="/css/all-ae-full.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.customized.min.css">
+    <!-- Upload Image module -->
+    <link rel="stylesheet" type="text/css" href="/css/jasny-bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/dmp_style.css" />
+
+	<title>Editor View - Daily Minor Planet</title>
+</head>
+<body>
+<style>
+</style>
+<div id="dmp-editor-wrapper">
+    <div id="newspaperContainer">
+        <div class="editorPageBtn btn-group" role="group">
+            <button type="button" class="btn btn-default btn-md" onclick="javascript:previewDraft();" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
+            <button type="button" class="btn btn-default btn-md" onclick="javascript:saveDraft();" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;&nbsp;Skip to publish this edition</a></li>
+              </ul>
+            </div>
+        </div>
+        <section id="editorContainer">
+            <div class="header">
+                <div class="subHeaderline" style="font-size:28px">DRAFT</div>
+                <img src="/images/title.png">
+            </div>
+            <div id="formNav">
+                <div id="basicSetting"><a href="#bodyBasic">1. Basic Settings</a></div>
+                <div id="flybyNews"><a href="#bodyFlyby">2. Flyby News</a></div>
+                <div id="newsStory"><a href="#bodyNews">3. News Story</a></div>
+            </div>
+            <div class="bodyContainer">
+                <div class="editSection" id="bodyBasic">
+                    <h4>1. Basic Settings</h4>
+                    <div class="eachLine">
+                        <div class="editLabel">Publish Schedule</div>
+                        <div class="inputValue">  <input type="date" name="publishDay" value="2016-07-06" style="width:150px"><input type="time" name="publishTime" value="00:00:00" style="width:150px"></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Newspaper Title</div>
+                        <div class="inputValue"> <input type="text" id="tagline" /></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Default Theme</div>
+                        <div class="inputValue"><input type="radio" name="themeType" value="Modern" checked> Modern <input type="radio" name="themeType" value="Classic" style="margin-left:10px"> Classic</div>
+                    </div>
+                </div>
+                <div class="editSection" id="bodyFlyby">
+                    <h4>2. Flyby News</h4>
+                    <div class="eachLine">
+                        <div class="editLabel">Flyby Title</div>
+                        <div class="inputValue"> <textarea rows="2" id="flybyTitle">New Earth Asteroid 2015 QH3 was found by the Catalina Sky Survey of Tucson, Arizona, on August 20, 2015.</textarea></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Flyby Content</div>
+                        <div class="inputValue"> <textarea rows="6" id="flybyContent">Fusce vehicula dolor arcu, sit amet blandit dolor mollis nec. Donec viverra eleifend lacus, vitae ullamcorper metus. Sed sollicitudin ipsum quis nunc sollicitudin ultrices. Donec euismod scelerisque ligula. Maecenas eu varius risus, eu aliquet arcu. Curabitur fermentum suscipit est, tincidunt mattis lorem luctus id. </textarea></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Flyby Image</div>
+                        <div class="inputValue"> 
+                            <input type="text" id="flybyImageUrl" value="http://"/>
+                            <!-- Image Upload -->
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                              <div class="fileinput-new thumbnail" style="width: 300px; height: 300px;">
+                                   <img src="http://placehold.it/600x600">
+                              </div>
+                              <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                              <div>
+                                <span class="btn btn-default btn-file"><span class="fileinput-new">Upload image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                              </div>
+                            </div>
+                        </div>
+
+                    </div>                    
+                </div>
+                <div class="editSection" id="bodyNews">
+                    <h4>3. News Story</h4>
+                    <div class="eachLine">
+                        <div class="editLabel">News Source</div>
+                        <div class="inputValue"><input type="radio" name="newsSource" value="Modern" checked> Source1 <input type="radio" name="newsSource" value="Classic" style="margin-left:10px"> Source2 <input type="radio" name="newsSource" value="Classic" style="margin-left:10px"> Source3 <input type="radio" name="newsSource" value="Classic" style="margin-left:10px"> Manual Input</div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">News URL</div>
+                        <div class="inputValue"><input type="text" id="newsUrl" value="http://"/> </div>
+                    </div>  
+                    <div class="eachLine">
+                        <div class="editLabel">News Title</div>
+                        <div class="inputValue"> <textarea rows="2" id="newsTitle">Hella narwhal Cosby sweater McSweeney's, salvia</textarea></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">News Content</div>
+                        <div class="inputValue"> <textarea rows="4" id="newsContent">Aliquam erat volutpat. Integer ut tincidunt orci. Etiam tristique, elit ut consectetur iaculis, metus lectus mattis justo, vel mollis eros neque quis augue. Sed lobortis ultrices lacus, a placerat metus rutrum sit amet. Aenean ut suscipit justo.</textarea></div>
+                    </div>  
+
+                </div>
+            </div>
+            <a href="#" class="back-to-top"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></a>
+        </section>
+        <div class="editorPageBtn btn-group" role="group">
+            <button type="button" class="btn btn-default btn-md" onclick="javascript:previewDraft();" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
+            <button type="button" class="btn btn-default btn-md" onclick="javascript:saveDraft();" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;&nbsp;Skip to publish this edition</a></li>
+              </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!-- Upload Image module -->
+<script src="/js/jasny-bootstrap.min.js"></script>
+
+<script type="text/javascript">
+//dropdown menu
+$('.dropdown-toggle').dropdown();
+
+//scroll to top
+var amountScrolled = 300;
+
+$(window).scroll(function() {
+    if ( $(window).scrollTop() > amountScrolled ) {
+        $('a.back-to-top').fadeIn('slow');
+    } else {
+        $('a.back-to-top').fadeOut('slow');
+    }
+});
+$('a.back-to-top').click(function() {
+    $('html, body').animate({
+        scrollTop: 0
+    }, 700);
+    return false;
+});
+
+function populateForm(edition){
+    // today's edition
+    console.log( "populate form: " + edition.title );
+	$('#heroline').val( edition.title );
+	$('#flybyTitle').val( edition.flyby.title );
+	$('#flybyContent').val( edition.flyby.content );
+	$('#newsTitle').val( edition.news_story.title );
+	$('#newsContent').val( edition.news_story.content );
+}
+
+$( document ).ready(function() {
+    //get data from backend
+    d3.json("/editions/25.json", function(error, edition) {
+        console.log( edition );
+        populateForm(edition);
+    });
+  
+});
+</script>
