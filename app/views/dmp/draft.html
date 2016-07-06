@@ -1,214 +1,175 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="description" content="description">
-	<meta name="keywords" content="keywords">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="description">
+    <meta name="keywords" content="keywords">
 
     <!-- Latest compiled and minified CSS -->
-    <!--
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    -->
-	<link rel="stylesheet" type="text/css" href="/css/dmp_style.css" />
-    <link rel="stylesheet" href="/css/rrssb.min.css" />
+    <link media="all" rel="stylesheet" href="/css/all-ae-full.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.customized.min.css">
+    <!-- Upload Image module -->
+    <link rel="stylesheet" type="text/css" href="/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/dmp_style.css" />
 
-	<title>Editor View - Daily Minor Planet</title>
+    <title>Editor View - Daily Minor Planet</title>
 </head>
 <body>
-<form>
-    Scheduled Publication: <input type="text" id="publish_date" placeholder="publish date"/> <br/>
-    Heroline: <input type="text" id="heroline" /> <br/> 
-    Flyby Title: <input type="text" id="flybytitle" /> <br/>
-    Flyby Content: <textarea type="textarea" id="flybycontent" rows="4" cols="50"></textarea> <br/>
-    News Title: <input type="text" id="newstitle" /> <br/>
-    News Content: <textarea type="textarea" id="newscontent" rows="4" cols="50"></textarea> <br/>
+<style>
+</style>
+<div id="dmp-editor-wrapper">
+    <div id="newspaperContainer">
+        <div class="editorPageBtn btn-group" role="group">
+            <button type="button" class="btn btn-default btn-md preview"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
+            <button type="button" class="btn btn-default btn-md save" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary publish"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" class="unpublish"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;&nbsp;Skip to publish this edition</a></li>
+              </ul>
+            </div>
+        </div>
+        <section id="editorContainer">
+            <div class="header">
+                <div class="subHeaderline" style="font-size:28px">DRAFT</div>
+                <img src="/images/title.png">
+            </div>
+            <div id="formNav">
+                <div id="basicSetting"><a href="#bodyBasic">1. Basic Settings</a></div>
+                <div id="flybyNews"><a href="#bodyFlyby">2. Flyby News</a></div>
+                <div id="newsStory"><a href="#bodyNews">3. News Story</a></div>
+            </div>
+            <div class="bodyContainer">
+                <div class="editSection" id="bodyBasic">
+                    <h4>1. Basic Settings</h4>
+                    <div class="eachLine">
+                        <div class="editLabel">Publish Schedule</div>
+                        <div class="inputValue">  <input type="date" name="publishDay" value="2016-07-06" style="width:150px"><input type="time" name="publishTime" value="00:00:00" style="width:150px"></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Newspaper Title</div>
+                        <div class="inputValue"> <input type="text" id="tagline" /></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Default Theme</div>
+                        <div class="inputValue"><input type="radio" name="themeType" value="Modern" checked> Modern <input type="radio" name="themeType" value="Classic" style="margin-left:10px"> Classic</div>
+                    </div>
+                </div>
+                <div class="editSection" id="bodyFlyby">
+                    <h4>2. Flyby News</h4>
+                    <div class="eachLine">
+                        <div class="editLabel">Flyby Title</div>
+                        <div class="inputValue"> <textarea rows="2" id="flybyTitle"></textarea></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Flyby Content</div>
+                        <div class="inputValue"> <textarea rows="6" id="flybyContent"></textarea></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Flyby Image</div>
+                        <div class="inputValue"> 
+                            <input type="text" id="flybyImageUrl" value="http://"/>
+                            <!-- Image Upload -->
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                              <div class="fileinput-new thumbnail" style="width: 100%; height: 300px;">
+                                   <img src="http://placehold.it/1196x532">
+                              </div>
+                              <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                              <div>
+                                <span class="btn btn-default btn-file"><span class="fileinput-new">Upload image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                              </div>
+                            </div>
+                        </div>
 
-    <input type="button" id="save" value="Save" /> <br/>
-    <input type="button" id="preview" value="Preview" /> <br/>
-    <input type="button" id="publish" value="Publish" /> <br/>
+                    </div>                    
+                </div>
+                <div class="editSection" id="bodyNews">
+                    <h4>3. News Story</h4>
+                    <div class="eachLine">
+                        <div class="editLabel">News Source</div>
+                        <div class="inputValue" id="sourceList">
+<!--
+                            <input type="radio" name="newsSource" value="source1" checked> source1
+                            <input type="radio" name="newsSource" value="source2" style="margin-left:10px"> source2 
+                            <input type="radio" name="newsSource" value="source3" style="margin-left:10px"> source3
+                            <input type="radio" name="newsSource" value="source4" style="margin-left:10px"> source4
+-->
+                        </div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">News URL</div>
+                        <div class="inputValue"><input type="text" id="newsUrl" value="http://"/> </div>
+                    </div>  
+                    <div class="eachLine">
+                        <div class="editLabel">News Title</div>
+                        <div class="inputValue"> <textarea rows="2" id="newsTitle">Hella narwhal Cosby sweater McSweeney's, salvia</textarea></div>
+                    </div>
+                    <div class="eachLine">
+                        <div class="editLabel">News Content</div>
+                        <div class="inputValue"> <textarea rows="4" id="newsContent">Aliquam erat volutpat. Integer ut tincidunt orci. Etiam tristique, elit ut consectetur iaculis, metus lectus mattis justo, vel mollis eros neque quis augue. Sed lobortis ultrices lacus, a placerat metus rutrum sit amet. Aenean ut suscipit justo.</textarea></div>
+                    </div>  
 
+                </div>
+            </div>
+            <a href="#" class="back-to-top"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></a>
+        </section>
+        <div class="editorPageBtn btn-group" role="group">
+            <button type="button" class="btn btn-default btn-md preview" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
+            <button type="button" class="btn btn-default btn-md save" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary publish"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" class="unpublish"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;&nbsp;Skip to publish this edition</a></li>
+              </ul>
+            </div>
+        </div>
 
-    <ul id="sourcelist">
-        
-    </ul>
-
-</form>
-
-<div id="toNewWindow">
-    <p>Your content here</p>
+    </div>
 </div>
-
 </body>
 </html>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>
-  window.jQuery || document.write('<script src="/js/jquery-1.12.4.min.js"><\/script>')
-</script>
-<!--
-<script src="/js/ejs_production.js"></script>
--->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!-- Upload Image module -->
+<script src="/js/jasny-bootstrap.min.js"></script>
+<!--  Handle newspaper draft-->
+<script src="/js/draft-form.js"></script>
 
 <script type="text/javascript">
-var draftForm = ( function() {
-    var s;
+//dropdown menu
+$('.dropdown-toggle').dropdown();
 
-    function populateForm(edition){
-        // today's edition
-        // console.log( "populate form: " + edition.title );
-        var today = new Date();
-        console.log( today );
+//scroll to top
+var amountScrolled = 300;
 
-
-        s.heroLine.val( edition.title );
-        s.flybyTile.val( edition.flyby.title );
-        s.flybyContent.val( edition.flyby.content );
-        s.newsTitle.val( edition.news_story.title );
-        s.newsContent.val( edition.news_story.content );
+$(window).scroll(function() {
+    if ( $(window).scrollTop() > amountScrolled ) {
+        $('a.back-to-top').fadeIn('slow');
+    } else {
+        $('a.back-to-top').fadeOut('slow');
     }
-
-    function populateDraft() {
-        console.log("get draft content");
-
-        $.ajax({
-            type: 'GET',
-            url: "http://localhost:3000/editions/25",
-            contentType: "application/json: charset=UTF-8",
-            success: function(res, status, error) {
-                console.log( "success ",  res );
-                populateForm(res);
-            },
-            error: function(res, status, error) {
-                console.log( "error: ", error );
-            }
-        });
-    }
-
-    function populateSource() {
-        console.log("TODO: get list of news sources");
-    }
-
-    function previewDraft(e) {
-        e.preventDefault();
-        console.log( "preview draft");
-
-        var draftData = getFormData();
-        var options = {};
-
-        // var template = ejs.compile({url: "preview.ejs"});
-/*
-        ejs.renderFile("preview.ejs", draftData, options, function(err, str){
-            // str => Rendered HTML string 
-            console.log( err );
-            console.log( str );
-
-            var w = window.open();
-            $(w.document.body).html(str);
-        });
-
-        var html = new EJS({url: '/preview.ejs'}).render(draftData);
-            var w = window.open();
-            $(w.document.body).html(html);
-*/
-    }
-
-    function publishDraft(e) {
-        e.preventDefault();
-        console.log( "publish draft");
-        var publishFlag = {"publish": true};
-
-        $.ajax({
-            type: 'PUT',
-            url: "http://localhost:3000/editions/25/publish",
-            contentType: "application/json: charset=UTF-8",
-            success: function(res, status, error) {
-                console.log( "success ",  res );
-            },
-            error: function(res, status, error) {
-                console.log( "error: ", error );
-            }
-        });
-    }
-
-    function getFormData() {
-        var draft = {};
-        var flyby = {};
-        var news = {};
-
-        flyby.title = s.flybyTile[0].value;
-        flyby.content = s.flybyContent[0].value;
-        news.title = s.newsTitle[0].value;
-        news.content = s.newsContent[0].value;
-
-        draft.flyby = flyby;
-        draft.news_story = news;
-        
-        debugger;
-
-        return draft;
-    }
+});
+$('a.back-to-top').click(function() {
+    $('html, body').animate({
+        scrollTop: 0
+    }, 700);
+    return false;
+});
 
 
-    function validateForm() {
-
-    }
-
-    function saveDraft(e) {
-        e.preventDefault();
-        var draft = getFormData();
-        validateForm();
-
-        $.ajax({
-            type: 'PUT',
-            url: "http://localhost:3000/editions/25",
-            data: draft,
-            contentType: "application/json: charset=UTF-8",
-            success: function(res, status, error) {
-                console.log( res );
-            },
-            error: function(res, status, error) {
-                console.log( error );
-            }
-        });
-    }
-
-    return {
-        settings: {
-            saveAction: $('#save'),
-            previewAction: $('#preview'),
-            publishAction: $('#publish'),
-            heroLine: $('#heroline'),
-            flybyTile: $('#flybytitle'),
-            flybyContent: $('#flybycontent'),
-            newsTitle: $('#newstitle'),
-            newsContent: $('#newscontent'),
-            sourceList: $('sourcelist'),
-        },
-
-        init: function() {
-            s = this.settings;
-            this.bindActions();
-            populateDraft();
-            populateSource();
-        },
-
-        bindActions: function() {
-            s.saveAction.on("click", function(e) {
-                saveDraft(e);
-            });
-
-            s.previewAction.on("click", function(e) {
-                previewDraft(e);
-            });
-        },
-
-    };             
-})();
-
-
+// populate draft form
 $(document).ready(function() {
-    draftForm.init();
+    dailyMinorPlanetDraftForm.init();
 });
 
 </script>
-
