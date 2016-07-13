@@ -113,7 +113,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/24/publish",
+            url: "http://localhost:3000/editions/12/publish",
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -130,7 +130,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/24/unpublish",
+            url: "http://localhost:3000/editions/12/unpublish",
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -145,15 +145,20 @@ var dailyMinorPlanetDraftForm = ( function() {
         var draft = {};
         var flyby = {};
         var news = {};
+        var theme = {};
 
         flyby.title = s.flybyTile[0].value;
         flyby.content = s.flybyContent[0].value;
         news.title = s.newsTitle[0].value;
         news.content = s.newsContent[0].value;
-        tagline = s.tagline[0].value;
+        tagline = s.tagLine[0].value;
 
-        // TODO: get the theme value
-        theme = "Classic";
+        for( var i=0; i<s.themeType.length; i++) {
+            if( s.themeType[i].checked ) {
+                theme.name = s.themeType[i].value;
+                break;
+            }
+        }
 
         draft.flyby = flyby;
         draft.news_story = news;
@@ -175,7 +180,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/25",
+            url: "http://localhost:3000/editions/12",
             data: draft,
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
@@ -200,6 +205,7 @@ var dailyMinorPlanetDraftForm = ( function() {
             newsTitle: $('#newsTitle'),
             newsContent: $('#newsContent'),
             newsUrl: $('#newsUrl'),
+            themeType: $("input[name='themeType']"),
             sourceList: $('#sourceList'),
 
         },
