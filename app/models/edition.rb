@@ -14,6 +14,7 @@ class Edition < ActiveRecord::Base
 
   default_scope -> { order('publish_date DESC') }
   scope :current, -> { where(state: 'published').limit(1) }
+  scope :draft, -> { where(state: 'draft').order('created_at DESC').limit(1) }
 
   state_machine :state, initial: :draft do
     after_transition(on: :publish) do |edition, _|
