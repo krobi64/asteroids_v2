@@ -7,13 +7,20 @@ Theme.create name: 'classic'
 Theme.create name: 'modern'
 Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroidwatch/'
 
+@first_day = Date.today - 25.days
+
   def create_data
-    (1..25).each do |n|
-      e = Edition.create sample_edition(n), without_protection: true
+    (25.downto 1).each do |n|
+      e = Edition.create! sample_edition(n), without_protection: true
       e.create_flyby sample_flyby(n)
       e.create_news_story sample_news(n)
       e.create_orbit_diagram sample_orbit
-      e.save
+      e.save!
+      unless n == 25
+        e.publish!
+        e.publish_date = @first_day + n.days
+        e.save!
+      end
     end
   end
 
@@ -27,7 +34,7 @@ Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroid
 
   def sample_news(n=1)
     {
-        title: "News of #{Date.yesterday - n.days}",
+        title: "News of #{@first_day + n.days}",
         content: lorem_ipsum('2p').gsub(/<p>/, '').gsub(/<\/p>/, "\n").gsub(/\n\n/, "\n"),
     }
   end
@@ -49,5 +56,5 @@ Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroid
   end
 
 # If you want to create sample data, uncomment this command:
-# create_data
+create_data
 
