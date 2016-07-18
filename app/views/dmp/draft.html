@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="description">
-    <meta name="keywords" content="keywords">
+    <meta name="description" content="Daily Minor Planet editor page">
+    <meta name="keywords" content="editor, administrator">
 
     <!-- Latest compiled and minified CSS -->
     <link media="all" rel="stylesheet" href="/css/all-ae-full.css">
@@ -19,24 +19,27 @@
 </style>
 <div id="dmp-editor-wrapper">
     <div id="newspaperContainer">
+        <a href="./archive.html" style="color:#0C69E6;line-height:34px;"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;Go to Archive</a>
         <div class="editorPageBtn btn-group" role="group">
             <button type="button" class="btn btn-default btn-md preview"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
             <button type="button" class="btn btn-default btn-md save" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
             <div class="btn-group">
               <button type="button" class="btn btn-primary publish"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
+<!-- DEFER FOR NEXT PATCH
               <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
               <ul class="dropdown-menu">
                 <li><a href="#" class="unpublish"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;&nbsp;Skip to publish this edition</a></li>
-              </ul>
+              </ul> 
+-->
             </div>
         </div>
         <section id="editorContainer">
             <div class="header">
-                <div class="subHeaderline" style="font-size:28px">DRAFT</div>
                 <img src="/images/title.png">
+                <div class="subHeaderline" style="font-size:28px">DRAFT</div>
             </div>
             <div id="formNav">
                 <div id="basicSetting"><a href="#bodyBasic">1. Basic Settings</a></div>
@@ -90,17 +93,17 @@
                 </div>
                 <div class="editSection" id="bodyNews">
                     <h4>3. News Story</h4>
+<!-- DEFER FOR NEXT PATCH
                     <div class="eachLine">
                         <div class="editLabel">News Source</div>
                         <div class="inputValue" id="sourceList">
-<!--
                             <input type="radio" name="newsSource" value="source1" checked> source1
                             <input type="radio" name="newsSource" value="source2" style="margin-left:10px"> source2 
                             <input type="radio" name="newsSource" value="source3" style="margin-left:10px"> source3
                             <input type="radio" name="newsSource" value="source4" style="margin-left:10px"> source4
--->
                         </div>
                     </div>
+-->
                     <div class="eachLine">
                         <div class="editLabel">News URL</div>
                         <div class="inputValue"><input type="text" id="newsUrl" value="http://"/> </div>
@@ -123,13 +126,13 @@
             <button type="button" class="btn btn-default btn-md save" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
             <div class="btn-group">
               <button type="button" class="btn btn-primary publish"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
               <ul class="dropdown-menu">
                 <li><a href="#" class="unpublish"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;&nbsp;Skip to publish this edition</a></li>
-              </ul>
+              </ul> -->
             </div>
         </div>
 
@@ -140,13 +143,11 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<!-- Upload Image module -->
-<script src="/js/jasny-bootstrap.min.js"></script>
 <!--  Handle newspaper draft-->
 <script src="/js/draft-form.js"></script>
 
 <script type="text/javascript">
-//dropdown menu
+// //dropdown menu
 $('.dropdown-toggle').dropdown();
 
 //scroll to top
@@ -165,7 +166,6 @@ $('a.back-to-top').click(function() {
     }, 700);
     return false;
 });
-
 
 // populate draft form
 $(document).ready(function() {

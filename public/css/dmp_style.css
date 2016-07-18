@@ -333,7 +333,8 @@
 
 	}
 }
-/* Editor */
+
+/* Darft Editor */
 #dmp-editor-wrapper{
 	width:100%;
 	min-height:850px;
@@ -354,6 +355,7 @@
 	position: relative;
 	width:100%;
 	margin:0 auto;
+    clear: both;
 }
 #dmp-editor-wrapper #editorContainer .header{
 	width:100%;
@@ -433,4 +435,57 @@
 	color:white;
 	text-align: center;
 	padding-top:10px;
+}
+
+/* Archive */
+#dmp-archive-calendarContent-wrapper #dmp-archive-calendar{
+	width: 435px;
+}
+#dmp-archive-calendarContent-wrapper #dmp-archive-preview{
+	display: inline-block;
+	vertical-align: top;
+}
+#dmp-archive-calendarContent-wrapper #dmp-archive-calendar-legend{
+	padding: 1.5em 0 0 1.5em;
+	width: 300px;
+}
+#dmp-archive-calendarContent-wrapper .background {
+	fill: #eee;
+}
+#dmp-archive-calendarContent-wrapper line {
+	stroke: #fff;
+}
+#dmp-archive-calendarContent-wrapper text.active {
+	fill: red;
+}
+#dmp-archive-calendarContent-wrapper .day {
+	fill: #fff;
+	stroke: #ccc;
+}
+#dmp-archive-calendarContent-wrapper .month {
+	fill: none;
+	stroke: #fff;
+	stroke-width: 4px;
+}
+#dmp-archive-calendarContent-wrapper .year-title {
+	font-size: 1.5em;
+}
+#dmp-archive-calendarContent-wrapper li.key {
+	border-top-width: 15px;
+	border-top-style: solid;
+	font-size: .75em;
+	width: 30px;
+	padding-left: 0;
+	padding-right: 0;
+}
+#dmp-editor-wrapper #tooltip {
+	background-color: #fff;
+	border: 2px solid #ccc;
+	padding: 10px;
+}
+#dmp-editor-wrapper #dmp-archive-explanation {
+	padding:1em;
+}
+#dmp-archive-calendarContent-wrapper #dmp-archive-sharelegend div{
+	display: inline-block;
 }
