@@ -15,6 +15,10 @@ class EditionsController < ApplicationController
     respond_with model.current.first
   end
 
+  def draft
+    respond_with model.draft.first
+  end
+
   def show
     respond_with @edition
   end

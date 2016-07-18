@@ -17,6 +17,7 @@ Mpc::Application.routes.draw do
   resources :editions, only: [:index, :new, :create, :edit, :update, :show] do
     collection do
       get :current
+      get :draft
     end
 
     member do
