@@ -4,7 +4,7 @@ class EditionsController < ApplicationController
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
 
   def index
-    respond_with (@editions = model.limit(25))
+    respond_with (@editions = model.all)
   end
 
   def new
@@ -83,6 +83,6 @@ class EditionsController < ApplicationController
   end
 
   def theme_from_params
-    params[:theme][:name] == 'modern' ? Theme.modern : Theme.classic
+    params[:theme].try(:[], :name) == 'modern' ? Theme.modern : Theme.classic
   end
 end

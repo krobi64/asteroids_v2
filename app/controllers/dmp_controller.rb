@@ -8,7 +8,7 @@ class DmpController < ApplicationController
   end
 
   def testemail
-  	# UserMailer.daily_newspaper().deliver
+  	UserMailer.daily_newspaper().deliver
   	# UserMailer.verify_email().deliver
   end
 end
