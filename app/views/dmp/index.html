@@ -311,14 +311,16 @@ function data_insertion(data, edition){
 function getNewspaper() {
 	// today
 	var today = new Date();
+
 	data.year = today.getFullYear();
 	data.date = today.getDate();
 	data.dayofweek = dayOfWeek[today.getDay()];
 	data.month = monthNames[today.getMonth()];
 
+    //   url: "http://localhost:3000/editions/" + data.date,
     $.ajax({
         type: 'GET',
-        url: "http://localhost:3000/editions/" + data.date,
+        url: "http://localhost:3000/editions/current",
         contentType: "application/json: charset=UTF-8",
         success: function(edition, status, error) {
             console.log( "success ",  edition );

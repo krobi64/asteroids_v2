@@ -4,10 +4,19 @@ var dailyMinorPlanetDraftForm = ( function() {
 
     function populateForm(edition){
         // today's edition
-        // console.log( "populate form: " + edition.title );
-        var today = new Date();
-        console.log( today );
-
+        var timestring = "05:00";  // default to: UTC 05:00 -> EDT 01:00 AM
+        var d = new Date();
+        if( edition.publish_date == null ) {
+            d.setDate(d.getDate() + 1);
+        }
+        else {
+            // parse the date from backend
+            d = new Date(edition.publish_date);
+            timestring = ("0"+d.getHours()).slice(-2) + ":" + ("0"+d.getMinutes()).slice(-2);
+        }
+        var datestring =  d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+        s.publishDay.val(datestring);
+        s.publishTime.val(timestring);
 
         s.tagLine.val( edition.title );
         s.flybyTile.val( edition.flyby.title );
@@ -21,7 +30,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'GET',
-            url: "http://localhost:3000/editions/12",
+            url: "http://localhost:3000/editions/draft",
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -113,7 +122,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/12/publish",
+            url: "http://localhost:3000/editions/draft/publish",
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -130,7 +139,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/12/unpublish",
+            url: "http://localhost:3000/editions/draft/unpublish",
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -146,6 +155,11 @@ var dailyMinorPlanetDraftForm = ( function() {
         var flyby = {};
         var news = {};
         var theme = {};
+
+        var pdate = s.publishDay[0].value;
+        var ptime = s.publishTime[0].value;
+        console.log( pdate );
+        console.log( ptime );
 
         flyby.title = s.flybyTile[0].value;
         flyby.content = s.flybyContent[0].value;
@@ -180,7 +194,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/12",
+            url: "http://localhost:3000/editions/draft",
             data: draft,
             contentType: "application/json: charset=UTF-8",
             success: function(res, status, error) {
@@ -198,6 +212,8 @@ var dailyMinorPlanetDraftForm = ( function() {
             previewAction: $('.preview'),
             publishAction: $('.publish'),
             unpublishAction: $('.unpublish'),
+            publishDay: $('#publishDay'),
+            publishTime: $('#publishTime'),            
             tagLine: $('#tagline'),
             flybyTile: $('#flybyTitle'),
             flybyContent: $('#flybyContent'),
