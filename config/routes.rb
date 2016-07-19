@@ -6,7 +6,7 @@ Mpc::Application.routes.draw do
   ActiveAdmin.routes(self)
 
   post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe
-  delete 'unsubscribe', controller: :subscriptions, actions: :unsubscribe, as: :unsubscribe
+  get 'unsubscribe', controller: :subscriptions, actions: :unsubscribe, as: :unsubscribe
 
   resources :sources, only: [:index] do
     member do
