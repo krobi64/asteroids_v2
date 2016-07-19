@@ -4,7 +4,7 @@ class EditionsController < ApplicationController
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
 
   def index
-    respond_with (@editions = model.all)
+    respond_with (@editions = model_date_range)
   end
 
   def new
@@ -64,6 +64,12 @@ class EditionsController < ApplicationController
 
   def model
     Edition.includes(:flyby, :orbit_diagram, :news_story, :theme)
+  end
+
+  def model_date_range
+    from = DateTime.parse(params[:from]) if params[:from].present?
+    to = DateTime.parse(params[:to]) if params[:to].present?
+    Edition.in_date_range(from, to)
   end
 
   def load_model

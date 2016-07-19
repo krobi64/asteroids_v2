@@ -30,6 +30,14 @@ class Edition < ActiveRecord::Base
     super
   end
 
+  def self.in_date_range(from, to)
+    query = scoped
+    query = query.where("publish_date >= '#{from.to_date}'") if from.present?
+    query = query.where("publish_date <= '#{to.end_of_day.to_time}'") if to.present?
+    query = query.limit(20) unless (to.present? && from.present?)
+    query.all.map { |edition| edition.minimal_json }
+  end
+
   def share(social_type)
     se = social_engagements.where(social_type: social_type).first
     if se.present?
@@ -43,6 +51,14 @@ class Edition < ActiveRecord::Base
 
   def initialize_shares
     self.total_shares = 0
+  end
+
+  def minimal_json
+    {
+        id: id,
+        publish_date: publish_date,
+        shares: total_shares.nil? ? 0 : total_shares
+    }
   end
 
   def as_json(options_for_json={})
