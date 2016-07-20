@@ -16,8 +16,12 @@ class SubscriptionsController < ApplicationController
 
   def unsubscribe
     @user = User.find_by_id(params[:user_id])
-    @user.unsubscribe!
-    head :no_content
+    if @user.present?
+      @user.unsubscribe!
+      head :no_content
+    else
+      render json: { error: 'subscription not found' }, status: :not_found
+    end
   end
 
   private
