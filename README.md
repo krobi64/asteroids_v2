@@ -1,3 +1,3 @@
-# Daily Minor Planet Center
+## Daily Minor Planet
  
  
