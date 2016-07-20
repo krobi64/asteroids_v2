@@ -18,7 +18,7 @@ class Edition < ActiveRecord::Base
 
   state_machine :state, initial: :draft do
     after_transition(on: :publish) do |edition, _|
-      edition.publish_date = DateTime.now
+      edition.publish_date ||= DateTime.now
     end
 
     event :publish do
