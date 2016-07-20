@@ -134,9 +134,11 @@ var dailyMinorPlanetDraftForm = ( function() {
         e.preventDefault();
         console.log( "publish draft");
 
+        var draftId = s.entityId[0].value;
+
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/draft/publish",
+            url: "http://localhost:3000/editions/" + draftId + "/publish",
             contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -151,9 +153,11 @@ var dailyMinorPlanetDraftForm = ( function() {
         e.preventDefault();
         console.log( "unpublish draft");
 
+        var draftId = s.entityId[0].value;
+
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/draft/unpublish",
+            url: "http://localhost:3000/editions/" + draftId + "/unpublish",
             contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );

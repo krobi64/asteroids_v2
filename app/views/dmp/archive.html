@@ -187,9 +187,14 @@
 	// Date,Share
 	// 2010-10-01,232
   //  d3.csv("data.csv", function(error, csv) {
+  var today = new Date();
+  today.setDate(today.getDate() - 1);
+  var fromDate = today.getFullYear() + "-01-01";
+  var toDate = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+  var archiveURL = "http://localhost:3000/editions.json?from=" + fromDate + "&to=" + toDate;
 
   // Should retrieve newspaper history list:  id, date, share
-  d3.json("http://localhost:3000/archive.json", function(error, csv) {  	
+  d3.json( archiveURL, function(error, csv) {  	
 	    var data = d3.nest()
 	        .key(function(d) { return d.Date; })
 	        .rollup(function(d) { return d[0].Share;})
