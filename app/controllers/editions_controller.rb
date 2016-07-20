@@ -39,9 +39,9 @@ class EditionsController < ApplicationController
 
   def update
     @edition.update_attributes edition_params
-    @edition.flyby = Flyby.first_or_create flyby_params
-    @edition.news_story = NewsStory.first_or_create news_story_params
-    @edition.orbit_diagram = OrbitDiagram.first_or_create orbit_diagram_params
+    @edition.flyby.update_attributes flyby_params
+    @edition.news_story.update_attributes news_story_params
+    @edition.orbit_diagram.update_attributes orbit_diagram_params
     @edition.theme = theme_from_params
     respond_with @edition.save
   end
