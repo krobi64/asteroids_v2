@@ -23,6 +23,18 @@ var dailyMinorPlanetDraftForm = ( function() {
         s.flybyContent.val( edition.flyby.content );
         s.newsTitle.val( edition.news_story.title );
         s.newsContent.val( edition.news_story.content );
+        s.entityId.val( edition.id );
+
+        // set the theme
+        // s.theme.val( edition.theme.name);
+        for( var i=0; i<s.themeType.length; i++) {
+            if( edition.theme.name == s.themeType[i].value ) {
+                s.themeType[i].checked = true;                
+            }
+            else {
+                s.themeType[i].checked = false;
+            }
+        }
     }
 
     function populateDraft() {
@@ -31,7 +43,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         $.ajax({
             type: 'GET',
             url: "http://localhost:3000/editions/draft",
-            contentType: "application/json: charset=UTF-8",
+            contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
                 populateForm(res);
@@ -80,13 +92,15 @@ var dailyMinorPlanetDraftForm = ( function() {
     function populateSource() {
         console.log("TODO: get list of news sources");
 
+        // defer to future for news source
+        return;
+
         // populate "newsSource" from backend, for now let's just hardcoded it. Need to add at backend too
         newsSources = [  {'name': 'NASA', 'url': 'http://www.nasa.gov/press-release/nasas-juno-spacecraft-in-orbit-around-mighty-jupiter', 'title': 'Juno Spacecraft in Orbit Around Mighty Jupiter', 'content': 'After an almost five-year journey to the solar system’s largest planet, NASA\'s Juno spacecraft successfully entered Jupiter\’s orbit during a 35-minute engine burn. Confirmation that the burn had completed was received on Earth at 8:53 p.m. PDT (11:53 p.m. EDT) Monday, July 4.'}, 
                 {'name': 'JPL', 'url': 'http://www.jpl.nasa.gov/spaceimages/details.php?id=PIA20490', 'title': 'Pandemonium', 'content': 'Pan and moons like it have profound effects on Saturn\'s rings. The effects can range from clearing gaps, to creating new ringlets, to raising vertical waves that rise above and below the ring plane. All of these effects, produced by gravity, are seen in this image.'}, 
                 {'name': 'Source3', 'url': 'URL for source #3 story', 'title': 'news title', 'content': 'news content from source #3'}, 
                 {'name': 'Manual Input', 'url': 'Internal REST URL', 'title': 'news title after manual input', 'content': 'orem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum, velit sagittis ultrices laoreet, neque nulla sagittis dolor, in tristique turpis ipsum vitae diam. Integer leo lorem, ornare non tristique quis, pharetra at dolor.'}];
 
-        debugger;
 
         var radioSource = document.getElementById("sourceList");
 
@@ -95,7 +109,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
             var radioButton = makeRadioButton(i, src.name);
             // s.sourceList.appendChild(radioButton);
-            radioSource.appendChild(radioButton);
+            // radioSource.appendChild(radioButton);
         }
 
         if( newsSources.length > 0 ) {
@@ -123,7 +137,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         $.ajax({
             type: 'PUT',
             url: "http://localhost:3000/editions/draft/publish",
-            contentType: "application/json: charset=UTF-8",
+            contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
             },
@@ -140,7 +154,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         $.ajax({
             type: 'PUT',
             url: "http://localhost:3000/editions/draft/unpublish",
-            contentType: "application/json: charset=UTF-8",
+            contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
             },
@@ -158,8 +172,8 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         var pdate = s.publishDay[0].value;
         var ptime = s.publishTime[0].value;
-        console.log( pdate );
-        console.log( ptime );
+        var pGMT = pdate + "T" + ptime + ":00+00:00";
+        console.log( pGMT );
 
         flyby.title = s.flybyTile[0].value;
         flyby.content = s.flybyContent[0].value;
@@ -174,11 +188,13 @@ var dailyMinorPlanetDraftForm = ( function() {
             }
         }
 
+        draft.id = s.entityId[0].value;
+        draft.title = tagline;
+        draft.publish_date = pGMT;
         draft.flyby = flyby;
         draft.news_story = news;
-        draft.title = tagline;
         draft.theme = theme;
-        
+
         return draft;
     }
 
@@ -194,9 +210,10 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/draft",
-            data: draft,
-            contentType: "application/json: charset=UTF-8",
+            url: "http://localhost:3000/editions/" + draft.id,
+            data: JSON.stringify(draft),
+            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
             success: function(res, status, error) {
                 console.log( res );
             },
@@ -223,7 +240,7 @@ var dailyMinorPlanetDraftForm = ( function() {
             newsUrl: $('#newsUrl'),
             themeType: $("input[name='themeType']"),
             sourceList: $('#sourceList'),
-
+            entityId: $('#entityId')
         },
 
         init: function() {

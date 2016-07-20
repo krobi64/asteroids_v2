@@ -37,7 +37,7 @@ Mpc::Application.configure do
   config.assets.debug = true
 
   # v++
-  config.log_level = :warn
+  config.log_level = :info
 
   # action mailer with gmail.com
   config.action_mailer.delivery_method = :smtp

@@ -3,12 +3,16 @@ class UserMailer < ActionMailer::Base
   
   # daily newspaper, should pass in a user object to this call
   def daily_newspaper()
-    @url = "http://localhost:3000/users/confirm"
+    # @url = "http://localhost:3000/users/confirm"
     mail( to: "yuhua_xie@yahoo.com", subject: "Your Daily Minor Planet" )
   end
 
   def daily_batch()
   	# loop through each 'active' user, and send out email
+    # @users = User.all
+    User.find_each do |user|
+      mail(to: user.email, subject: "Your Daily Minor Planet" )
+    end
   end
 
   def verify_email()

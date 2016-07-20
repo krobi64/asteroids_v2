@@ -186,8 +186,10 @@
 	// data format in data.csv
 	// Date,Share
 	// 2010-10-01,232
-    d3.csv("data.csv", function(error, csv) {
-    	
+  //  d3.csv("data.csv", function(error, csv) {
+
+  // Should retrieve newspaper history list:  id, date, share
+  d3.json("http://localhost:3000/archive.json", function(error, csv) {  	
 	    var data = d3.nest()
 	        .key(function(d) { return d.Date; })
 	        .rollup(function(d) { return d[0].Share;})
@@ -271,18 +273,22 @@
     function yearTitle (t0) {
       return t0.toString().split(" ")[3];
     }
-    function pullNewspaper(date){
+    
+function pullNewspaper(date){
+
+    console.log( "date: ", date );
+
     	// @Rayomnd 
     	// Create a pulling newspaper from DB.
 
     	// date change
-	    $('#dmp-archive-preview .dayofweek').html(formatDayofWeek(parseTime(date))); 
+	  $('#dmp-archive-preview .dayofweek').html(formatDayofWeek(parseTime(date))); 
 		$('#dmp-archive-preview .month').html(formatMonth(parseTime(date))); 
 		$('#dmp-archive-preview .day').html(formatDay(parseTime(date))); 
 		$('#dmp-archive-preview .year').html(year(parseTime(date)));	    
 
 		// content change
-    }
+}
 
 //scroll to top
 var amountScrolled = 300;

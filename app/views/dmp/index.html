@@ -45,7 +45,7 @@
 	      </div>
 	      <div class="modal-body">
 
-				<form data-toggle="validator" role="form" novalidate="true">
+				<form id="subscription_form" data-toggle="validator" role="form" novalidate="true">
 				  <div class="form-group">
 				    <label for="inputName" class="control-label">Name</label>
 				    <input type="text" class="form-control" id="inputName" placeholder="Minor Planet" required>
@@ -57,7 +57,7 @@
 				    <div class="help-block with-errors"></div>
 				  </div>
 				  <div class="form-group">
-		  	        <button type="submit" class="btn btn-primary ">Subscribe</button>
+		  	        <button id="dosubscribe" type="submit" class="btn btn-primary ">Subscribe</button>
 				  </div>
 				</form>
 	      </div>
@@ -246,6 +246,38 @@ $('body').mouseover(function(event) {
 // Reset validator after modal show up
 $('.modal').on('shown.bs.modal', function () {
     $(this).find('form').validator('destroy').validator()
+});
+
+// subscribe
+$(function() { //shorthand document.ready function
+    $('#subscription_form').on('submit', function(e) { 
+        e.preventDefault();  //prevent form from submitting
+        // var data = $("#subscription_form :input").serializeArray();
+        var data = {};
+        var uname = $('#inputName')[0].value;
+        var uemail = $('#inputEmail')[0].value;
+        if( uname != null && uemail != null ) {
+        	data.username = uname;
+        	data.email = uemail;
+	
+	        console.log(data); 
+
+        	// post to backend
+	        $.ajax({
+	            type: 'POST',
+	            url: "http://localhost:3000/subscribe",
+	            data: JSON.stringify(data),
+	            contentType: "application/json; charset=UTF-8",
+	            dataType: "json",
+	            success: function(res, status, error) {
+	                console.log( "success ",  res );
+	            },
+	            error: function(res, status, error) {
+	                console.log( "error: ", error );
+	            }
+	        });
+        }
+    });
 });
 
 function modern_theme(){
