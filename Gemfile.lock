@@ -55,6 +55,7 @@ GEM
       thor (~> 0.19)
     builder (3.0.4)
     cancancan (1.14.0)
+    chronic (0.10.2)
     coderay (1.1.1)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -165,6 +166,8 @@ GEM
       execjs (>= 0.3.0, < 3)
     warden (1.2.6)
       rack (>= 1.0)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -186,3 +189,4 @@ DEPENDENCIES
   state_machine
   test-unit (~> 3.0)
   uglifier (>= 1.0.3)
+  whenever

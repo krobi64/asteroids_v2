@@ -77,7 +77,7 @@ class EditionsController < ApplicationController
   end
 
   def edition_params
-    params.slice(:state, :title)
+    params.slice(:state, :title, :publish_date)
   end
 
   def flyby_params
