@@ -5,9 +5,10 @@ class SubscriptionsController < ApplicationController
   respond_to :html, :json
 
   def subscribe
-    @user = User.first_or_create(user_params) do |u|
-      u.password = params[:password]
-      u.password_confirmation = params[:password_confirmation]
+    generated_password = Devise.friendly_token.first(8)
+    @user = User.where(user_params).first_or_create do |u|
+      u.password = generated_password
+      u.password_confirmation = generated_password
     end
     @user.subscribe!
     render json: @user, status: :created
