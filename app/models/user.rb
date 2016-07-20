@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :subscription, inverse_of: :user
@@ -28,12 +28,12 @@ class User < ActiveRecord::Base
   def subscribe!
     create_subscription
     self.roles = roles.push('subscriber').uniq
-    save
+    save!
   end
 
   def unsubscribe!
     subscription.destroy
     self.roles = roles - ['subscriber']
-    save
+    save!
   end
 end
