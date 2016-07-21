@@ -21,8 +21,10 @@ var dailyMinorPlanetDraftForm = ( function() {
         s.tagLine.val( edition.title );
         s.flybyTile.val( edition.flyby.title );
         s.flybyContent.val( edition.flyby.content );
+        s.flybyImageUrl.val( edition.orbit_diagram.url );
         s.newsTitle.val( edition.news_story.title );
         s.newsContent.val( edition.news_story.content );
+        s.newsUrl.val( edition.news_story.url );
         s.entityId.val( edition.id );
 
         // set the theme
@@ -208,6 +210,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
     function getFormData() {
         var draft = {};
         var flyby = {};
+        var diagram = {};
         var news = {};
         var theme = {};
 
@@ -218,8 +221,10 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
         flyby.title = s.flybyTile[0].value;
         flyby.content = s.flybyContent[0].value;
+        diagram.url = s.flybyImageUrl[0].value;
         news.title = s.newsTitle[0].value;
         news.content = s.newsContent[0].value;
+        news.url = s.newsUrl[0].value;
         tagline = s.tagLine[0].value;
 
         for( var i=0; i<s.themeType.length; i++) {
@@ -234,6 +239,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         draft.publish_date = pGMT;
         draft.flyby = flyby;
         draft.news_story = news;
+        draft.orbit_diagram = diagram;
         draft.theme = theme;
 
         return draft;

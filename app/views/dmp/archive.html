@@ -14,6 +14,7 @@
 </head>
 <body>
 <style>
+<style>
 
 </style>
 <div id="dmp-editor-wrapper">
@@ -191,7 +192,9 @@ function chartRender(winWidth){
 	// data format in data.csv
 	// Date,Share
 	// 2010-10-01,232
-  //  d3.csv("data.csv", function(error, csv) {
+  d3.csv("data.csv", function(error, csv) {
+
+  /*
   var today = new Date();
   today.setDate(today.getDate() - 1);
   var fromDate = today.getFullYear() + "-01-01";
@@ -200,6 +203,7 @@ function chartRender(winWidth){
 
   // Should retrieve newspaper history list:  id, date, share
   d3.json( archiveURL, function(error, csv) {  	
+  */
 	    var data = d3.nest()
 	        .key(function(d) { return d.Date; })
 	        .rollup(function(d) { return d[0].Share;})
