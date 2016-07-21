@@ -82,14 +82,29 @@
 				</div>
 			</div>
 			<div class="bodyContainer">
-				<div class="diagram"></div>
+				<div class="diagram" style="border:none; overflow: hidden;">
+					<div class="legendncredit">
+						<ul>
+							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li>
+							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li>
+							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li>
+							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li>
+							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li>
+							<li>&#169; Minor Planet Center</li>
+						</ul>
+					</div>
+					<iframe scrolling="no" src="http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch"></iframe>
+				</div>
 				<div class="contents">
 					<div class="dates">
 						<div class="day"></div>
 						<div class="monthYear"><span class="month"></span>&nbsp;<span class="year"></span></div>
 					</div>
 					<div class="heroline"></div>
-					<div class="mobile-diagram"></div>
+					<div class="mobile-diagram">
+						<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li></ul>
+						</div>
+					</div>
 					<div class="flybyTitle"></div>
 					<div class="flybyContents"></div>
 					<div class="storyTitle"></div>
@@ -120,7 +135,11 @@
 						<div class="flybyTitle"></div>
 						<div class="flybyContents"></div>				
 					</div>
-					<div class="diagram"></div>
+					<div class="diagram">
+						<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li></ul>
+						</div>						
+						<iframe scrolling="no" src="http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch"></iframe>
+					</div>
 					<div class="storyContainer">
 						<div class="storyTitle"></div>
 						<div class="storyContents"></div>
@@ -213,6 +232,7 @@
 <script type="text/javascript" src="/js/validator.js"></script>
 <script type="text/javascript">
 
+
 // Window Resize - make modern theme as default
 $(window).resize(function () {
 	if($(window).width() < 1024){
@@ -292,6 +312,7 @@ function modern_theme(){
 	$('#subscribe-btn').removeClass('classic');
 	$('#subscribe-btn').addClass('modern');
 }
+
 function classic_theme(){
 	if(!$('#themeClassic').hasClass('selected')){
 		$('#classic').removeClass('hide');
@@ -338,6 +359,7 @@ function data_insertion(data, edition){
 	$('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
 	// $('.diagram').css('background-image','url('+ edition.orbit_diagram.url + ')');
 }
+// $('.diagram').load('http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch');
 
 
 function getNewspaper() {
@@ -363,11 +385,25 @@ function getNewspaper() {
         }
     });
 }
-
+function resizeIframe(){
+	// properly set iframe width and height
+	var diagramWidth = window.innerWidth*0.50;
+	var iframeWidth = diagramWidth + 80;
+	var iframeHeight = 800;
+	$('#modern .diagram iframe').css({'width':iframeWidth,'height':iframeHeight});
+	// properly set iframe width and height
+	var diagramWidth = window.innerWidth*0.35;
+	var iframeWidth = diagramWidth + 80;
+	var iframeHeight = 800;
+	$('#classic .diagram iframe').css({'width':iframeWidth,'height':iframeHeight});
+}
 
 $(document).ready(function() {
     $('#share-buttons').hide();
-    //get data from backend
-	getNewspaper();  
+    // get data from backend
+	getNewspaper();
+
+	// resize iframe   
+	resizeIframe();
 });
 </script>
