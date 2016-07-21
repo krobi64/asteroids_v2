@@ -9,7 +9,9 @@ class NewsStory < ActiveRecord::Base
   def as_json(options_for_json={})
     {
         title: title,
-        content: content
+        content: content,
+        story_url: story_url,
+        source: source.try(:name)
     }
   end
 end
