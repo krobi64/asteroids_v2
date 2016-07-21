@@ -132,10 +132,13 @@
 #dmp-wrapper #modern .diagram{
 	display: inline-block;
 	width:50%;
-	height:532px;
+	height:600px;
 	background-color: #08002A;
 	background-size: 100% 100% cover;
 	background-position: 50% 50%;
+	border:none; 
+	overflow: hidden;
+	position: relative
 }
 #dmp-wrapper #modern .mobile-diagram{
 	display: none;
@@ -145,6 +148,9 @@
 	background-size: 100% 100% cover;
 	background-position: 50% 50%;
 	margin-bottom:20px;
+	border:none; 
+	overflow: hidden;
+	position: relative;
 }
 #dmp-wrapper #modern .contents{
 	vertical-align: top;
@@ -181,7 +187,30 @@
 	font-size:14px;
 	margin-bottom:30px;	
 }
-
+/* DIAGRAM IFRAME*/
+#modern iframe, #classic iframe{
+	border: 0px none; 
+	margin-left: -8px; 
+	margin-top: -8px;
+}
+#modern .legendncredit,#classic .legendncredit {
+	z-index: 999;
+	position: absolute;
+	right:0;
+	bottom:0;
+}
+#modern .legendncredit ul,#classic .legendncredit ul{
+	list-style: none;
+}
+#modern .legendncredit ul li, #classic .legendncredit ul li{
+	display: inline-block;
+	margin-right:10px;
+	color:white;
+}
+#modern .legendncredit ul li div,#classic .legendncredit ul li div{
+	display: inline-block;
+	margin-right:5px;
+}
 /* CLASSIC UI */
 
 #dmp-wrapper #classic{
@@ -273,11 +302,14 @@
 #dmp-wrapper #classic .diagram{
 	width:35%;
 	height:auto;
-	min-height:380px;
+	height:600px;
 	background-color: #08002A;
 	background-size: 100% 100% cover;
 	background-position: 50% 50%;	
 	margin:0 2%;
+	border:none; 
+	overflow: hidden;
+	position: relative;
 }
 #dmp-wrapper #classic .flybyTitle, #classic .storyTitle{
 	font-size:22px;

@@ -18,6 +18,7 @@ Mpc::Application.routes.draw do
     collection do
       get :current
       get :draft
+      get 'day(/:publish_date)', action: :day, as: :day
     end
 
     member do

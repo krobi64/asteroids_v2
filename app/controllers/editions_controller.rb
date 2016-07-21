@@ -15,6 +15,13 @@ class EditionsController < ApplicationController
     respond_with model.current.first
   end
 
+  def day
+    day = Time.zone.parse(params[:publish_date]).beginning_of_day
+    next_day = day + 1.day
+    @edition = model.where("publish_date >= '#{day}' AND publish_date < '#{next_day}'").all.first
+    respond_with @edition
+  end
+
   def draft
     respond_with model.draft.first
   end
