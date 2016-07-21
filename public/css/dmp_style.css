@@ -70,7 +70,7 @@
 #dmp-wrapper #share-buttons.classic{
 	position: absolute; 
 	right:2%; 
-	top: 165px; 
+	top: 130px; 
 }
 #dmp-wrapper #share-buttons.classic .rrssb-icon{
 	background-color: black;
@@ -81,6 +81,13 @@
 	width:100%;
 	margin:0 auto;
 }
+#dmp-wrapper #modern.hide{
+	display: none;
+}
+#dmp-wrapper #classic.hide{
+	display: none;
+}
+
 #dmp-wrapper #modern .header{
 	width:100%;
 	text-align: center;
@@ -183,7 +190,7 @@
 	box-shadow: 0 0 10px rgba(0,0,0,0.3);
 	position: relative;
 	font-family: 'Brawler', serif;
-	display: none;
+	display: block;
 	width:100%;
 }
 #dmp-wrapper #classic:after {
@@ -488,4 +495,10 @@
 }
 #dmp-archive-calendarContent-wrapper #dmp-archive-sharelegend div{
 	display: inline-block;
+}
+@media (max-width: 1500px) 
+{
+	#dmp-archive-calendarContent-wrapper #dmp-archive-calendar {
+    	width: 300px;
+	}
 }

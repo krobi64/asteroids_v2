@@ -86,11 +86,15 @@
 
 <script type="text/javascript">
 
+function chartRender(winWidth){
+  var offsetWidth = (winWidth<1500) ? 135 : 0
+  var offsetHeight = (winWidth<1500) ? 230 : 0
+
 	var margin = {top: 0, bottom: 0, left: 0, right:0};
 
-	var width = 435 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom,
-        cellSize = 16; // cell size
+	var width = 435 - margin.left - margin.right - offsetWidth,
+      height = 600 - margin.top - margin.bottom + offsetHeight,
+      cellSize = 16; // cell size
 
     var no_months_in_a_row = Math.floor(width / (cellSize * 7 + 30));
     var shift_up = cellSize * 2;
@@ -108,7 +112,7 @@
         percent = d3.format(".1%"),
         format = d3.time.format("%Y-%m-%d");
 
-	var parseTime = d3.timeParse("%Y-%m-%d");
+    var parseTime = d3.timeParse("%Y-%m-%d");
 	
     // @Rayomnd 
 	// pull yesterday newspaper as a default
@@ -120,10 +124,11 @@
 
     var svg = d3.select("#dmp-archive-calendar").selectAll("svg")
         .data(d3.range(year(new Date),+year(new Date)+1))
-      	.enter().append("svg")
+      	.enter()
+        .append("svg")
       	.attr("id","svg")
-	    .attr("width", width + margin.left + margin.right)
-	    .attr("height", height + margin.top + margin.bottom)
+	      .attr("width", width + margin.left + margin.right)
+	       .attr("height", height + margin.top + margin.bottom)
         .attr("class", "RdYlGn")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
   	    .append("g")
@@ -278,14 +283,15 @@
     function yearTitle (t0) {
       return t0.toString().split(" ")[3];
     }
-    
+}
+  
 function pullNewspaper(date){
 
     console.log( "date: ", date );
 
     	// @Rayomnd 
     	// Create a pulling newspaper from DB.
-
+    var parseTime = d3.timeParse("%Y-%m-%d");
     	// date change
 	  $('#dmp-archive-preview .dayofweek').html(formatDayofWeek(parseTime(date))); 
 		$('#dmp-archive-preview .month').html(formatMonth(parseTime(date))); 
@@ -310,6 +316,12 @@ $('a.back-to-top').click(function() {
         scrollTop: 0
     }, 700);
     return false;
+});
+
+// Render Calendar Correctly
+$(document).ready(function() {
+  var winWidth = window.innerWidth;
+  chartRender(winWidth);
 });
 
 

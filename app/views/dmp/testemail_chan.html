@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -25,53 +24,69 @@
 	<link href='https://fonts.googleapis.com/css?family=Brawler' rel='stylesheet' type='text/css'>
 	
 	<!-- Latest compiled and minified CSS -->
-    <link media="all" rel="stylesheet" href="/css/all-ae-full.css">
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.customized.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/dmp_style.css" />
+    <!-- <link media="all" rel="stylesheet" href="/css/all-ae-full.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap.customized.min.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="/css/dmp_style.css" /> -->
     <link rel="stylesheet" href="/css/rrssb.min.css" />
 
 	<title>Daily Minor Planet</title>
 </head>
 <body>
+<style>
+	#dmp-wrapper{
+		margin-top:-60px;
+	}
+	#dmp-wrapper #classic{
+		display:none;
+	}
+	#dmp-wrapper #modern{
+		display:block;
+		position: relative;
+		/*width:100%;*/
+	}
+	#dmp-wrapper #modern .header{
+		width:90%;
+		margin:0 auto;
+		padding-bottom:40px;
+	}
+
+	#dmp-wrapper #modern .header img{
+		width:81%;
+	}
+	#dmp-wrapper #modern .est, #dmp-wrapper #modern .shares{
+		top:50px;
+	}
+	#dmp-wrapper #modern .contents, #dmp-wrapper #modern .bodyContainer{
+		width:90%;
+		margin:0 auto;
+	}
+	#dmp-wrapper #modern .diagram{
+		display: none;
+	}
+	#dmp-wrapper #modern .mobile-diagram{
+		display: block;
+	}
+	#dmp-wrapper #modern .contents .heroline{
+		margin-bottom:10px;
+	}
+	#dmp-wrapper #themeToggle{
+		display: none;
+	}
+	#dmp-wrapper #share-buttons.modern{
+	    position: absolute;
+	    right: 7%;
+	    top: 140px;
+	}
+	#dmp-wrapper .ae-btn-blue.modern{
+	    position: absolute;
+	    left: 45%;
+	    top: 150px;
+
+	}
+</style>
 
 <div id="dmp-wrapper">
-	<!-- Subscribe Modal -->
-	<div class="modal fade" id="subscribe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Subscribe to Daily Minor Planet</h4>
-	      </div>
-	      <div class="modal-body">
-
-				<form id="subscription_form" data-toggle="validator" role="form" novalidate="true">
-				  <div class="form-group">
-				    <label for="inputName" class="control-label">Name</label>
-				    <input type="text" class="form-control" id="inputName" placeholder="Minor Planet" required>
-				  </div>
-
-				  <div class="form-group">
-				    <label for="inputEmail" class="control-label">Email</label>
-				    <input type="email" class="form-control" id="inputEmail" placeholder="minor.planet@example.com" data-error="This email address is invalid" required>
-				    <div class="help-block with-errors"></div>
-				  </div>
-				  <div class="form-group">
-		  	        <button id="dosubscribe" type="submit" class="btn btn-primary ">Subscribe</button>
-				  </div>
-				</form>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
 	<div id="newspaperContainer">
-		<div id="themeToggle" class="btn-group" role="group">
-			<button type="button" class="btn btn-default btn-xs selected" id="themeModern">Modern</button>
-			<button type="button" class="btn btn-default btn-xs" id="themeClassic">Classic</button>
-		</div>
-		<button type="button" id="subscribe-btn" class="btn btn-primary btn-xs modern ae-btn-blue" data-toggle="modal" data-target="#subscribe">Subscribe</button>
-
 		<section id="modern">
 			<div class="header">
 				<img src="/images/title.png">
@@ -97,38 +112,6 @@
 				</div>
 			</div>
 		</section>
-
-		<section id="classic" class="hide">
-			<div class="header">
-				<img src="/images/title.png">
-				<div class="tagline"></div>
-				<div class="subHeaderline">
-					<div class="est"></div>
-					<div class="dates">
-						<span class="dayofweek"></span>, 
-						<span class="month"></span>
-						<span class="day"></span>,
-						<span class="year"></span>
-					</div>
-					<div class="shares"><span class="numberShares"></span> Shares +</div>
-				</div>
-			</div>
-			<div class="bodyContainer">
-				<div class="heroline"></div>
-				<div class="bodyContentsContainer">
-					<div class="flybyContainer">
-						<div class="flybyTitle"></div>
-						<div class="flybyContents"></div>				
-					</div>
-					<div class="diagram"></div>
-					<div class="storyContainer">
-						<div class="storyTitle"></div>
-						<div class="storyContents"></div>
-					</div>
-				</div>
-			</div>
-		</section>	
-
 		<section id="share-buttons" class="modern">
 		    <ul class="rrssb-buttons" >
 		      <li class="rrssb-twitter" title="Twitter">
@@ -199,160 +182,19 @@
 
 	</div>
 </div>
-
-</body>
-</html>
-<!-- Required Javascript files. Copy these to your document. -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
-  window.jQuery || document.write('<script src="/js/jquery-1.12.4.min.js"><\/script>')
-</script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/rrssb.js"></script>
-<script type="text/javascript" src="/js/validator.js"></script>
-<script type="text/javascript">
-
-// Window Resize - make modern theme as default
-$(window).resize(function () {
-	if($(window).width() < 1024){
-		modern_theme();
-	}
-});
-
-// Click Behavior - theme toggle
-$('body').click(function(event) {
-    $target = $(event.target);
-    if ($target.is('#themeModern')) {
-    	modern_theme();
-    } else if($target.is('#themeClassic')){
-		classic_theme();
-	} else{
-		$('#share-buttons').hide();  
-		$('.shares').css('opacity','1');
-	}
-});
-
-// Hover Behavior - Share Button
-$('body').mouseover(function(event) {
-    $target = $(event.target);
-
-    if($target.is('.shares, .numberShares,#share-buttons, .rrssb-icon *')){
-		$('#share-buttons').css('opacity','1').slideDown();    
-		$('.shares').css('opacity','0');
-    }
-});
-
-// Reset validator after modal show up
-$('.modal').on('shown.bs.modal', function () {
-    $(this).find('form').validator('destroy').validator()
-});
-
-// subscribe
-$(function() { //shorthand document.ready function
-    $('#subscription_form').on('submit', function(e) { 
-        e.preventDefault();  //prevent form from submitting
-        // var data = $("#subscription_form :input").serializeArray();
-        var data = {};
-        var uname = $('#inputName')[0].value;
-        var uemail = $('#inputEmail')[0].value;
-        if( uname != null && uemail != null ) {
-        	data.username = uname;
-        	data.email = uemail;
-	
-	        console.log(data); 
-
-        	// post to backend
-	        $.ajax({
-	            type: 'POST',
-	            url: "http://localhost:3000/subscribe",
-	            data: JSON.stringify(data),
-	            contentType: "application/json; charset=UTF-8",
-	            dataType: "json",
-	            success: function(res, status, error) {
-	                console.log( "success ",  res );
-	            },
-	            error: function(res, status, error) {
-	                console.log( "error: ", error );
-	            }
-	        });
-        }
-    });
-});
-
-function modern_theme(){
-	if(!$('#themeModern').hasClass('selected')){
-		$('#modern').removeClass('hide');
-		$('#classic').addClass('hide');
-		$('#themeModern').addClass('selected');
-		$('#themeClassic').removeClass('selected');
-	}
-	$('#share-buttons').removeClass('classic');
-	$('#share-buttons').addClass('modern');    	
-	$('#subscribe-btn').removeClass('classic');
-	$('#subscribe-btn').addClass('modern');
-}
-function classic_theme(){
-	if(!$('#themeClassic').hasClass('selected')){
-		$('#classic').removeClass('hide');
-		$('#modern').addClass('hide');
-		$('#themeClassic').addClass('selected');
-		$('#themeModern').removeClass('selected');
-	}
-	$('#share-buttons').removeClass('modern');
-	$('#share-buttons').addClass('classic');
-	$('#subscribe-btn').addClass('classic');
-	$('#subscribe-btn').removeClass('modern');
-}
-
-var data = {
-	tagline:"The nerve center of asteroid detection in our Solar System",
-	est:"Est. 1947",
-	dayofweek: "Friday",
-	date: "10",
-	month: "June",
-	year: "2016",
-	diagram:"diagram.png"
-};
-var dayOfWeek = ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-function data_insertion(data, edition){
-    // newspaper fixture
-	$('.tagline').html(data.tagline);
-	$('.est').html(data.est);
-	$('.day').html(data.date);
-	$('.month').html(data.month);
-	$('.year').html(data.year);
-    $('.dayofweek').html(data.dayofweek);
-//	$('.heroline').html(data.heroline);
-
-    // today's edition
-	$('.numberShares').html(edition.shares);
-	$('.heroline').html(edition.title);
-	$('.flybyTitle').html(edition.flyby.title);
-	$('.flybyContents').html(edition.flyby.content);
-	$('.storyTitle').html(edition.news_story.title);
-	$('.storyContents').html(edition.news_story.content);
-	$('.diagram').css('background-image','url(/images/'+data.diagram+')');
-	$('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
-	// $('.diagram').css('background-image','url('+ edition.orbit_diagram.url + ')');
-}
-
 
 function getNewspaper() {
 	// today
 	var today = new Date();
-
 	data.year = today.getFullYear();
 	data.date = today.getDate();
 	data.dayofweek = dayOfWeek[today.getDay()];
 	data.month = monthNames[today.getMonth()];
 
-    //   url: "http://localhost:3000/editions/" + data.date,
     $.ajax({
         type: 'GET',
-        url: "http://localhost:3000/editions/current",
+        url: "http://localhost:3000/editions/" + data.date,
         contentType: "application/json: charset=UTF-8",
         success: function(edition, status, error) {
             console.log( "success ",  edition );
@@ -371,3 +213,5 @@ $(document).ready(function() {
 	getNewspaper();  
 });
 </script>
+</body>
+</html>
