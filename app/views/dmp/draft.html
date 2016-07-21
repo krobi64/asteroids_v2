@@ -17,7 +17,7 @@
 <body>
 <style>
 </style>
-<!-- Subscribe Modal -->
+<!-- Preview Modal -->
 <div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="width:90%;">
     <div class="modal-content">
@@ -95,7 +95,7 @@
     <div id="newspaperContainer">
         <a href="./archive.html" style="color:#0C69E6;line-height:34px;"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;Go to Archive</a>
         <div class="editorPageBtn btn-group" role="group">
-            <button type="button" class="btn btn-default btn-md preview" data-toggle="modal" data-target="#preview" onclick="preview()"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
+            <button type="button" class="btn btn-default btn-md preview" data-toggle="modal" data-target="#preview" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
             <button type="button" class="btn btn-default btn-md save" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
             <div class="btn-group">
               <button type="button" class="btn btn-primary publish"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
@@ -129,7 +129,7 @@
                     </div>
                     <div class="eachLine">
                         <div class="editLabel">Newspaper Title</div>
-                        <div class="inputValue"> <input type="text" id="tagline" />NEW NEAR EARTH ASTEROID FLYBY!</div>
+                        <div class="inputValue"> <input type="text" id="tagline" /></div>
                         <input type="hidden" id="entityId"/>
                     </div>
                     <div class="eachLine">
@@ -197,7 +197,7 @@
             <a href="#" class="back-to-top"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></a>
         </section>
         <div class="editorPageBtn btn-group" role="group">
-            <button type="button" class="btn btn-default btn-md preview" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
+            <button type="button" class="btn btn-default btn-md preview" data-toggle="modal" data-target="#preview"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
             <button type="button" class="btn btn-default btn-md save" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
             <div class="btn-group">
               <button type="button" class="btn btn-primary publish"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Publish Now</button>
@@ -222,71 +222,7 @@
 <script src="/js/draft-form.js"></script>
 
 <script type="text/javascript">
-// preview 
-function preview(){
-    // get default theme
-    var previewTheme = $('input[name="themeType"]:checked').val();
-
-    //contents fill
-    // data_insertion();
-    
-    //chagne theme in preview
-    if (previewTheme == 'modern'){
-        $('#preview #modern').removeClass('hide');
-        $('#preview #classic').addClass('hide');
-    }else{
-        $('#preview #classic').removeClass('hide');
-        $('#preview #modern').addClass('hide');
-    }
-}
-
-function data_insertion(){
-    
-    // NEED TO GET PROPER DATA TO PREVIEW 
-    // var data = {
-    //     // tagline:"The nerve center of asteroid detection in our Solar System",
-    //     // est:"Est. 1947",
-    //     dayofweek:,
-    //     date:,
-    //     month:,
-    //     year:,
-    //     diagram:,
-    //     data_title:,
-    //     flyby_title:,
-    //     flyby_content:,
-    //     news_story_title:,
-    //     news_story_content:,
-    //     diagram:
-    // };
-    var dayOfWeek = ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    
-    // predefined
-    // $('.tagline').html(data.tagline);
-    // $('.est').html(data.est);    
-    $('.day').html(data.date);
-    $('.month').html(data.month);
-    $('.year').html(data.year);
-    $('.dayofweek').html(data.dayofweek);
-
-    // today's edition
-    $('.heroline').html(data_title);
-    $('.flybyTitle').html(data.flyby_title);
-    $('.flybyContents').html(data.flyby_content);
-    $('.storyTitle').html(data.news_story_title);
-    $('.storyContents').html(data.news_story_content);
-    $('.diagram').css('background-image','url(/images/'+data.diagram+')');
-    $('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
-
-    // NEED TO HAVE A TAG LINK TO EACH HTML DOM!!!
-    // 1. DIAGRAM
-    // 2. FLYBY TITLE & CONTENT
-    // 3. NEWS STORY TITLE & CONTENT
-}
-
-
-
-// //dropdown menu
+//dropdown menu
 $('.dropdown-toggle').dropdown();
 
 //scroll to top

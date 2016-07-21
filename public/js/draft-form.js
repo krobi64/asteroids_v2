@@ -121,13 +121,50 @@ var dailyMinorPlanetDraftForm = ( function() {
     }
 
 
+var dayOfWeek = ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
     function previewDraft(e) {
         // implement the Preview functionality here
         e.preventDefault();
         console.log( "preview draft");
 
-        var draftData = getFormData();
-        var options = {};
+        var data = getFormData();
+
+            // get default theme
+        var previewTheme = $('input[name="themeType"]:checked').val();
+
+        //contents fill
+        // today's edition
+        $('.heroline').html(data.title);
+        $('.flybyTitle').html(data.flyby.title);
+        $('.flybyContents').html(data.flyby.content);
+        $('.storyTitle').html(data.news_story.title);
+        $('.storyContents').html(data.news_story.content);
+        $('.diagram').css('background-image','url(/images/'+data.diagram+')');
+        $('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
+        
+        var today = new Date(data.publish_date);
+
+        data.year = today.getFullYear();
+        data.date = today.getDate();
+        data.dayofweek = dayOfWeek[today.getDay()];
+        data.month = monthNames[today.getMonth()];
+
+        $('.day').html(data.date);
+        $('.month').html(data.month);
+        $('.year').html(data.year);
+        $('.dayofweek').html(data.dayofweek);
+
+        //chagne theme in preview
+        if (previewTheme == 'modern'){
+            $('#preview #modern').removeClass('hide');
+            $('#preview #classic').addClass('hide');
+        }else{
+            $('#preview #classic').removeClass('hide');
+            $('#preview #modern').addClass('hide');
+        }
+
     }
 
     function publishDraft(e) {
