@@ -230,9 +230,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/rrssb.js"></script>
 <script type="text/javascript" src="/js/validator.js"></script>
+<script type="text/javascript" src="/js/newspaper.js"></script>
+
 <script type="text/javascript">
-
-
 // Window Resize - make modern theme as default
 $(window).resize(function () {
 	if($(window).width() < 1024){
@@ -268,38 +268,6 @@ $('.modal').on('shown.bs.modal', function () {
     $(this).find('form').validator('destroy').validator()
 });
 
-// subscribe
-$(function() { //shorthand document.ready function
-    $('#subscription_form').on('submit', function(e) { 
-        e.preventDefault();  //prevent form from submitting
-        // var data = $("#subscription_form :input").serializeArray();
-        var data = {};
-        var uname = $('#inputName')[0].value;
-        var uemail = $('#inputEmail')[0].value;
-        if( uname != null && uemail != null ) {
-        	data.username = uname;
-        	data.email = uemail;
-	
-	        console.log(data); 
-
-        	// post to backend
-	        $.ajax({
-	            type: 'POST',
-	            url: "http://localhost:3000/subscribe",
-	            data: JSON.stringify(data),
-	            contentType: "application/json; charset=UTF-8",
-	            dataType: "json",
-	            success: function(res, status, error) {
-	                console.log( "success ",  res );
-	            },
-	            error: function(res, status, error) {
-	                console.log( "error: ", error );
-	            }
-	        });
-        }
-    });
-});
-
 function modern_theme(){
 	if(!$('#themeModern').hasClass('selected')){
 		$('#modern').removeClass('hide');
@@ -326,65 +294,6 @@ function classic_theme(){
 	$('#subscribe-btn').removeClass('modern');
 }
 
-var data = {
-	tagline:"The nerve center of asteroid detection in our Solar System",
-	est:"Est. 1947",
-	dayofweek: "Friday",
-	date: "10",
-	month: "June",
-	year: "2016",
-	diagram:"diagram.png"
-};
-var dayOfWeek = ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-function data_insertion(data, edition){
-    // newspaper fixture
-	$('.tagline').html(data.tagline);
-	$('.est').html(data.est);
-	$('.day').html(data.date);
-	$('.month').html(data.month);
-	$('.year').html(data.year);
-    $('.dayofweek').html(data.dayofweek);
-//	$('.heroline').html(data.heroline);
-
-    // today's edition
-	$('.numberShares').html(edition.shares);
-	$('.heroline').html(edition.title);
-	$('.flybyTitle').html(edition.flyby.title);
-	$('.flybyContents').html(edition.flyby.content);
-	$('.storyTitle').html(edition.news_story.title);
-	$('.storyContents').html(edition.news_story.content);
-	$('.diagram').css('background-image','url(/images/'+data.diagram+')');
-	$('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
-	// $('.diagram').css('background-image','url('+ edition.orbit_diagram.url + ')');
-}
-// $('.diagram').load('http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch');
-
-
-function getNewspaper() {
-	// today
-	var today = new Date();
-
-	data.year = today.getFullYear();
-	data.date = today.getDate();
-	data.dayofweek = dayOfWeek[today.getDay()];
-	data.month = monthNames[today.getMonth()];
-
-    //   url: "http://localhost:3000/editions/" + data.date,
-    $.ajax({
-        type: 'GET',
-        url: "http://localhost:3000/editions/current",
-        contentType: "application/json: charset=UTF-8",
-        success: function(edition, status, error) {
-            console.log( "success ",  edition );
-	        data_insertion(data, edition);
-        },
-        error: function(res, status, error) {
-            console.log( "error: ", error );
-        }
-    });
-}
 function resizeIframe(){
 	// properly set iframe width and height
 	var diagramWidth = window.innerWidth*0.50;
