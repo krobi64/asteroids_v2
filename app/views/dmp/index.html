@@ -44,20 +44,19 @@
 	        <h4 class="modal-title" id="myModalLabel">Subscribe to Daily Minor Planet</h4>
 	      </div>
 	      <div class="modal-body">
-
 				<form id="subscription_form" data-toggle="validator" role="form" novalidate="true">
 				  <div class="form-group">
 				    <label for="inputName" class="control-label">Name</label>
 				    <input type="text" class="form-control" id="inputName" placeholder="Minor Planet" required>
 				  </div>
-
 				  <div class="form-group">
 				    <label for="inputEmail" class="control-label">Email</label>
-				    <input type="email" class="form-control" id="inputEmail" placeholder="minor.planet@example.com" data-error="This email address is invalid" required>
+				    <input type="email" class="form-control" id="inputEmail" placeholder="minor.planet@minorplanetcenter.net" data-error="This email address is invalid" required>
 				    <div class="help-block with-errors"></div>
 				  </div>
 				  <div class="form-group">
 		  	        <button id="dosubscribe" type="submit" class="btn btn-primary ">Subscribe</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				  </div>
 				</form>
 	      </div>
@@ -82,29 +81,14 @@
 				</div>
 			</div>
 			<div class="bodyContainer">
-				<div class="diagram" style="border:none; overflow: hidden;">
-					<div class="legendncredit">
-						<ul>
-							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li>
-							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li>
-							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li>
-							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li>
-							<li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li>
-							<li>&#169; Minor Planet Center</li>
-						</ul>
-					</div>
-					<iframe scrolling="no" src="http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch"></iframe>
-				</div>
+				<div class="diagram"></div>
 				<div class="contents">
 					<div class="dates">
 						<div class="day"></div>
 						<div class="monthYear"><span class="month"></span>&nbsp;<span class="year"></span></div>
 					</div>
 					<div class="heroline"></div>
-					<div class="mobile-diagram">
-						<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li></ul>
-						</div>
-					</div>
+					<div class="mobile-diagram"></div>
 					<div class="flybyTitle"></div>
 					<div class="flybyContents"></div>
 					<div class="storyTitle"></div>
@@ -135,11 +119,7 @@
 						<div class="flybyTitle"></div>
 						<div class="flybyContents"></div>				
 					</div>
-					<div class="diagram">
-						<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li></ul>
-						</div>						
-						<iframe scrolling="no" src="http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch"></iframe>
-					</div>
+					<div class="diagram"></div>
 					<div class="storyContainer">
 						<div class="storyTitle"></div>
 						<div class="storyContents"></div>
@@ -271,6 +251,7 @@ $('.modal').on('shown.bs.modal', function () {
 // subscribe
 $(function() { //shorthand document.ready function
     $('#subscription_form').on('submit', function(e) { 
+    	console.log('submit');
         e.preventDefault();  //prevent form from submitting
         // var data = $("#subscription_form :input").serializeArray();
         var data = {};
@@ -279,9 +260,14 @@ $(function() { //shorthand document.ready function
         if( uname != null && uemail != null ) {
         	data.username = uname;
         	data.email = uemail;
-	
 	        console.log(data); 
+			var msgContent = $('.modal-content').html();
 
+			// Confirmation Msg.
+			$('#subscription_form').parent().parent().find('.modal-title').text("Confirm your email address");
+            $('#subscription_form').parent().html("<div style='font-size:1em;'>Click on the link in the email to activate your email. We do this as a security precaution. If you don't see the email, please check your junk mail folder. <br><br><strong>Thank you for subscribing Daily Minor Planet!</strong><br><br><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>");
+            setTimeout(function(){$('.modal').modal('hide');}, 4000);
+                        
         	// post to backend
 	        $.ajax({
 	            type: 'POST',
@@ -291,6 +277,8 @@ $(function() { //shorthand document.ready function
 	            dataType: "json",
 	            success: function(res, status, error) {
 	                console.log( "success ",  res );
+
+
 	            },
 	            error: function(res, status, error) {
 	                console.log( "error: ", error );
@@ -306,6 +294,7 @@ function modern_theme(){
 		$('#classic').addClass('hide');
 		$('#themeModern').addClass('selected');
 		$('#themeClassic').removeClass('selected');
+		if($('#modern iframe').length == 0) modernIframe(diagramUrl);
 	}
 	$('#share-buttons').removeClass('classic');
 	$('#share-buttons').addClass('modern');    	
@@ -319,6 +308,7 @@ function classic_theme(){
 		$('#modern').addClass('hide');
 		$('#themeClassic').addClass('selected');
 		$('#themeModern').removeClass('selected');
+		if($('#classic iframe').length == 0) classicIframe(diagramUrl);
 	}
 	$('#share-buttons').removeClass('modern');
 	$('#share-buttons').addClass('classic');
@@ -359,7 +349,6 @@ function data_insertion(data, edition){
 	$('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
 	// $('.diagram').css('background-image','url('+ edition.orbit_diagram.url + ')');
 }
-// $('.diagram').load('http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch');
 
 
 function getNewspaper() {
@@ -385,25 +374,42 @@ function getNewspaper() {
         }
     });
 }
-function resizeIframe(){
+
+
+function modernIframe(diagramUrl){
 	// properly set iframe width and height
 	var diagramWidth = window.innerWidth*0.50;
 	var iframeWidth = diagramWidth + 80;
 	var iframeHeight = 800;
-	$('#modern .diagram iframe').css({'width':iframeWidth,'height':iframeHeight});
+	var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
+	var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
+	$('#modern .diagram').html(legendContent+iframeContent);
+}
+
+function classicIframe(diagramUrl){
 	// properly set iframe width and height
 	var diagramWidth = window.innerWidth*0.35;
 	var iframeWidth = diagramWidth + 80;
 	var iframeHeight = 800;
-	$('#classic .diagram iframe').css({'width':iframeWidth,'height':iframeHeight});
+	var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
+	var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
+	$('#classic .diagram').html(legendContent+iframeContent);
 }
+
+
+// url for interactive diagram (need to be global) --used in modern_theme() and classic_theme()
+var diagramUrl = "";
 
 $(document).ready(function() {
     $('#share-buttons').hide();
     // get data from backend
 	getNewspaper();
+	
+	// @Raymond, get diagram url 
+	diagramUrl = "http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch";
+	
+	// @Raymond, please check the default theme here.
+	modernIframe(diagramUrl);
 
-	// resize iframe   
-	resizeIframe();
 });
 </script>
