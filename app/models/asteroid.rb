@@ -20,6 +20,7 @@ class Asteroid
     delegate :size, to: :all
     delegate :sample, to: :all
     delegate :[], to: :all
+    delegate :index, to: :all
 
     private
 
