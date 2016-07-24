@@ -221,6 +221,8 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
         flyby.title = s.flybyTile[0].value;
         flyby.content = s.flybyContent[0].value;
+
+        // this diagram url is problematic during save
         diagram.url = s.flybyImageUrl[0].value;
         news.title = s.newsTitle[0].value;
         news.content = s.newsContent[0].value;
@@ -239,7 +241,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         draft.publish_date = pGMT;
         draft.flyby = flyby;
         draft.news_story = news;
-        draft.orbit_diagram = diagram;
+        // draft.orbit_diagram = diagram;
         draft.theme = theme;
 
         return draft;
