@@ -24,7 +24,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         s.flybyImageUrl.val( edition.orbit_diagram.url );
         s.newsTitle.val( edition.news_story.title );
         s.newsContent.val( edition.news_story.content );
-        s.newsUrl.val( edition.news_story.url );
+        s.newsUrl.val( edition.news_story.story_url );
         s.entityId.val( edition.id );
 
         // set the theme
@@ -224,7 +224,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         diagram.url = s.flybyImageUrl[0].value;
         news.title = s.newsTitle[0].value;
         news.content = s.newsContent[0].value;
-        news.url = s.newsUrl[0].value;
+        news.story_url = s.newsUrl[0].value;
         tagline = s.tagLine[0].value;
 
         for( var i=0; i<s.themeType.length; i++) {

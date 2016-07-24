@@ -42,10 +42,10 @@
 						                <div class="subHeaderline" style="width: 100%;border-bottom: 2px solid #414042;position: relative;padding: 0px 0 2px 0px;margin-bottom: 20px;">
 						                    <div class="dates" style="text-align: center;display: inline-block;font-size: 1.5em; color: black; padding-top: 0.5em;">
 						                    	Daily Minor Planet at 
-						                        <span class="dayofweek">Thursday</span>, 
-						                        <span class="month">July</span>
-						                        <span class="day">14</span>,
-						                        <span class="year">2016</span>
+						                        <span class="dayofweek"></span>, 
+						                        <span class="month"></span>
+						                        <span class="day"></span>,
+						                        <span class="year"></span>
 						                    </div>
 						                </div>
 						            </div>
@@ -53,13 +53,14 @@
 						                <div class="contents" style="vertical-align: top;display: inline-block;width: 100%;height: auto;margin: 0 auto;padding-left:0px">
 						                    <div class="heroline" style="font-size: 1.2em;font-weight: bold;margin-bottom: 10px;">NEW NEAR EARTH ASTEROID FLYBY!</div>
 						                    <div class="mobile-diagram" style="display: block;width: 100%;height: 200px;background-color: #08002A;margin-bottom: 20px;">
+
 						                        <!-- NEED TO CHANGE TITLE IMAGE URL -->
-						                        <img src="https://ci4.googleusercontent.com/proxy/bClxPSAnt62a3DlMRQVPW_A5xBURw3e0qaLUHat4DGJCdRRU1dMlTmScvoROV2KriQ4fvPfWd3kDk2JjunOo2WZGdxCXWpJa0tV65HI=s0-d-e1-ft#http://images.spaceref.com/news/2012/oo2319_946-710.jpg" style="height:100%;width:100%;display:block;margin:0 auto;object-fit: cover;">
+						                        <img src="http://images.spaceref.com/news/2012/oo2319_946-710.jpg" style="height:100%;width:100%;display:block;margin:0 auto;object-fit: cover;">
 						                    </div>
-						                    <div class="flybyTitle" style="font-size: 1.2em;font-weight: bold;margin-bottom: 16px;">New Earth Asteroid 2015 QH3 was found by the Catalina Sky Survey of Tucson, Arizona, on August 20, 2015</div>
-						                    <div class="flybyContents" style="font-size: 1em;margin-bottom: 30px;">Fusce vehicula dolor arcu, sit amet blandit dolor mollis nec. Donec viverra eleifend lacus, vitae ullamcorper metus. Sed sollicitudin ipsum quis nunc sollicitudin ultrices. Donec euismod scelerisque ligula. Maecenas eu varius risus, eu aliquet arcu. Curabitur fermentum suscipit est, tincidunt mattis lorem luctus id.</div>
-						                    <div class="storyTitle" style="font-size: 1.2em;font-weight: bold;margin-bottom: 16px;">Hella narwhal Cosby sweater McSweeney's, salvia</div>
-						                    <div class="storyContents" style="font-size: 1em;margin-bottom: 30px;">Aliquam erat volutpat. Integer ut tincidunt orci. Etiam tristique, elit ut consectetur iaculis, metus lectus mattis justo, vel mollis eros neque quis augue. Sed lobortis ultrices lacus, a placerat metus rutrum sit amet. Aenean ut suscipit justo.</div>
+						                    <div class="flybyTitle" style="font-size: 1.2em;font-weight: bold;margin-bottom: 16px;"></div>
+						                    <div class="flybyContents" style="font-size: 1em;margin-bottom: 30px;"></div>
+						                    <div class="storyTitle" style="font-size: 1.2em;font-weight: bold;margin-bottom: 16px;"></div>
+						                    <div class="storyContents" style="font-size: 1em;margin-bottom: 30px;"></div>
 						                </div>
 						            </div>
 						        </div>
@@ -79,6 +80,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <!-- Upload Image module -->
 <script src="/js/jasny-bootstrap.min.js"></script>
+<script src="/js/newspaper.js"></script>
 
 <!-- D3 Calendar -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -88,12 +90,12 @@
 <script type="text/javascript">
 
 function chartRender(winWidth){
-  var offsetWidth = (winWidth<1500) ? 135 : 0
-  var offsetHeight = (winWidth<1500) ? 230 : 0
+    var offsetWidth = (winWidth<1500) ? 135 : 0
+    var offsetHeight = (winWidth<1500) ? 230 : 0
 
-	var margin = {top: 0, bottom: 0, left: 0, right:0};
+    var margin = {top: 0, bottom: 0, left: 0, right:0};
 
-	var width = 435 - margin.left - margin.right - offsetWidth,
+    var width = 435 - margin.left - margin.right - offsetWidth,
       height = 600 - margin.top - margin.bottom + offsetHeight,
       cellSize = 16; // cell size
 
@@ -115,13 +117,11 @@ function chartRender(winWidth){
 
     var parseTime = d3.timeParse("%Y-%m-%d");
 	
-    // @Rayomnd 
-	// pull yesterday newspaper as a default
-	var today = new Date();
-	today.setDate(today.getDate() - 1);
-	var yesterday = format(today);
-	pullNewspaper(yesterday);
-
+    // pull yesterday newspaper as a default
+    var today = new Date();
+    today.setDate(today.getDate() - 1);
+    var yesterday = format(today);
+    pullNewspaper(yesterday);
 
     var svg = d3.select("#dmp-archive-calendar").selectAll("svg")
         .data(d3.range(year(new Date),+year(new Date)+1))
@@ -188,35 +188,43 @@ function chartRender(winWidth){
       .style("visibility", "hidden")
       .text("a simple tooltip");
 
-
+/****
+  // For local testing, use fixed data set
 	// data format in data.csv
-	// Date,Share
+	// Date,share
 	// 2010-10-01,232
   d3.csv("data.csv", function(error, csv) {
+    var data = d3.nest()
+          .key(function(d) { return d.Date; })
+          .rollup(function(d) { return d[0].shares; })
+          .map(csv);
 
-  /*
+    console.log("processed data reading");
+***/
+
   var today = new Date();
-  today.setDate(today.getDate() - 1);
+  // today.setDate(today.getDate() - 1);
   var fromDate = today.getFullYear() + "-01-01";
   var toDate = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
-  var archiveURL = "http://localhost:3000/editions.json?from=" + fromDate + "&to=" + toDate;
+  var archiveURL = "/editions.json?from=" + fromDate + "&to=" + toDate;
 
   // Should retrieve newspaper history list:  id, date, share
+  // {"id": 5, "publish_date": "2016-07-24T10:00:00Z", "shares": 20}
+
   d3.json( archiveURL, function(error, csv) {  	
-  */
-	    var data = d3.nest()
-	        .key(function(d) { return d.Date; })
-	        .rollup(function(d) { return d[0].Share;})
+	  var data = d3.nest()
+	        .key(function(d) { return d.publish_date.substring(0,10); })
+          .rollup(function(d) { return ""+d[0].shares })
 	        .map(csv);
-			
+
 		csv.forEach(function(d) {
-		    d.Share = +d.Share;
+		    d.shares = +d.shares;
 		});
 
-		 var max = d3.max(csv, function(d) { return d.Share; });
+		var max = d3.max(csv, function(d) { return d.shares; });
 
 		var colors = d3.scale.quantize()
-			.domain([0,max])
+			  .domain([0,max])
 	    	.range(colorbrewer.YlGnBu[9]);
 		
 		var formats = {
@@ -262,6 +270,7 @@ function chartRender(winWidth){
 	                    .style("left", (d3.event.pageX)+30 + "px")     
 	                    .style("top", (d3.event.pageY) + "px"); 
 	    }
+
 	    function mouseOut (d) {
 	      tooltip.transition()        
 	              .duration(500)      
@@ -270,12 +279,11 @@ function chartRender(winWidth){
 	        $tooltip.empty();
 	    }
 
-	    // @Rayomnd 
-		// Create a pulling newspaper from DB.
 	    function mouseClick() {
-		    var date = $(this)[0].__data__;
-			pullNewspaper(date);
-		}
+		     var date = $(this)[0].__data__;
+         console.log("archive date:", date);
+			   pullNewspaper(date);
+		  }
     });
 
     function dayTitle (t0) {
@@ -293,15 +301,17 @@ function pullNewspaper(date){
 
     console.log( "date: ", date );
 
-    	// @Rayomnd 
-    	// Create a pulling newspaper from DB.
+    // Create a pulling newspaper from DB.
+    getNewspaperByDay(date);
+
+    /*
     var parseTime = d3.timeParse("%Y-%m-%d");
-    	// date change
+    // date change
 	  $('#dmp-archive-preview .dayofweek').html(formatDayofWeek(parseTime(date))); 
 		$('#dmp-archive-preview .month').html(formatMonth(parseTime(date))); 
 		$('#dmp-archive-preview .day').html(formatDay(parseTime(date))); 
 		$('#dmp-archive-preview .year').html(year(parseTime(date)));	    
-
+    */
 		// content change
 }
 

@@ -7,16 +7,16 @@ Theme.create name: 'classic'
 Theme.create name: 'modern'
 Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroidwatch/'
 
-@first_day = Date.today - 25.days
+@first_day = Date.today - 85.days
 
   def create_data
-    (25.downto 1).each do |n|
+    (85.downto 1).each do |n|
       e = Edition.create! sample_edition(n), without_protection: true
       e.create_flyby sample_flyby(n)
       e.create_news_story sample_news(n)
       e.create_orbit_diagram sample_orbit
       e.save!
-      unless n == 25
+      unless n == 85
         e.publish!
         e.publish_date = @first_day + n.days
         e.save!
@@ -28,12 +28,13 @@ Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroid
     {
         title: "News Title for #{n}",
         theme: Theme.all.sample,
-        total_shares: 0
+        total_shares: n
     }
   end
 
   def sample_news(n=1)
     {
+        story_url: "http://story_url.com/#{n}.html",
         title: "News of #{@first_day + n.days}",
         content: lorem_ipsum('2p').gsub(/<p>/, '').gsub(/<\/p>/, "\n").gsub(/\n\n/, "\n"),
     }

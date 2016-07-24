@@ -40,6 +40,23 @@ function displayNewspaper(data) {
 }
 
 // get the newspaper content for current edition
+// datestring: 2016-07-11
+function getNewspaperByDay(datestring) {
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:3000/editions/day/" + datestring,
+        contentType: "application/json: charset=UTF-8",
+        success: function(edition, status, error) {
+            console.log( "success ",  edition );
+            displayNewspaper(edition);
+        },
+        error: function(res, status, error) {
+            console.log( "error: ", error );
+        }
+    });
+}
+
+// get the newspaper content for current edition
 function getNewspaper() {
     $.ajax({
         type: 'GET',
