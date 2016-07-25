@@ -1,5 +1,12 @@
-<p>Welcome <%= @email %>!</p>
+<h1>Welcome to Daily Minor Planet, <%= @username %>!</h1>
+
+<p>
+Thank you for your interest in Daily Minor Planet.
+A daily newspaper will be delievered to you at: <%= @email %><br>
+</p>
 
 <p>You can confirm your account email through the link below:</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p>Thanks for joining and have a great day!</p>

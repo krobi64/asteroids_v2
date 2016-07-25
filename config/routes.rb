@@ -1,6 +1,9 @@
 Mpc::Application.routes.draw do
 
-  devise_for :users
+  devise_for :users, controllers: { confirmations: 'confirmations' }
+  devise_scope :user do
+    get '/dmp' => 'dmp#index', as: 'after_confirmation'
+  end
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
