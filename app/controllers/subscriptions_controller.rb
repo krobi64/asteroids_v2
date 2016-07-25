@@ -11,6 +11,8 @@ class SubscriptionsController < ApplicationController
       u.password_confirmation = generated_password
     end
     @user.subscribe!
+    RegistrationMailer.welcome(user, generated_password).deliver
+    sign_in :user, @user
     render json: @user, status: :created
   end
 
