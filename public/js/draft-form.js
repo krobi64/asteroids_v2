@@ -222,8 +222,8 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         flyby.title = s.flybyTile[0].value;
         flyby.content = s.flybyContent[0].value;
 
-        // this diagram url is problematic during save
-        diagram.url = s.flybyImageUrl[0].value;
+        // this diagram url should not be edited manually
+        // diagram.url = s.flybyImageUrl[0].value;
         news.title = s.newsTitle[0].value;
         news.content = s.newsContent[0].value;
         news.story_url = s.newsUrl[0].value;
