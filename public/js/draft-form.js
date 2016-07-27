@@ -248,6 +248,38 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
     }
 
 
+// fetch
+function fetchFlybyInfo(e){
+        
+    var asteroid = s.designation[0].value;
+    
+    if( asteroid !== null && asteroid.trim().length > 0 ) {
+        var formatted = encodeURIComponent(asteroid);
+
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost:3000/flyby/search?designation="+formatted,
+            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            success: function(res, status, error) {
+                console.log( "success ",  res );
+
+                var title = res[0].designation;
+                var content = "Approach date: " + res[0].close_app_date + ", Impact Probability: " + res[0].impact_prob;
+                var url = res[0].url;
+
+                s.flybyTile.val(title);
+                s.flybyContent.val(content);
+                s.flybyImageUrl.val(url);
+            },  
+            error: function(res, status, error) {
+                console.log( "error: ", error );
+            }
+        });
+    }
+};
+
+
     function validateForm() {
 
     }
@@ -278,9 +310,11 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
             previewAction: $('.preview'),
             publishAction: $('.publish'),
             unpublishAction: $('.unpublish'),
+            fetchAction: $('#dmp-flyby-fetch'),
             publishDay: $('#publishDay'),
             publishTime: $('#publishTime'),            
             tagLine: $('#tagline'),
+            designation: $('#designation'),
             flybyTile: $('#flybyTitle'),
             flybyContent: $('#flybyContent'),
             flybyImageUrl: $('#flybyImageUrl'),
@@ -314,6 +348,10 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
             s.unpublishAction.on("click", function(e) {
                 unpublishDraft(e);
+            });
+
+            s.fetchAction.on("click", function(e) {
+                fetchFlybyInfo(e);
             });
         },
 
