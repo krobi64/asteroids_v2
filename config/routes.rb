@@ -7,6 +7,7 @@ Mpc::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  get 'flyby/search' => 'flyby#search'
 
   post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe
   get 'unsubscribe', controller: :subscriptions, actions: :unsubscribe, as: :unsubscribe

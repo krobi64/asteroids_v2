@@ -13,6 +13,10 @@ class Asteroid
       list[designation]
     end
 
+    def search(term)
+      select {|a| a['designation'] =~ /#{term}/}
+    end
+
     def all
       import unless list.present? && last_read_current?
       list.values
@@ -21,6 +25,7 @@ class Asteroid
     delegate :sample, to: :all
     delegate :[], to: :all
     delegate :index, to: :all
+    delegate :select, to: :all
 
     private
 
