@@ -263,10 +263,6 @@ $(function() { //shorthand document.ready function
 	        console.log(data); 
 			var msgContent = $('.modal-content').html();
 
-			// Confirmation Msg.
-			$('#subscription_form').parent().parent().find('.modal-title').text("Confirm your email address");
-            $('#subscription_form').parent().html("<div style='font-size:1em;'>Click on the link in the email to activate your email. We do this as a security precaution. If you don't see the email, please check your junk mail folder. <br><br><strong>Thank you for subscribing Daily Minor Planet!</strong><br><br><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>");
-            setTimeout(function(){$('.modal').modal('hide');}, 4000);
                         
         	// post to backend
 	        $.ajax({
@@ -278,10 +274,21 @@ $(function() { //shorthand document.ready function
 	            success: function(res, status, error) {
 	                console.log( "success ",  res );
 
+					// Confirmation Msg.
+					$('#subscription_form').parent().parent().find('.modal-title').text("Confirm your email address");
+		            $('#subscription_form').parent().html("<div style='font-size:1em;'>Click on the link in the email to activate your email. We do this as a security precaution. If you don't see the email, please check your junk mail folder. <br><br><strong>Thank you for subscribing Daily Minor Planet!</strong><br><br><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>");
+		            
+		            // setTimeout(function(){$('.modal').modal('hide');}, 4000);
 
 	            },
 	            error: function(res, status, error) {
 	                console.log( "error: ", error );
+
+					$('#subscription_form').parent().parent().find('.modal-title').text("Failed to subscribe");
+
+		            $('#subscription_form').parent().html("<div style='font-size:1em;'>" + error +
+		            	"<br><br><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>");
+
 	            }
 	        });
         }

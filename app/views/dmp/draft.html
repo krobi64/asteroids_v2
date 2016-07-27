@@ -247,6 +247,27 @@ $('a.back-to-top').click(function() {
     return false;
 });
 
+// fetch
+$('#dmp-flyby-fetch').on('click', function(){
+        
+        var payload = {"designation": "2014 JR24"};
+
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost:3000/flyby/search?designation=2014+JR24",
+            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            success: function(res, status, error) {
+                console.log( "success ",  res );
+            },
+            error: function(res, status, error) {
+                console.log( "error: ", error );
+            }
+        });
+
+});
+
+
 // populate draft form
 $(document).ready(function() {
     dailyMinorPlanetDraftForm.init();

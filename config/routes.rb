@@ -5,8 +5,9 @@ Mpc::Application.routes.draw do
     get '/dmp' => 'dmp#index', as: 'after_confirmation'
   end
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  # devise_for :admin_users, ActiveAdmin::Devise.config
+  # ActiveAdmin.routes(self)
+
   get 'flyby/search' => 'flyby#search'
 
   post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe

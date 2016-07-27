@@ -2,9 +2,10 @@ class UserMailer < ActionMailer::Base
   default from: "asteroid.daily@gmail.com"
   
   # daily newspaper, should pass in a user object to this call
-  def daily_newspaper()
+  def daily_newspaper(edition, email)
     # @url = "http://localhost:3000/users/confirm"
-    mail( to: "yuhua_xie@yahoo.com", subject: "Your Daily Minor Planet" )
+    @edition = edition
+    mail( to: "yuhua.xie@gmail.com", subject: "Your Daily Minor Planet" )
   end
 
   def daily_batch()

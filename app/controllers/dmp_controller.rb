@@ -8,7 +8,9 @@ class DmpController < ApplicationController
   end
 
   def testemail
-  	UserMailer.daily_newspaper().deliver
+  	@edition = Edition.current.first
+  	@email = "yuhua.xie@gmail.com"
+  	UserMailer.daily_newspaper(@edition, @email).deliver
   	# UserMailer.verify_email().deliver
   end
 end

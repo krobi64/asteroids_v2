@@ -5,5 +5,6 @@ class FlybyController < ApplicationController
 
   def search
     @asteroids = Asteroid.search(params[:designation])
+    render json: @asteroids
   end
 end
