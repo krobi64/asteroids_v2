@@ -72,34 +72,62 @@ function getNewspaper() {
     });
 }
 
+
 // subscribe
 $(function() { //shorthand document.ready function
     $('#subscription_form').on('submit', function(e) { 
+        console.log('submit');
         e.preventDefault();  //prevent form from submitting
-        // var data = $("#subscription_form :input").serializeArray();
+
         var data = {};
         var uname = $('#inputName')[0].value;
         var uemail = $('#inputEmail')[0].value;
-        
         if( uname != null && uemail != null ) {
-        	data.username = uname;
-        	data.email = uemail;
-	
-	        console.log(data); 
-        	// post to backend
-	        $.ajax({
-	            type: 'POST',
-	            url: "http://localhost:3000/subscribe",
-	            data: JSON.stringify(data),
-	            contentType: "application/json; charset=UTF-8",
-	            dataType: "json",
-	            success: function(res, status, error) {
-	                console.log( "success ",  res );
-	            },
-	            error: function(res, status, error) {
-	                console.log( "error: ", error );
-	            }
-	        });
+            data.username = uname;
+            data.email = uemail;
+            console.log(data); 
+
+            var msgContent = $('.modal-content').html();
+                        
+            // post to backend
+            $.ajax({
+                type: 'POST',
+                url: "http://localhost:3000/subscribe",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=UTF-8",
+                dataType: "json",
+                success: function(res, status, error) {
+                    console.log( "success ",  res );
+
+                    // Confirmation message on popup UI
+                    var title = "Confirm your email address";
+                    var content = "<div style='font-size:1em;'>" + 
+                        "Click on the link in the email to activate your subscription. We do this as a security precaution. " + 
+                        "If you don't see the email, please check your junk mail folder. <br><br>" + 
+                        "<strong>Thank you for subscribing Daily Minor Planet!</strong><br><br>" + 
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>";
+                    
+
+
+                    $('#subscription_form').parent().parent().find('.modal-title').text(title);
+                    $('#subscription_form').parent().html(content);
+
+                    // self-dismiss after some time
+                    // setTimeout(function(){$('.modal').modal('hide');}, 4000);
+                },
+                error: function(res, status, error) {
+                    console.log( "error: ", error );
+
+                    var title = "Subscription failed";
+                    $('#subscription_form').parent().parent().find('.modal-title').text(title);
+
+                    $('#subscription_form').parent().html("<div style='font-size:1em;'>" + error +
+                        "<br><br><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>");
+
+                    // self-dismiss after some time
+                    setTimeout(function(){$('.modal').modal('hide');}, 4000);
+                }
+            });
         }
     });
 });

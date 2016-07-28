@@ -248,53 +248,6 @@ $('.modal').on('shown.bs.modal', function () {
     $(this).find('form').validator('destroy').validator()
 });
 
-// subscribe
-$(function() { //shorthand document.ready function
-    $('#subscription_form').on('submit', function(e) { 
-    	console.log('submit');
-        e.preventDefault();  //prevent form from submitting
-        // var data = $("#subscription_form :input").serializeArray();
-        var data = {};
-        var uname = $('#inputName')[0].value;
-        var uemail = $('#inputEmail')[0].value;
-        if( uname != null && uemail != null ) {
-        	data.username = uname;
-        	data.email = uemail;
-	        console.log(data); 
-			var msgContent = $('.modal-content').html();
-
-                        
-        	// post to backend
-	        $.ajax({
-	            type: 'POST',
-	            url: "http://localhost:3000/subscribe",
-	            data: JSON.stringify(data),
-	            contentType: "application/json; charset=UTF-8",
-	            dataType: "json",
-	            success: function(res, status, error) {
-	                console.log( "success ",  res );
-
-					// Confirmation Msg.
-					$('#subscription_form').parent().parent().find('.modal-title').text("Confirm your email address");
-		            $('#subscription_form').parent().html("<div style='font-size:1em;'>Click on the link in the email to activate your email. We do this as a security precaution. If you don't see the email, please check your junk mail folder. <br><br><strong>Thank you for subscribing Daily Minor Planet!</strong><br><br><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>");
-		            
-		            // setTimeout(function(){$('.modal').modal('hide');}, 4000);
-
-	            },
-	            error: function(res, status, error) {
-	                console.log( "error: ", error );
-
-					$('#subscription_form').parent().parent().find('.modal-title').text("Failed to subscribe");
-
-		            $('#subscription_form').parent().html("<div style='font-size:1em;'>" + error +
-		            	"<br><br><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>");
-
-	            }
-	        });
-        }
-    });
-});
-
 function modern_theme(){
 	if(!$('#themeModern').hasClass('selected')){
 		$('#modern').removeClass('hide');
@@ -322,66 +275,6 @@ function classic_theme(){
 	$('#subscribe-btn').addClass('classic');
 	$('#subscribe-btn').removeClass('modern');
 }
-/*
-var data = {
-	tagline:"The nerve center of asteroid detection in our Solar System",
-	est:"Est. 1947",
-	dayofweek: "Friday",
-	date: "10",
-	month: "June",
-	year: "2016",
-	diagram:"diagram.png"
-};
-var dayOfWeek = ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-function data_insertion(data, edition){
-    // newspaper fixture
-	$('.tagline').html(data.tagline);
-	$('.est').html(data.est);
-	$('.day').html(data.date);
-	$('.month').html(data.month);
-	$('.year').html(data.year);
-    $('.dayofweek').html(data.dayofweek);
-//	$('.heroline').html(data.heroline);
-
-    // today's edition
-	$('.numberShares').html(edition.shares);
-	$('.heroline').html(edition.title);
-	$('.flybyTitle').html(edition.flyby.title);
-	$('.flybyContents').html(edition.flyby.content);
-	$('.storyTitle').html(edition.news_story.title);
-	$('.storyContents').html(edition.news_story.content);
-	$('.diagram').css('background-image','url(/images/'+data.diagram+')');
-	$('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
-	// $('.diagram').css('background-image','url('+ edition.orbit_diagram.url + ')');
-}
-
-
-function getNewspaper() {
-	// today
-	var today = new Date();
-
-	data.year = today.getFullYear();
-	data.date = today.getDate();
-	data.dayofweek = dayOfWeek[today.getDay()];
-	data.month = monthNames[today.getMonth()];
-
-    //   url: "http://localhost:3000/editions/" + data.date,
-    $.ajax({
-        type: 'GET',
-        url: "http://localhost:3000/editions/current",
-        contentType: "application/json: charset=UTF-8",
-        success: function(edition, status, error) {
-            console.log( "success ",  edition );
-	        data_insertion(data, edition);
-        },
-        error: function(res, status, error) {
-            console.log( "error: ", error );
-        }
-    });
-}
-*/
 
 function modernIframe(diagramUrl){
 	// properly set iframe width and height
