@@ -22,6 +22,7 @@ function displayNewspaper(data) {
     $('.storyTitle').html(data.news_story.title);
     $('.storyContents').html(data.news_story.content);
     $('#entityId').val(data.id);
+    $('.numberShares').html(data.shares);
 
 	// TODO: use the live image URL    
 	// $('.diagram').css('background-image','url('+ data.orbit_diagram.url + ')');
