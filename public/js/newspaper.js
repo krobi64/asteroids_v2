@@ -21,6 +21,7 @@ function displayNewspaper(data) {
     $('.flybyContents').html(data.flyby.content);
     $('.storyTitle').html(data.news_story.title);
     $('.storyContents').html(data.news_story.content);
+    $('#entityId').val(data.id);
 
 	// TODO: use the live image URL    
 	// $('.diagram').css('background-image','url('+ data.orbit_diagram.url + ')');
@@ -45,7 +46,7 @@ function getNewspaperByDay(datestring) {
     $.ajax({
         type: 'GET',
         url: "http://localhost:3000/editions/day/" + datestring,
-        contentType: "application/json: charset=UTF-8",
+        contentType: "application/json; charset=UTF-8",
         success: function(edition, status, error) {
             console.log( "success ",  edition );
             displayNewspaper(edition);
@@ -61,7 +62,7 @@ function getNewspaper() {
     $.ajax({
         type: 'GET',
         url: "http://localhost:3000/editions/current",
-        contentType: "application/json: charset=UTF-8",
+        contentType: "application/json; charset=UTF-8",
         success: function(edition, status, error) {
             console.log( "success ",  edition );
 	        displayNewspaper(edition);
@@ -72,6 +73,26 @@ function getNewspaper() {
     });
 }
 
+// record social sharing
+function shareNewspaper(channel) {
+    var editionId = $('#entityId')[0].value;
+    var payload = {};
+    payload.channel = channel;
+
+    $.ajax({
+        type: 'PUT',
+        url: "http://localhost:3000/editions/"+editionId+"/share",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(payload),
+        dataType: "json",
+        success: function(edition, status, error) {
+            console.log( "success ",  edition );
+        },
+        error: function(res, status, error) {
+            console.log( "error: ", error );
+        }
+    });    
+}
 
 // subscribe
 $(function() { //shorthand document.ready function
@@ -129,5 +150,10 @@ $(function() { //shorthand document.ready function
                 }
             });
         }
+    });
+
+    $('.popup').on('click', function(e){
+        var channel = e.currentTarget.id;
+        shareNewspaper(channel);
     });
 });
