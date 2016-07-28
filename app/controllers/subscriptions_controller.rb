@@ -5,13 +5,26 @@ class SubscriptionsController < ApplicationController
   respond_to :html, :json
 
   def subscribe
-    generated_password = Devise.friendly_token.first(8)
-    @user = User.where(user_params).first_or_create do |u|
-      u.password = generated_password
-      u.password_confirmation = generated_password
+    response = { status: 'success' }
+    if User.where(email: user_params[:email]).present?
+      response = {
+          status: 'error',
+          message: 'Email already subscribed'
+      }
+    else
+      generated_password = Devise.friendly_token.first(8)
+      @user = User.create(user_params.merge(password: generated_password, password_confirmation: generated_password))
     end
-    @user.subscribe!
-    render json: @user, status: :created
+    if @user.valid?
+      @user.subscribe!
+    else
+      response = {
+          status: 'error',
+          message: @user.errors.messages
+      }
+    end
+
+    render json: response, status: response[:status] == 'success' ? :created : :unprocessable_entity
   end
 
   def unsubscribe
