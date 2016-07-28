@@ -1,5 +1,5 @@
 class EditionsController < ApplicationController
-  respond_to :json, :html
+  respond_to :json
 
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
 
