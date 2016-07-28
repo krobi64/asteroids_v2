@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -29,6 +30,14 @@ class User < ActiveRecord::Base
     create_subscription
     self.roles = roles.push('subscriber').uniq
     save!
+  end
+
+  def subscribed?
+    subscription.present?
+  end
+
+  def unsubscribed?
+    subscription.blank?
   end
 
   def unsubscribe!

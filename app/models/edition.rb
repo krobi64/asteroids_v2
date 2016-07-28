@@ -13,8 +13,6 @@ class Edition < ActiveRecord::Base
   validates :theme, presence: true, inclusion: { in: Theme.all }
 
   default_scope -> { order('publish_date DESC') }
-  scope :current, -> { where(state: 'published').limit(1) }
-  scope :draft, -> { where(state: 'draft').order('created_at DESC').limit(1) }
 
   state_machine :state, initial: :draft do
     after_transition(on: :publish) do |edition, _|
@@ -36,6 +34,38 @@ class Edition < ActiveRecord::Base
     query = query.where("publish_date <= '#{to.end_of_day.to_time}'") if to.present?
     query = query.limit(20) unless (to.present? && from.present?)
     query.all.map { |edition| edition.minimal_json }
+  end
+
+  def self.current
+    where(state: 'published').limit(1).first
+  end
+
+  def self.draft
+    where(state: 'draft').order('created_at DESC').limit(1).first
+  end
+
+  def self.create_draft(date, theme=Theme.classic)
+    recommended_item = OrbitDiagram.most_relevant_asteroid
+    edition = create(
+        title: "News for #{date}",
+        theme: theme
+    )
+    if edition.valid?
+      edition.create_orbit_diagram(
+          title: recommended_item.second,
+          asteroid_designation: recommended_item.second
+      )
+      edition.create_flyby(
+          title: recommended_item.second,
+          content: "Relevant Date: #{recommended_item.first}, Designation: #{recommended_item.second}, Lunar Distance: #{recommended_item.last}"
+      )
+      edition.create_news_story(
+          title: 'Create News Story',
+          content: 'Enter Story Info'
+      )
+      edition.save!
+    end
+
   end
 
   def share(social_type)

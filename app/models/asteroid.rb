@@ -10,6 +10,7 @@ class Asteroid
     end
 
     def find(designation)
+      import
       list[designation]
     end
 

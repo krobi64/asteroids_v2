@@ -6,14 +6,14 @@ class SubscriptionsController < ApplicationController
 
   def subscribe
     response = { status: 'success' }
-    if User.where(email: user_params[:email]).present?
+    if (@user = User.where(email: user_params[:email]).first.presence) && @user.subscribed?
       response = {
           status: 'error',
           message: 'Email already subscribed'
       }
     else
       generated_password = Devise.friendly_token.first(8)
-      @user = User.create(user_params.merge(password: generated_password, password_confirmation: generated_password))
+      @user ||= User.create(user_params.merge(password: generated_password, password_confirmation: generated_password))
     end
     if @user.valid?
       @user.subscribe!
@@ -28,10 +28,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def unsubscribe
-    @user = User.find_by_id(params[:user_id])
-    if @user.present?
+    @user = User.where(email: params[:email]).first
+    if @user.present? && @user.subscribed?
       @user.unsubscribe!
-      head :no_content
+      flash.notice = 'You have been unsubscribed'
+      redirect_to current_dmp_url
     else
       render json: { error: 'subscription not found' }, status: :not_found
     end

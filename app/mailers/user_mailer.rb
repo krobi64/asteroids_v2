@@ -1,10 +1,10 @@
 class UserMailer < ActionMailer::Base
   default from: "asteroid.daily@gmail.com"
-  
+
   # daily newspaper, should pass in a user object to this call
-  def daily_newspaper(edition, email)
+  def daily_newspaper(user, edition)
     @edition = edition
-    @email = email
+    @email = user.email
 
     # 2016-07-23T07:00:00Z
     # pDate = Date.strptime(edition.publish_date[0..10], "%Y-%m-%d")
@@ -14,7 +14,7 @@ class UserMailer < ActionMailer::Base
     @month = pDate.strftime('%B')
     @day = pDate.strftime('%-d')
 
-    mail( to: email, subject: "Your Daily Minor Planet" )
+    mail( to: @email, subject: "Your Daily Minor Planet" )
   end
 
   def daily_batch()

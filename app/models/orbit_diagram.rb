@@ -1,17 +1,26 @@
 class OrbitDiagram < ActiveRecord::Base
-  belongs_to :asteroid
   belongs_to :created_by
   belongs_to :updated_by
-  attr_accessible :title, :asteroid_id
+  attr_accessible :title, :asteroid_designation
 
   validates :title, presence: true
   validate :existing_asteroid, message: 'Invalid asteroid designation'
 
+  def self.most_relevant_asteroid
+    response = Net::HTTP.get URI('http://minorplanetcenter.net/next_close_approaches?asteroids=10')
+    list = JSON.parse response
+    list.find { |item| !published_asteroids.include?(item.second)}
+  end
+
+  def self.published_asteroids
+    pluck(:asteroid_designation)
+  end
+
   def as_json(options_for_json={})
-    asteroid = Asteroid[asteroid_id]
+    asteroid = Asteroid.find asteroid_designation
     {
         title: asteroid['designation'],
-        asteroid_id: asteroid_id,
+        asteroid_id: asteroid_designation,
         url: asteroid['url']
     }
   end
@@ -19,9 +28,8 @@ class OrbitDiagram < ActiveRecord::Base
   private
 
   def existing_asteroid
-    unless Asteroid.find(title).present? &&
-        (self.asteroid_id = Asteroid.index {|a| a['designation'] == title})
-      errors.add(:title, 'Invalid asteroid designation')
+    if Asteroid.find(asteroid_designation).blank?
+      errors.add(:asteroid_designation, 'Invalid asteroid designation')
     end
   end
 end

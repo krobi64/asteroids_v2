@@ -12,7 +12,7 @@ class EditionsController < ApplicationController
   end
 
   def current
-    respond_with model.current.first
+    respond_with model.current
   end
 
   def day
@@ -23,7 +23,7 @@ class EditionsController < ApplicationController
   end
 
   def draft
-    respond_with model.draft.first
+    respond_with model.draft
   end
 
   def show
