@@ -52,7 +52,7 @@ Source.create name: 'JPL Asteroid Watch', url: 'http://www.jpl.nasa.gov/asteroid
     a = Asteroid[idx]
     {
         title: a['designation'],
-        asteroid_id: idx
+        asteroid_designation: a['designation']
     }
   end
 
