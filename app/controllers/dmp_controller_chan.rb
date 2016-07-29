@@ -1,10 +1,13 @@
 class DmpController < ApplicationController
+  include CanCan::ControllerAdditions
   respond_to :json, :html
 
   def index
   end
 
   def draft
+    @edition = Edition.draft.first
+    authorize!(:manage, @edition)
   end
 
   def testemail

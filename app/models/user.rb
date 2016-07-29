@@ -7,28 +7,20 @@ class User < ActiveRecord::Base
 
   has_one :subscription, inverse_of: :user
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :subscription, :username
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :subscription, :username, :role
 
-  ROLES = %i[admin editor subscriber]
+  ROLES = %w[admin editor subscriber]
 
-  def roles=(roles)
-    roles = [*roles].map { |r| r.to_sym }
-    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
-  end
-
-  def roles
-    ROLES.reject do |r|
-      ((roles_mask.to_i || 0) & 2**ROLES.index(r)).zero?
-    end
-  end
+  validates :email, :role, :username, presence: true
+  validates :role, inclusion: { in: ROLES }
 
   def has_role?(role)
-    roles.include? role
+    self.role == role
   end
 
   def subscribe!
     create_subscription
-    self.roles = roles.push('subscriber').uniq
+    self.role = 'subscriber'
     save!
   end
 
@@ -42,7 +34,6 @@ class User < ActiveRecord::Base
 
   def unsubscribe!
     subscription.destroy
-    self.roles = roles - ['subscriber']
     save!
   end
 end

@@ -1,4 +1,5 @@
 class EditionsController < ApplicationController
+  include CanCan::ControllerAdditions
   respond_to :json
 
   before_filter :load_model, only: [:show, :edit, :update, :share, :publish]
@@ -35,6 +36,7 @@ class EditionsController < ApplicationController
   end
 
   def create
+    authorize!(:manage, Edition.new)
     @edition = Edition.create edition_params
     @edition.create_flyby flyby_params
     @edition.create_news_story news_story_params
@@ -45,6 +47,7 @@ class EditionsController < ApplicationController
   end
 
   def update
+    authorize!(:manage, @edition)
     @edition.update_attributes edition_params
     @edition.flyby.update_attributes flyby_params
     @edition.news_story.update_attributes news_story_params
