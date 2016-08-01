@@ -19,7 +19,7 @@
 </style>
 <div id="dmp-editor-wrapper">
     <div id="newspaperContainer">
-    	<a href="./draft.html" style="color:#0C69E6;margin-bottom:30px;display:block;line-height:34px;"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Back to Draft for tomorrow</a>
+    	<a href="<%= draft_path %>" style="color:#0C69E6;margin-bottom:30px;display:block;line-height:34px;"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Back to Draft for tomorrow</a>
 
         <section id="editorContainer">
             <div class="header" style="border-bottom: 2px solid #A7A9AC;">
@@ -41,8 +41,8 @@
 						            <div class="header" style="width: 100%;text-align: center;padding-bottom: 0px;font-weight: bold;margin: 0 auto;border:none;">
 						                <div class="subHeaderline" style="width: 100%;border-bottom: 2px solid #414042;position: relative;padding: 0px 0 2px 0px;margin-bottom: 20px;">
 						                    <div class="dates" style="text-align: center;display: inline-block;font-size: 1.5em; color: black; padding-top: 0.5em;">
-						                    	Daily Minor Planet at 
-						                        <span class="dayofweek"></span>, 
+						                    	Daily Minor Planet at
+						                        <span class="dayofweek"></span>,
 						                        <span class="month"></span>
 						                        <span class="day"></span>,
 						                        <span class="year"></span>
@@ -65,7 +65,7 @@
 						            </div>
 						        </div>
 						    </div>
-						</div>	        		
+						</div>
 		        	</div>
 	        	 </div>
             </div>
@@ -116,7 +116,7 @@ function chartRender(winWidth){
         format = d3.time.format("%Y-%m-%d");
 
     var parseTime = d3.timeParse("%Y-%m-%d");
-	
+
     // pull yesterday newspaper as a default
     var today = new Date();
     today.setDate(today.getDate() - 1);
@@ -135,7 +135,7 @@ function chartRender(winWidth){
   	    .append("g")
 
     var rect = svg.selectAll(".day")
-        .data(function(d) { 
+        .data(function(d) {
           return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1));
         })
       .enter().append("rect")
@@ -144,9 +144,9 @@ function chartRender(winWidth){
         .attr("height", cellSize)
         .attr("x", function(d) {
           var month_padding = 1.2 * cellSize*7 * ((month(d)-1) % (no_months_in_a_row));
-          return day(d) * cellSize + month_padding; 
+          return day(d) * cellSize + month_padding;
         })
-        .attr("y", function(d) { 
+        .attr("y", function(d) {
           var week_diff = week(d) - week(new Date(year(d), month(d)-1, 1) );
           var row_level = Math.ceil(month(d) / (no_months_in_a_row));
           return (week_diff*cellSize) + row_level*cellSize*8 - cellSize/2 - shift_up;
@@ -154,7 +154,7 @@ function chartRender(winWidth){
         .datum(format);
 
     var month_titles = svg.selectAll(".month-title")  // Jan, Feb, Mar and the whatnot
-          .data(function(d) { 
+          .data(function(d) {
             return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
         .enter().append("text")
           .text(monthTitle)
@@ -171,7 +171,7 @@ function chartRender(winWidth){
           .attr("d", monthTitle);
 
     var year_titles = svg.selectAll(".year-title")  // Jan, Feb, Mar and the whatnot
-          .data(function(d) { 
+          .data(function(d) {
             return d3.time.years(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
         .enter().append("text")
           .text(yearTitle)
@@ -211,7 +211,7 @@ function chartRender(winWidth){
   // Should retrieve newspaper history list:  id, date, share
   // {"id": 5, "publish_date": "2016-07-24T10:00:00Z", "shares": 20}
 
-  d3.json( archiveURL, function(error, csv) {  	
+  d3.json( archiveURL, function(error, csv) {
 	  var data = d3.nest()
 	        .key(function(d) { return d.publish_date.substring(0,10); })
           .rollup(function(d) { return ""+d[0].shares })
@@ -226,7 +226,7 @@ function chartRender(winWidth){
 		var colors = d3.scale.quantize()
 			  .domain([0,max])
 	    	.range(colorbrewer.YlGnBu[9]);
-		
+
 		var formats = {
 		    threedigits: d3.format('3f')
 		};
@@ -248,7 +248,7 @@ function chartRender(winWidth){
 
 		rect.filter(function(d) {return d in data; })
 			  .style('fill', function(d) { return colors(data[d]); })
-		      .select("title") 
+		      .select("title")
 		      .text(function(d) { return data[d]; });
 
 	    //  Tooltip
@@ -263,18 +263,18 @@ function chartRender(winWidth){
 	        var percent_data = (data[d] !== undefined) ? data[d] : 0;
 	        var purchase_text = d + ": " + percent_data;
 
-	        tooltip.transition()        
-	                    .duration(200)      
-	                    .style("opacity", .9);      
-	        tooltip.html(purchase_text)  
-	                    .style("left", (d3.event.pageX)+30 + "px")     
-	                    .style("top", (d3.event.pageY) + "px"); 
+	        tooltip.transition()
+	                    .duration(200)
+	                    .style("opacity", .9);
+	        tooltip.html(purchase_text)
+	                    .style("left", (d3.event.pageX)+30 + "px")
+	                    .style("top", (d3.event.pageY) + "px");
 	    }
 
 	    function mouseOut (d) {
-	      tooltip.transition()        
-	              .duration(500)      
-	                .style("opacity", 0); 
+	      tooltip.transition()
+	              .duration(500)
+	                .style("opacity", 0);
 	        var $tooltip = $("#tooltip");
 	        $tooltip.empty();
 	    }
@@ -296,7 +296,7 @@ function chartRender(winWidth){
       return t0.toString().split(" ")[3];
     }
 }
-  
+
 function pullNewspaper(date){
 
     console.log( "date: ", date );
@@ -307,10 +307,10 @@ function pullNewspaper(date){
     /*
     var parseTime = d3.timeParse("%Y-%m-%d");
     // date change
-	  $('#dmp-archive-preview .dayofweek').html(formatDayofWeek(parseTime(date))); 
-		$('#dmp-archive-preview .month').html(formatMonth(parseTime(date))); 
-		$('#dmp-archive-preview .day').html(formatDay(parseTime(date))); 
-		$('#dmp-archive-preview .year').html(year(parseTime(date)));	    
+	  $('#dmp-archive-preview .dayofweek').html(formatDayofWeek(parseTime(date)));
+		$('#dmp-archive-preview .month').html(formatMonth(parseTime(date)));
+		$('#dmp-archive-preview .day').html(formatDay(parseTime(date)));
+		$('#dmp-archive-preview .year').html(year(parseTime(date)));
     */
 		// content change
 }

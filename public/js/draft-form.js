@@ -31,7 +31,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         // s.theme.val( edition.theme.name);
         for( var i=0; i<s.themeType.length; i++) {
             if( edition.theme.name == s.themeType[i].value ) {
-                s.themeType[i].checked = true;                
+                s.themeType[i].checked = true;
             }
             else {
                 s.themeType[i].checked = false;
@@ -67,7 +67,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         radio.onclick = radioSelected;
 
         label.appendChild(radio);
-        
+
         var display = document.createTextNode(text);
         // if need style the text label, do it here
         label.appendChild(display);
@@ -79,7 +79,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         console.log("radio selected: ", e);
         // e.target.prop('checked', true);
         $('#'+e.target.id).prop("checked", true);
-        selectNewsSource();        
+        selectNewsSource();
     }
 
     function selectNewsSource() {
@@ -98,9 +98,9 @@ var dailyMinorPlanetDraftForm = ( function() {
         return;
 
         // populate "newsSource" from backend, for now let's just hardcoded it. Need to add at backend too
-        newsSources = [  {'name': 'NASA', 'url': 'http://www.nasa.gov/press-release/nasas-juno-spacecraft-in-orbit-around-mighty-jupiter', 'title': 'Juno Spacecraft in Orbit Around Mighty Jupiter', 'content': 'After an almost five-year journey to the solar system’s largest planet, NASA\'s Juno spacecraft successfully entered Jupiter\’s orbit during a 35-minute engine burn. Confirmation that the burn had completed was received on Earth at 8:53 p.m. PDT (11:53 p.m. EDT) Monday, July 4.'}, 
-                {'name': 'JPL', 'url': 'http://www.jpl.nasa.gov/spaceimages/details.php?id=PIA20490', 'title': 'Pandemonium', 'content': 'Pan and moons like it have profound effects on Saturn\'s rings. The effects can range from clearing gaps, to creating new ringlets, to raising vertical waves that rise above and below the ring plane. All of these effects, produced by gravity, are seen in this image.'}, 
-                {'name': 'Source3', 'url': 'URL for source #3 story', 'title': 'news title', 'content': 'news content from source #3'}, 
+        newsSources = [  {'name': 'NASA', 'url': 'http://www.nasa.gov/press-release/nasas-juno-spacecraft-in-orbit-around-mighty-jupiter', 'title': 'Juno Spacecraft in Orbit Around Mighty Jupiter', 'content': 'After an almost five-year journey to the solar system’s largest planet, NASA\'s Juno spacecraft successfully entered Jupiter\’s orbit during a 35-minute engine burn. Confirmation that the burn had completed was received on Earth at 8:53 p.m. PDT (11:53 p.m. EDT) Monday, July 4.'},
+                {'name': 'JPL', 'url': 'http://www.jpl.nasa.gov/spaceimages/details.php?id=PIA20490', 'title': 'Pandemonium', 'content': 'Pan and moons like it have profound effects on Saturn\'s rings. The effects can range from clearing gaps, to creating new ringlets, to raising vertical waves that rise above and below the ring plane. All of these effects, produced by gravity, are seen in this image.'},
+                {'name': 'Source3', 'url': 'URL for source #3 story', 'title': 'news title', 'content': 'news content from source #3'},
                 {'name': 'Manual Input', 'url': 'Internal REST URL', 'title': 'news title after manual input', 'content': 'orem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum, velit sagittis ultrices laoreet, neque nulla sagittis dolor, in tristique turpis ipsum vitae diam. Integer leo lorem, ornare non tristique quis, pharetra at dolor.'}];
 
 
@@ -145,7 +145,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         $('.storyContents').html(data.news_story.content);
         $('.diagram').css('background-image','url(/images/'+data.diagram+')');
         $('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
-        
+
         var today = new Date(data.publish_date);
 
         data.year = today.getFullYear();
@@ -250,15 +250,15 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
 // fetch
 function fetchFlybyInfo(e){
-        
+
     var asteroid = s.designation[0].value;
-    
+
     if( asteroid !== null && asteroid.trim().length > 0 ) {
         var formatted = encodeURIComponent(asteroid);
 
         $.ajax({
             type: 'GET',
-            url: "http://localhost:3000/flyby/search?designation="+formatted,
+            url: "/flyby/search?designation="+formatted,
             contentType: "application/json; charset=UTF-8",
             dataType: "json",
             success: function(res, status, error) {
@@ -271,7 +271,7 @@ function fetchFlybyInfo(e){
                 s.flybyTile.val(title);
                 s.flybyContent.val(content);
                 s.flybyImageUrl.val(url);
-            },  
+            },
             error: function(res, status, error) {
                 console.log( "error: ", error );
             }
@@ -312,7 +312,7 @@ function fetchFlybyInfo(e){
             unpublishAction: $('.unpublish'),
             fetchAction: $('#dmp-flyby-fetch'),
             publishDay: $('#publishDay'),
-            publishTime: $('#publishTime'),            
+            publishTime: $('#publishTime'),
             tagLine: $('#tagline'),
             designation: $('#designation'),
             flybyTile: $('#flybyTitle'),
@@ -355,5 +355,5 @@ function fetchFlybyInfo(e){
             });
         },
 
-    };             
+    };
 })();

@@ -6,7 +6,9 @@ Mpc::Application.routes.draw do
   get 'flyby/search' => 'flyby#search'
 
   post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe
-  get 'unsubscribe', controller: :subscriptions, actions: :unsubscribe, as: :unsubscribe
+  get 'unsubscribe', controller: :subscriptions, action: :unsubscribe, as: :unsubscribe
+  get 'dmp/archives', controller: :dmp, action: :archive, as: :archives
+  get 'dmp/draft', controller: :dmp, action: :draft, as: :draft
 
   resources :sources, only: [:index] do
     member do
