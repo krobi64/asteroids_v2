@@ -11,8 +11,11 @@ class User < ActiveRecord::Base
 
   ROLES = %w[admin editor subscriber]
 
+  before_validation :assign_role
+
   validates :email, :role, :username, presence: true
   validates :role, inclusion: { in: ROLES }
+
 
   def has_role?(role)
     self.role == role
@@ -35,5 +38,11 @@ class User < ActiveRecord::Base
   def unsubscribe!
     subscription.destroy
     save!
+  end
+
+  private
+
+  def assign_role
+    self.role ||= 'subscriber'
   end
 end
