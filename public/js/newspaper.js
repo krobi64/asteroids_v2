@@ -117,7 +117,7 @@ function getInteractiveUrl(designation) {
     var formatted = encodeURIComponent(designation);
     $.ajax({
         type: 'GET',
-        url: "/flyby/orbit_params/" + formatted,
+        url: "/flyby/orbit_params?designation="+formatted,
         contentType: "application/json; charset=UTF-8",
         dataType: "json",
         success: function(orbit, status, error) {
