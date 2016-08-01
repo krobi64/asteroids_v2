@@ -26,11 +26,6 @@ function displayNewspaper(data) {
     $('#entityId').val(data.id);
     $('.numberShares').html(data.shares);
 
-	// TODO: use the live image URL    
-	// $('.diagram').css('background-image','url('+ data.orbit_diagram.url + ')');
-    $('.diagram').css('background-image','url(/images/diagram.png)');
-    $('.mobile-diagram').css('background-image','url(/images/diagram.png');
-
     var today = new Date(data.publish_date);
     data.year = today.getFullYear();
     data.date = today.getDate();
@@ -41,6 +36,13 @@ function displayNewspaper(data) {
     $('.month').html(data.month);
     $('.year').html(data.year);
     $('.dayofweek').html(data.dayofweek);
+
+	// TODO: use the live image URL    
+    // The image URL is generated at backend by commandline and named as "/images/orbit/2016-07-21.png" convention
+    var static_image_url = "/images/orbit/" + data.publish_date.substring(0,10) + ".png";
+    $('.diagram').css('background-image','url("'+ static_image_url +'")');
+    $('.mobile-diagram').css('background-image','url("' + static_image_url + '")');
+
 }
 
 // get the newspaper content for current edition
