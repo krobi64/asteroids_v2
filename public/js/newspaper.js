@@ -58,7 +58,7 @@ function displayNewspaper(data) {
 function getNewspaperByDay(datestring) {
     $.ajax({
         type: 'GET',
-        url: "http://localhost:3000/editions/day/" + datestring,
+        url: "/editions/day/" + datestring,
         contentType: "application/json; charset=UTF-8",
         success: function(edition, status, error) {
             console.log( "success ",  edition );
@@ -74,7 +74,7 @@ function getNewspaperByDay(datestring) {
 function getNewspaper() {
     $.ajax({
         type: 'GET',
-        url: "http://localhost:3000/editions/current",
+        url: "/editions/current",
         contentType: "application/json; charset=UTF-8",
         success: function(edition, status, error) {
             console.log( "success ",  edition );
@@ -117,7 +117,7 @@ function getInteractiveUrl(designation) {
     var formatted = encodeURIComponent(designation);
     $.ajax({
         type: 'GET',
-        url: "http://localhost:3000/flyby/orbit_params/" + formatted,
+        url: "/flyby/orbit_params/" + formatted,
         contentType: "application/json; charset=UTF-8",
         dataType: "json",
         success: function(orbit, status, error) {
@@ -147,7 +147,7 @@ function shareNewspaper(channel) {
 
     $.ajax({
         type: 'PUT',
-        url: "http://localhost:3000/editions/"+editionId+"/share",
+        url: "/editions/"+editionId+"/share",
         contentType: "application/json; charset=UTF-8",
         data: JSON.stringify(payload),
         dataType: "json",
@@ -267,7 +267,7 @@ $(function() { //shorthand document.ready function
             // post to backend
             $.ajax({
                 type: 'POST',
-                url: "http://localhost:3000/subscribe",
+                url: "/subscribe",
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",

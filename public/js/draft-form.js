@@ -44,7 +44,7 @@ var dailyMinorPlanetDraftForm = ( function() {
 
         $.ajax({
             type: 'GET',
-            url: "http://localhost:3000/editions/draft",
+            url: "/editions/draft",
             contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -177,7 +177,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/" + draftId + "/publish",
+            url: "/editions/" + draftId + "/publish",
             contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -196,7 +196,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/" + draftId + "/unpublish",
+            url: "/editions/" + draftId + "/unpublish",
             contentType: "application/json; charset=UTF-8",
             success: function(res, status, error) {
                 console.log( "success ",  res );
@@ -291,7 +291,7 @@ function fetchFlybyInfo(e){
 
         $.ajax({
             type: 'PUT',
-            url: "http://localhost:3000/editions/" + draft.id,
+            url: "/editions/" + draft.id,
             data: JSON.stringify(draft),
             contentType: "application/json; charset=UTF-8",
             dataType: "json",
