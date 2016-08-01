@@ -250,53 +250,6 @@ $('.modal').on('shown.bs.modal', function () {
     $(this).find('form').validator('destroy').validator()
 });
 
-function modern_theme(){
-	if(!$('#themeModern').hasClass('selected')){
-		$('#modern').removeClass('hide');
-		$('#classic').addClass('hide');
-		$('#themeModern').addClass('selected');
-		$('#themeClassic').removeClass('selected');
-		if($('#modern iframe').length == 0) modernIframe(diagramUrl);
-	}
-	$('#share-buttons').removeClass('classic');
-	$('#share-buttons').addClass('modern');    	
-	$('#subscribe-btn').removeClass('classic');
-	$('#subscribe-btn').addClass('modern');
-}
-
-function classic_theme(){
-	if(!$('#themeClassic').hasClass('selected')){
-		$('#classic').removeClass('hide');
-		$('#modern').addClass('hide');
-		$('#themeClassic').addClass('selected');
-		$('#themeModern').removeClass('selected');
-		if($('#classic iframe').length == 0) classicIframe(diagramUrl);
-	}
-	$('#share-buttons').removeClass('modern');
-	$('#share-buttons').addClass('classic');
-	$('#subscribe-btn').addClass('classic');
-	$('#subscribe-btn').removeClass('modern');
-}
-
-function modernIframe(diagramUrl){
-	// properly set iframe width and height
-	var diagramWidth = window.innerWidth*0.50;
-	var iframeWidth = diagramWidth + 80;
-	var iframeHeight = 800;
-	var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
-	var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
-	$('#modern .diagram').html(legendContent+iframeContent);
-}
-
-function classicIframe(diagramUrl){
-	// properly set iframe width and height
-	var diagramWidth = window.innerWidth*0.35;
-	var iframeWidth = diagramWidth + 80;
-	var iframeHeight = 800;
-	var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
-	var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
-	$('#classic .diagram').html(legendContent+iframeContent);
-}
 
 
 // url for interactive diagram (need to be global) --used in modern_theme() and classic_theme()

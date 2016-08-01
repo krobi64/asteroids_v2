@@ -19,8 +19,10 @@ function displayNewspaper(data) {
     $('.heroline').html(data.title);
     $('.flybyTitle').html(data.flyby.title);
     $('.flybyContents').html(data.flyby.content);
+    $('.flybyContents').append('&nbsp;<a href="http://minorplanetcenter.net/asteroid_explorers/show/'+data.orbit_diagram.asteroid_id+'" target="_blank" style="text-decoration:underline">More Details</a>');
     $('.storyTitle').html(data.news_story.title);
     $('.storyContents').html(data.news_story.content);
+    $('.storyContents').append('&nbsp;<a href="'+data.news_story.url+'" target="_blank" style="text-decoration:underline">Read More</a>');
     $('#entityId').val(data.id);
     $('.numberShares').html(data.shares);
 
@@ -94,6 +96,95 @@ function shareNewspaper(channel) {
         }
     });    
 }
+
+
+// detect WebGL setting of browser
+function webgl_detect(return_context)
+{
+    if (!!window.WebGLRenderingContext) {
+        var canvas = document.createElement("canvas"),
+             names = ["webgl", "experimental-webgl", "moz-webgl", "webkit-3d"],
+           context = false;
+
+        for(var i=0;i<4;i++) {
+            try {
+                context = canvas.getContext(names[i]);
+                if (context && typeof context.getParameter == "function") {
+                    // WebGL is enabled
+                    if (return_context) {
+                        // return WebGL object if the function's argument is present
+                        return {name:names[i], gl:context};
+                    }
+                    // else, return just true
+                    return true;
+                }
+            } catch(e) {}
+        }
+
+        // WebGL is supported, but disabled
+        return false;
+    }
+
+    // WebGL not supported
+    return false;
+}
+
+function modern_theme(){
+    if(!$('#themeModern').hasClass('selected')){
+        $('#modern').removeClass('hide');
+        $('#classic').addClass('hide');
+        $('#themeModern').addClass('selected');
+        $('#themeClassic').removeClass('selected');
+        if($('#modern iframe').length == 0) modernIframe(diagramUrl);
+    }
+    $('#share-buttons').removeClass('classic');
+    $('#share-buttons').addClass('modern');     
+    $('#subscribe-btn').removeClass('classic');
+    $('#subscribe-btn').addClass('modern');
+    var top = $('#modern .subHeaderline').position().top-8;
+    $('#share-buttons').css('top',top);
+}
+
+function classic_theme(){
+    if(!$('#themeClassic').hasClass('selected')){
+        $('#classic').removeClass('hide');
+        $('#modern').addClass('hide');
+        $('#themeClassic').addClass('selected');
+        $('#themeModern').removeClass('selected');
+        if($('#classic iframe').length == 0) classicIframe(diagramUrl);
+    }
+    $('#share-buttons').removeClass('modern');
+    $('#share-buttons').addClass('classic');
+    $('#subscribe-btn').addClass('classic');
+    $('#subscribe-btn').removeClass('modern');
+    var top = $('#classic .subHeaderline').position().top-8;
+    $('#share-buttons').css('top',top);
+}
+
+function modernIframe(diagramUrl){
+    if( webgl_detect()) {
+        // properly set iframe width and height
+        var diagramWidth = window.innerWidth*0.50;
+        var iframeWidth = diagramWidth + 80;
+        var iframeHeight = 800;
+        var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
+        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
+        $('#modern .diagram').html(legendContent+iframeContent);
+    }
+}
+
+function classicIframe(diagramUrl){
+    if( webgl_detect()) {
+        // properly set iframe width and height
+        var diagramWidth = window.innerWidth*0.35;
+        var iframeWidth = diagramWidth + 80;
+        var iframeHeight = 800;
+        var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
+        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
+        $('#classic .diagram').html(legendContent+iframeContent);
+    }
+}
+
 
 // subscribe
 $(function() { //shorthand document.ready function
