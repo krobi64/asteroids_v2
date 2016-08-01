@@ -8,17 +8,17 @@
     <!-- sample fb meta -->
     <meta property="og:title" content="Daily Minor Planet" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://" />
-    <meta property="og:image" content="http://" />
+    <meta property="og:url" content="http://www.minorplanetcenter.net/daily-minor-planet" />
+    <meta property="og:image" content="https://pbs.twimg.com/profile_images/1844408727/MPClogo6b.png" />
     <meta property="og:description" content=""/>  
   
     <!-- sample twitter meta -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@">
-    <meta name="twitter:creator" content="@">
+    <meta name="twitter:site" content="http://www.minorplanetcenter.net/daily-minor-planet">
+    <meta name="twitter:creator" content="@MinorPlanetCtr">
     <meta name="twitter:title" content="Daily Minor Planet">
     <meta name="twitter:description" content="">  
-    <meta name="twitter:image" content="">
+    <meta name="twitter:image" content="https://pbs.twimg.com/profile_images/1844408727/MPClogo6b.png">
   
 	<!-- Custom Fonts -->
 	<link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -250,8 +250,6 @@ $('.modal').on('shown.bs.modal', function () {
     $(this).find('form').validator('destroy').validator()
 });
 
-
-
 // url for interactive diagram (need to be global) --used in modern_theme() and classic_theme()
 var diagramUrl = "";
 
@@ -261,7 +259,7 @@ $(document).ready(function() {
 	getNewspaper();
 	
 	// @Raymond, get diagram url 
-	diagramUrl = "http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2009+QH34&epoch=2016-07-31.0&number=&designation=2009+QH34&name=&peri=189.0763893&m=353.96876&node=161.0193848&incl=3.0708676&e=0.560498657&a=2.2913121&commit=Interactive+Orbit+Sketch #orbit-sketch";
+	diagramUrl = "http://minorplanetcenter.net/db_search/show_orbit_dmp?utf8=%E2%9C%93&object_id=2014+AA&epoch=2013-11-04.0&number=&designation=2014+AA&name=&peri=52.0242539&m=278.29815&node=101.7040875&incl=1.3989395&e=0.20920871&a=1.1605495&commit=Interactive+Orbit+Sketch";
 	
 	// @Raymond, please check the default theme here.
 	modernIframe(diagramUrl);

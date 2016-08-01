@@ -211,8 +211,15 @@
 	display: inline-block;
 	margin-right:5px;
 }
-/* CLASSIC UI */
 
+#modern .interactiveLink,#classic .interactiveLink {
+	z-index: 999;
+	position: absolute;
+	right:10px;
+	top:10px;
+}
+
+/* CLASSIC UI */
 #dmp-wrapper #classic{
 	margin: 0 auto;
 	background:url('../images/bg.png') repeat;
@@ -221,6 +228,7 @@
 	font-family: 'Brawler', serif;
 	display: block;
 	width:100%;
+	padding:0;
 }
 #dmp-wrapper #classic:after {
   content: "";
@@ -281,7 +289,8 @@
 }
 #dmp-wrapper #classic .bodyContainer{
 	width:100%;
-	min-height:650px;
+	min-height:450px;
+	height:auto;
 	vertical-align: top;
 }
 #dmp-wrapper #classic .heroline{
@@ -302,7 +311,7 @@
 #dmp-wrapper #classic .diagram{
 	width:35%;
 	height:auto;
-	height:600px;
+	height:400px;
 	background-color: #08002A;
 	background-size: 100% 100% cover;
 	background-position: 50% 50%;	

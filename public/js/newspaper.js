@@ -172,25 +172,21 @@ function classic_theme(){
 
 function modernIframe(diagramUrl){
     if( webgl_detect()) {
-        // properly set iframe width and height
-        var diagramWidth = window.innerWidth*0.50;
-        var iframeWidth = diagramWidth + 80;
-        var iframeHeight = 800;
         var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
-        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
-        $('#modern .diagram').html(legendContent+iframeContent);
+        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:100%;height:100%"></iframe>';
+        var newdiagramUrl = diagramUrl.replace('show_orbit_dmp','show_orbit');
+        var linkToInteractive = '<a href="'+newdiagramUrl+'" target="_blank" class="interactiveLink"><span style="color:white;font-size:1em" class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span></a>';
+        $('#modern .diagram').html(legendContent+linkToInteractive+iframeContent);
     }
 }
 
 function classicIframe(diagramUrl){
     if( webgl_detect()) {
-        // properly set iframe width and height
-        var diagramWidth = window.innerWidth*0.35;
-        var iframeWidth = diagramWidth + 80;
-        var iframeHeight = 800;
         var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>&#169; Minor Planet Center</li> </ul> </div>';
-        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:'+iframeWidth+'px;height:'+iframeHeight+'px"></iframe>';
-        $('#classic .diagram').html(legendContent+iframeContent);
+        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:100%;height:100%"></iframe>';
+        var newdiagramUrl = diagramUrl.replace('show_orbit_dmp','show_orbit');
+        var linkToInteractive = '<a href="'+newdiagramUrl+'" target="_blank" class="interactiveLink"><span style="color:white;font-size:1em" class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span></a>';
+        $('#classic .diagram').html(legendContent+linkToInteractive+iframeContent);
     }
 }
 
