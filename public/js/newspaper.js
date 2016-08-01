@@ -78,6 +78,15 @@ function getNewspaper() {
     });
 }
 
+// populate contents for social media
+function populateSocialcontent(url){
+    $('.rrssb-buttons').rrssb({
+        // required:
+        title: 'Get your daily dose of #asteroid today with @MinorPlanetCtr\'s #DailyMinorPlanet:',
+        url: url
+  });
+}
+
 // record social sharing
 function shareNewspaper(channel) {
     var editionId = $('#entityId')[0].value;
