@@ -16,6 +16,7 @@ class Edition < ActiveRecord::Base
 
   state_machine :state, initial: :draft do
     after_transition(on: :publish) do |edition, _|
+      edition.orbit_diagram.create_static_image
       edition.publish_date ||= DateTime.now
     end
 
