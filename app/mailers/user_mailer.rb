@@ -13,6 +13,8 @@ class UserMailer < ActionMailer::Base
     @year = pDate.strftime('%Y')
     @month = pDate.strftime('%B')
     @day = pDate.strftime('%-d')
+    filepath = pDate.strftime('%F')
+    @image_url = "http://www.minorplanetcenter.net/images/orbit/" + filepath + ".png"
 
     mail( to: @email, subject: "Your Daily Minor Planet" )
   end
