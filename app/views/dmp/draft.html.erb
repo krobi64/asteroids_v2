@@ -61,7 +61,7 @@
                         <div class="subHeaderline">
                             <div class="est">Est. 1947</div>
                             <div class="dates">
-                                <span class="dayofweek"></span>, 
+                                <span class="dayofweek"></span>,
                                 <span class="month"></span>
                                 <span class="day"></span>,
                                 <span class="year"></span>
@@ -74,7 +74,7 @@
                         <div class="bodyContentsContainer">
                             <div class="flybyContainer">
                                 <div class="flybyTitle"></div>
-                                <div class="flybyContents"></div>               
+                                <div class="flybyContents"></div>
                             </div>
                             <div class="diagram"></div>
                             <div class="storyContainer">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                </section>  
+                </section>
             </div>
         </div>        <!-- End of Preview  -->
       </div>
@@ -93,7 +93,7 @@
 
 <div id="dmp-editor-wrapper">
     <div id="newspaperContainer">
-        <a href="./archive.html" style="color:#0C69E6;line-height:34px;"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;Go to Archive</a>
+        <a href="<%= archives_path %>" style="color:#0C69E6;line-height:34px;"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;Go to Archive</a>
         <div class="editorPageBtn btn-group" role="group">
             <button type="button" class="btn btn-default btn-md preview" data-toggle="modal" data-target="#preview" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</button>
             <button type="button" class="btn btn-default btn-md save" title="Save and publish as scheduled" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Save</button>
@@ -106,7 +106,7 @@
               </button>
               <ul class="dropdown-menu">
                 <li><a href="#" class="unpublish"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;&nbsp;Skip to publish this edition</a></li>
-              </ul> 
+              </ul>
             -->
             </div>
         </div>
@@ -154,7 +154,7 @@
                     </div>
                     <div class="eachLine">
                         <div class="editLabel">Flyby Image</div>
-                        <div class="inputValue"> 
+                        <div class="inputValue">
                             <input type="text" id="flybyImageUrl" value="http://" readonly/>
                             <!-- Image Upload -->
                             <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -169,7 +169,7 @@
                             </div>
                         </div>
 
-                    </div>                    
+                    </div>
                 </div>
                 <div class="editSection" id="bodyNews">
                     <h4>3. News Story</h4>
@@ -178,7 +178,7 @@
                         <div class="editLabel">News Source</div>
                         <div class="inputValue" id="sourceList">
                             <input type="radio" name="newsSource" value="source1" checked> source1
-                            <input type="radio" name="newsSource" value="source2" style="margin-left:10px"> source2 
+                            <input type="radio" name="newsSource" value="source2" style="margin-left:10px"> source2
                             <input type="radio" name="newsSource" value="source3" style="margin-left:10px"> source3
                             <input type="radio" name="newsSource" value="source4" style="margin-left:10px"> source4
                         </div>
@@ -187,7 +187,7 @@
                     <div class="eachLine">
                         <div class="editLabel">News URL</div>
                         <div class="inputValue"><input type="text" id="newsUrl" value="http://"/> </div>
-                    </div>  
+                    </div>
                     <div class="eachLine">
                         <div class="editLabel">News Title</div>
                         <div class="inputValue"> <textarea rows="2" id="newsTitle">Hella narwhal Cosby sweater McSweeney's, salvia</textarea></div>
@@ -195,7 +195,7 @@
                     <div class="eachLine">
                         <div class="editLabel">News Content</div>
                         <div class="inputValue"> <textarea rows="4" id="newsContent">Aliquam erat volutpat. Integer ut tincidunt orci. Etiam tristique, elit ut consectetur iaculis, metus lectus mattis justo, vel mollis eros neque quis augue. Sed lobortis ultrices lacus, a placerat metus rutrum sit amet. Aenean ut suscipit justo.</textarea></div>
-                    </div>  
+                    </div>
 
                 </div>
             </div>

@@ -4,9 +4,12 @@ Mpc::Application.routes.draw do
   ActiveAdmin.routes(self)
 
   get 'flyby/search' => 'flyby#search'
+  get 'flyby/orbit_params/:designation' => 'flyby#orbit_params'
 
   post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe
-  get 'unsubscribe', controller: :subscriptions, actions: :unsubscribe, as: :unsubscribe
+  get 'unsubscribe', controller: :subscriptions, action: :unsubscribe, as: :unsubscribe
+  get 'dmp/archives', controller: :dmp, action: :archive, as: :archives
+  get 'dmp/draft', controller: :dmp, action: :draft, as: :draft
 
   resources :sources, only: [:index] do
     member do
