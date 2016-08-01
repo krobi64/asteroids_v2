@@ -8,6 +8,8 @@ var fixdata = {
 	est:"Est. 1947",
 	diagram:"diagram.png"
 };
+var currentTheme = "modern";
+var interactiveUrl = "";
 
 // plugin live data into the display
 function displayNewspaper(data) {
@@ -25,6 +27,13 @@ function displayNewspaper(data) {
     $('.storyContents').append('&nbsp;<a href="'+data.news_story.url+'" target="_blank" style="text-decoration:underline">Read More</a>');
     $('#entityId').val(data.id);
     $('.numberShares').html(data.shares);
+    var theme = data.theme.name;
+    if( theme === "classic") {
+        classic_theme();
+    }
+    else if (theme === "modern") {
+        modern_theme();
+    }
 
     var today = new Date(data.publish_date);
     data.year = today.getFullYear();
@@ -42,7 +51,6 @@ function displayNewspaper(data) {
     var static_image_url = "/images/orbit/" + data.publish_date.substring(0,10) + ".png";
     $('.diagram').css('background-image','url("'+ static_image_url +'")');
     $('.mobile-diagram').css('background-image','url("' + static_image_url + '")');
-
 }
 
 // get the newspaper content for current edition
@@ -70,7 +78,51 @@ function getNewspaper() {
         contentType: "application/json; charset=UTF-8",
         success: function(edition, status, error) {
             console.log( "success ",  edition );
+
+            // ask backend for more asteroid properties for interactive diagram rendering
+            getInteractiveUrl(edition.orbit_diagram.asteroid_id)
+
 	        displayNewspaper(edition);
+        },
+        error: function(res, status, error) {
+            console.log( "error: ", error );
+        }
+    });
+}
+
+// http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2008+VA15&epoch=2016-07-31.0&number=&designation=2008+VA15&name=&peri=96.8053975&m=137.95785&node=335.1056427&incl=1.82044&e=0.303886146&a=1.4499345&commit=Interactive+Orbit+Sketch
+function showInteractive(orbit) {
+    var aURL = "/db_search/show_orbit?utf8=%E2%9C%93";
+
+    for( var key in orbit ) {
+        if( orbit.hasOwnProperty(key) ) {
+            var val = obj[key];
+            aURL = aURL + "&" + key + "=" + encodeURIComponent(val);
+        }
+    }
+    
+    console.log("interactive url: " + aURL);
+    interactiveUrl = aURL:
+
+    if( currentTheme === "modern" ) {
+        modernIframe(interactiveUrl);
+    }
+    else if( currentTheme === "classic" ) {
+        classicIframe(interactiveUrl);
+    }
+
+}
+
+function getInteractiveUrl(designation) {
+    var formatted = encodeURIComponent(designation);
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:3000/flyby/orbit_params/" + formatted,
+        contentType: "application/json; charset=UTF-8",
+        dataType: "json",
+        success: function(orbit, status, error) {
+            console.log( "success ",  orbit );
+            showInteractive(orbit);
         },
         error: function(res, status, error) {
             console.log( "error: ", error );
@@ -123,10 +175,9 @@ function webgl_detect(return_context)
                 if (context && typeof context.getParameter == "function") {
                     // WebGL is enabled
                     if (return_context) {
-                        // return WebGL object if the function's argument is present
+                        // return WebGL object if the function's argument exists
                         return {name:names[i], gl:context};
                     }
-                    // else, return just true
                     return true;
                 }
             } catch(e) {}
@@ -146,7 +197,7 @@ function modern_theme(){
         $('#classic').addClass('hide');
         $('#themeModern').addClass('selected');
         $('#themeClassic').removeClass('selected');
-        if($('#modern iframe').length == 0) modernIframe(diagramUrl);
+        if($('#modern iframe').length == 0) modernIframe(interactiveUrl);
     }
     $('#share-buttons').removeClass('classic');
     $('#share-buttons').addClass('modern');     
@@ -154,6 +205,8 @@ function modern_theme(){
     $('#subscribe-btn').addClass('modern');
     var top = $('#modern .subHeaderline').position().top-8;
     $('#share-buttons').css('top',top);
+
+    currentTheme = "modern";
 }
 
 function classic_theme(){
@@ -162,7 +215,7 @@ function classic_theme(){
         $('#modern').addClass('hide');
         $('#themeClassic').addClass('selected');
         $('#themeModern').removeClass('selected');
-        if($('#classic iframe').length == 0) classicIframe(diagramUrl);
+        if($('#classic iframe').length == 0) classicIframe(interactiveUrl);
     }
     $('#share-buttons').removeClass('modern');
     $('#share-buttons').addClass('classic');
@@ -170,6 +223,8 @@ function classic_theme(){
     $('#subscribe-btn').removeClass('modern');
     var top = $('#classic .subHeaderline').position().top-8;
     $('#share-buttons').css('top',top);
+
+    currentTheme = "classic";
 }
 
 function modernIframe(diagramUrl){
