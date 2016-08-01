@@ -21,7 +21,7 @@ function displayNewspaper(data) {
     $('.heroline').html(data.title);
     $('.flybyTitle').html(data.flyby.title);
     $('.flybyContents').html(data.flyby.content);
-    $('.flybyContents').append('&nbsp;<a href="http://minorplanetcenter.net/asteroid_explorers/show/'+data.orbit_diagram.asteroid_id+'" target="_blank" style="text-decoration:underline">More Details</a>');
+    $('.flybyContents').append('&nbsp;<a href="http://minorplanetcenter.net/db_search/show_object?object_id='+data.orbit_diagram.asteroid_id+'" target="_blank" style="text-decoration:underline">More Details</a>');
     $('.storyTitle').html(data.news_story.title);
     $('.storyContents').html(data.news_story.content);
     $('.storyContents').append('&nbsp;<a href="'+data.news_story.url+'" target="_blank" style="text-decoration:underline">Read More</a>');
@@ -80,7 +80,7 @@ function getNewspaper() {
             console.log( "success ",  edition );
 
             // ask backend for more asteroid properties for interactive diagram rendering
-            getInteractiveUrl(edition.orbit_diagram.asteroid_id)
+            getInteractiveUrl(edition.orbit_diagram.asteroid_id);
 
 	        displayNewspaper(edition);
         },
@@ -102,7 +102,7 @@ function showInteractive(orbit) {
     }
     
     console.log("interactive url: " + aURL);
-    interactiveUrl = aURL:
+    interactiveUrl = aURL;
 
     if( currentTheme === "modern" ) {
         modernIframe(interactiveUrl);
