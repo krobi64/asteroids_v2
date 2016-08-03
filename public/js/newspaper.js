@@ -24,7 +24,7 @@ function displayNewspaper(data) {
     $('.flybyContents').append('&nbsp;<a href="http://minorplanetcenter.net/db_search/show_object?object_id='+data.orbit_diagram.asteroid_id+'" target="_blank" style="text-decoration:underline">More Details</a>');
     $('.storyTitle').html(data.news_story.title);
     $('.storyContents').html(data.news_story.content);
-    $('.storyContents').append('&nbsp;<a href="'+data.news_story.url+'" target="_blank" style="text-decoration:underline">Read More</a>');
+    $('.storyContents').append('&nbsp;<a href="'+data.news_story.story_url+'" target="_blank" style="text-decoration:underline">Read More</a>');
     $('#entityId').val(data.id);
     $('.numberShares').html(data.shares);
     var theme = data.theme.name;
@@ -92,11 +92,11 @@ function getNewspaper() {
 
 // http://minorplanetcenter.net/db_search/show_orbit?utf8=%E2%9C%93&object_id=2008+VA15&epoch=2016-07-31.0&number=&designation=2008+VA15&name=&peri=96.8053975&m=137.95785&node=335.1056427&incl=1.82044&e=0.303886146&a=1.4499345&commit=Interactive+Orbit+Sketch
 function showInteractive(orbit) {
-    var aURL = "/db_search/show_orbit?utf8=%E2%9C%93";
+    var aURL = "/db_search/show_orbit_dmp?utf8=%E2%9C%93";
 
     for( var key in orbit ) {
         if( orbit.hasOwnProperty(key) ) {
-            var val = obj[key];
+            var val = orbit[key];
             aURL = aURL + "&" + key + "=" + encodeURIComponent(val);
         }
     }
@@ -117,6 +117,7 @@ function getInteractiveUrl(designation) {
     var formatted = encodeURIComponent(designation);
     $.ajax({
         type: 'GET',
+        url: "/flyby/orbit_params?designation="+formatted,
         url: "/flyby/orbit_params?designation="+formatted,
         contentType: "application/json; charset=UTF-8",
         dataType: "json",
@@ -203,9 +204,10 @@ function modern_theme(){
     $('#share-buttons').addClass('modern');     
     $('#subscribe-btn').removeClass('classic');
     $('#subscribe-btn').addClass('modern');
-    var top = $('#modern .subHeaderline').position().top-8;
-    $('#share-buttons').css('top',top);
-
+    if( $('#modern .subHeaderline').position() !== undefined ) {
+        var top = $('#modern .subHeaderline').position().top-8;
+        $('#share-buttons').css('top',top);
+    }
     currentTheme = "modern";
 }
 
@@ -221,9 +223,10 @@ function classic_theme(){
     $('#share-buttons').addClass('classic');
     $('#subscribe-btn').addClass('classic');
     $('#subscribe-btn').removeClass('modern');
-    var top = $('#classic .subHeaderline').position().top-8;
-    $('#share-buttons').css('top',top);
-
+    if( $('#classic .subHeaderline').position() !== undefined ) {
+        var top = $('#classic .subHeaderline').position().top-8;
+        $('#share-buttons').css('top',top);
+    }
     currentTheme = "classic";
 }
 

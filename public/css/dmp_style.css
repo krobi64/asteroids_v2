@@ -1,7 +1,8 @@
 #dmp-wrapper{
 	width:100%;
 	min-height:850px;
-	height:auto;	
+	height:auto;
+	margin-top: 65px;	
 }
 #dmp-wrapper #newspaperContainer{
 	padding:0px;
