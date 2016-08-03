@@ -26,6 +26,7 @@ var dailyMinorPlanetDraftForm = ( function() {
         s.newsContent.val( edition.news_story.content );
         s.newsUrl.val( edition.news_story.story_url );
         s.entityId.val( edition.id );
+        s.designation.val( edition.orbit_diagram.asteroid_id );
 
         // set the theme
         // s.theme.val( edition.theme.name);
@@ -222,6 +223,8 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         flyby.title = s.flybyTile[0].value;
         flyby.content = s.flybyContent[0].value;
 
+        diagram.asteroid_designation = s.designation[0].value;
+
         // this diagram url should not be edited manually
         // diagram.url = s.flybyImageUrl[0].value;
         news.title = s.newsTitle[0].value;
@@ -241,7 +244,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         draft.publish_date = pGMT;
         draft.flyby = flyby;
         draft.news_story = news;
-        // draft.orbit_diagram = diagram;
+        draft.orbit_diagram = diagram;
         draft.theme = theme;
 
         return draft;
