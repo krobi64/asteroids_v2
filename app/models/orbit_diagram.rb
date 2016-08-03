@@ -1,6 +1,7 @@
 class OrbitDiagram < ActiveRecord::Base
   belongs_to :created_by
   belongs_to :updated_by
+  has_one :edition
   attr_accessible :title, :asteroid_designation
 
   validates :title, presence: true
@@ -14,6 +15,10 @@ class OrbitDiagram < ActiveRecord::Base
 
   def self.published_asteroids
     pluck(:asteroid_designation)
+  end
+
+  def create_static_image
+    DmpUtil.generate_image(edition.orbit_diagram.asteroid_designation, edition.publish_date)
   end
 
   def as_json(options_for_json={})

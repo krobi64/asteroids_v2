@@ -3,7 +3,6 @@ namespace 'edition' do
   task :deliver_dmp => :environment do
     @edition = Edition.current
     Subscription.subscribed_users.each do |user|
-      puts "USER: #{user} confirmed? #{user.confirmed?}"
       UserMailer.daily_newspaper(user, @edition).deliver if user.confirmed?
     end
   end
@@ -17,7 +16,10 @@ namespace 'edition' do
 
   desc 'Automatically publish scheduled drafts'
   task :publish => :environment do
-    Edition.where(state: 'draft').where("publish_date IS NOT NULL AND publish_date < '#{Time.zone.now}'").all.each do |edition|
+    Edition.
+        where(state: 'draft').
+        where("publish_date IS NOT NULL AND publish_date < '#{Time.zone.now}'").
+    all.each do |edition|
       edition.publish!
     end
   end
