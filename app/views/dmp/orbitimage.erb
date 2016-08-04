@@ -30,7 +30,7 @@
                 dataType: "json",
             success: function(res, status, error) {
                 console.log( "success ",  res );
-                parent.document.getElementById('downloadCheck').html("Image successfully generated!");
+                parent.document.getElementById('downloadCheck').innerHTML = "Image successfully generated!";
             }, 
             error: function(res, status, error) {
                 console.log( "error: ", error );
