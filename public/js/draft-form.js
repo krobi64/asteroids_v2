@@ -250,6 +250,19 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         return draft;
     }
 
+// generate static flyby image
+function showFlybyImage(e){
+    var designation = s.designation[0].value;
+    var pdate = s.publishDay[0].value;
+    if( designation === undefined || pdate === undefined ) {
+        alert("Require asteroid designation and flyby date to generate flyby diagram image");
+    }
+    // reformat pdate
+    pdate = pdate.replace('/', '-');
+
+    // open up a window and load a page
+
+};
 
 // fetch
 function fetchFlybyInfo(e){
@@ -314,6 +327,7 @@ function fetchFlybyInfo(e){
             publishAction: $('.publish'),
             unpublishAction: $('.unpublish'),
             fetchAction: $('#dmp-flyby-fetch'),
+            showFlybyImageAction: $('#show-flyby-image'),
             publishDay: $('#publishDay'),
             publishTime: $('#publishTime'),
             tagLine: $('#tagline'),
@@ -355,6 +369,10 @@ function fetchFlybyInfo(e){
 
             s.fetchAction.on("click", function(e) {
                 fetchFlybyInfo(e);
+            });
+
+            s.showFlybyImageAction.on("click", function(e) {
+                showFlybyImage(e);
             });
         },
 

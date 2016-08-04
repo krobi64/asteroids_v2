@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/vader/jquery-ui.css"/>
+  <link rel="stylesheet" href="/stylesheets/show-orbit.css"/>
+
+  <title>MPC -- Orbit Sketch</title>
+
+  <script src="/js/processing.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
+  <script src="/js/reimg.js"></script>
+  <script type="text/javascript">
+    function sendImageDataToServer() {
+      String desig = "<%= @desig %>";
+      String name = "<%= @name %>";
+      String date = "<%= @date %>";
+
+
+    }
+
+    function downloadCanvasAsPng(fileName) {
+      ReImg.fromCanvas(document.querySelector('canvas')).downloadPng(fileName);
+    }
+  </script>
+
+  <script type="text/javascript">
+    var uivars = {
+      max_out: 0,
+      yaw: 0,
+      roll: 0,
+      in_out: 0,
+      width: 0,
+      height: 0
+    };
+  </script>
+
+  <script type="text/processing" data-processing-target="orbit-sketch">
+    int WIDTH       = <%= @width %>;
+    int HEIGHT      = <%= @height %>;
+    int HALF_WIDTH  = WIDTH / 2;
+    int HALF_HEIGHT = HEIGHT / 2;
+    float WIDTH_OVER_HEIGHT = WIDTH / HEIGHT;
+
+    float SUN_SIZE = 5.0;
+    float ONE_AU = 100;
+
+    int obj_x = <%= @obj_x %>;
+    int obj_y = <%= @obj_y %>;
+    int obj_z = <%= @obj_z %>;
+
+    String desig = "<%= @desig %>";
+    String name = "<%= @name %>";
+    String date = "<%= @date %>";
+
+    float obj_peri = <%= @peri %>;
+    float obj_node = <%= @node %>;
+    float obj_incl = <%= @incl %>;
+    float obj_e = <%= @e %>;
+    float obj_a = <%= @a %>;
+
+    float view_dist = <%= @view_dist %>;
+    float x_offset  = <%= @x_offset %>;
+    float y_offset  = <%= @y_offset %>;
+
+    int OBJECT  = 0;
+    int MERCURY = 1;
+    int VENUS   = 2;
+    int EARTH   = 3;
+    int MARS    = 4;
+    int JUPITER = 5;
+    int SATURN  = 6;
+    int URANUS  = 7;
+    int NEPTUNE = 8;
+
+    int OBJ_COUNT = 9;
+
+    // Orbital elements: object  Mercury   Venus   Earth    Mars Jupiter  Saturn   Uranus Neptune
+    float[] elts_peri = {obj_peri, 29.13,  54.92, 102.94, 286.50, 274.25, 338.94,  96.94, 273.18};
+    float[] elts_node = {obj_node, 48.33,  76.68,   0.00,  49.56, 100.47, 113.66,  74.02, 131.78};
+    float[] elts_incl = {obj_incl,  7.00,   3.39,   0.00,   1.85,   1.30,   2.49,   0.77,   1.77};
+    float[] elts_e    = {   obj_e, 0.206,  0.007,  0.017,  0.093,  0.048,  0.054,  0.047,  0.009};
+    float[] elts_a    = {   obj_a,  0.39,   0.72,    1.0,   1.52,   5.20,   9.54,  19.19,  30.07};
+
+    float[] orb_red = {0, 139, 120, 102, 170, 238, 238, 143, 102};
+    float[] orb_grn = {0,  69, 120, 178,   0, 154, 220, 188, 102};
+    float[] orb_blu = {0,  19, 120, 255,   0,   0, 130, 143, 255};
+
+    // Auxilliary params:
+    float[] aux_c = new float[OBJ_COUNT];  // focus
+    float[] aux_b = new float[OBJ_COUNT];  // semi-major axis
+    // Angles used to draw arcs to ascending and descending nodes:
+    float[] aux_alpha = new float[OBJ_COUNT];
+    float[] aux_beta  = new float[OBJ_COUNT];
+
+    float X_VIEW_ANGLE_INITIAL = radians(0);
+    float Z_VIEW_ANGLE_INITIAL = 3.14159 + atan2(obj_x, obj_y);
+
+    float obj_Q = obj_a * (1 + obj_e);
+    float CAMERA_Z_INITIAL = 6.5 * obj_Q * ONE_AU;
+    
+    // Whether perihelion is above or below the ecliptic plane:
+    boolean peri_above[9] = [true, true, true, true, true, true, true, true, true];
+    
+    float x_center = HALF_WIDTH;
+    float y_center = HALF_HEIGHT;
+    float z_center = 0.0;
+    
+    float camera_x = x_center;
+    float camera_y = y_center;
+
+    float camera_z = CAMERA_Z_INITIAL;
+    if (view_dist != -1)
+      camera_z = view_dist * ONE_AU;
+    
+    float x_view_angle = X_VIEW_ANGLE_INITIAL;
+    float z_view_angle = Z_VIEW_ANGLE_INITIAL;
+
+    void setup() {
+      uivars.width = WIDTH;
+      uivars.height = HEIGHT;
+      size(WIDTH, HEIGHT, P3D);
+      strokeWeight(4.0);
+      ellipseMode(RADIUS);
+
+      // Deal with perihelion below ecliptic:
+      for (obj_id = 1; obj_id < OBJ_COUNT; obj_id++) {
+        if (elts_peri[obj_id] > 180.0)  { 
+          peri_above[obj_id] = false;
+        }
+      }
+
+      // Flag perihelion below ecliptic:
+      if ((elts_peri[OBJECT] > 180.0) || (elts_peri[OBJECT] < 0.0)) {
+        peri_above[OBJECT] = false;
+      }
+
+      uivars.yaw = degrees(z_view_angle);
+      uivars.roll = degrees(-x_view_angle);
+
+      if (obj_Q > 30)  { uivars.max_out = 10.0 * obj_Q; }
+      else             { uivars.max_out = 200; }
+
+      uivars.in_out = CAMERA_Z_INITIAL / ONE_AU;
+      uivars.left_right = x_center - HALF_WIDTH;
+      uivars.up_down = y_center - HALF_HEIGHT;
+
+      // Put parameters in a more usable form:
+      for (obj_id = 0; obj_id < OBJ_COUNT; obj_id++) {
+        if (elts_peri[obj_id] > 180.0) {
+          elts_peri[obj_id] -= 180.0;
+        }
+        elts_peri[obj_id] = radians(elts_peri[obj_id]);
+        elts_node[obj_id] = radians(elts_node[obj_id]);
+        elts_incl[obj_id] = radians(elts_incl[obj_id]);
+        elts_a[obj_id] = elts_a[obj_id] * ONE_AU;
+        aux_c[obj_id] = elts_a[obj_id] * elts_e[obj_id];
+        aux_b[obj_id] = sqrt((elts_a[obj_id] * elts_a[obj_id]) - 
+                             (aux_c[obj_id] * aux_c[obj_id]));
+
+        float a = elts_a[obj_id];
+        float b = aux_b[obj_id];
+        float c = aux_c[obj_id];
+        float e = elts_e[obj_id];
+        float peri = elts_peri[obj_id];
+
+        // Find angle subtended at ellipse center of the argument of perihelion:
+        float r1 = a * (1 - e * e) / (1 + e * cos(peri));
+        float x1 = r1 * cos(peri);
+        float y1 = r1 * sin(peri);
+        float alpha = atan2(y1, c + x1);
+    
+        // Find angle subtended at ellipse center from perihelion to the descending node:
+        // Note: the ascending node, Sun, and descending node should be collinear.
+        float theta = PI - peri;
+        float r2 = a * (1 - e * e) / (1 + e * cos(theta));
+        float x2 = r2 * cos(peri) - c;
+        float y2 = r2 * sin(peri);
+        float gamma2 = atan2(y2, x2);
+        float beta = PI - gamma2;
+    
+        // Apply fudge factors to get arc function to work right with non-circles:
+        float cr = y1 / sin(alpha);
+        float nx = cr * cos(alpha);
+        alpha = acos(nx / a);
+
+        float epsilon2 = acos(x2 / a);
+        float delta2 = epsilon2 - gamma2;
+        beta = beta - delta2;
+
+        aux_alpha[obj_id] = alpha;
+        aux_beta[obj_id] = beta;
+      }
+
+      // Save CPU by turning off looping -- mouse movements will call redraw():
+      noLoop();
+    }
+
+
+    void mouseDragged() {
+      uivars.yaw += 0.5 * (mouseX - pmouseX);
+      uivars.roll -= 0.5 * (mouseY - pmouseY);
+
+      $("#yaw-slider").slider("option", "value", uivars.yaw);
+      $("#roll-slider").slider("option", "value", uivars.roll);
+
+      redraw();
+    }
+
+
+    void draw() {
+      background(8, 0, 42);
+      //z-- textFont(createFont("Verdana", 15));
+
+      fill(253, 255, 56);
+      stroke(253, 255, 56);
+      textSize(18);
+
+      textSize(15);
+      stroke(255, 255, 255);
+      fill(255, 255, 255);
+      text(date, 10, 10, 0);
+      text("Credit: Minor Planet Center", x_center - 105, HEIGHT - 15, 0);
+
+      // Draw Sun:
+      pushMatrix();
+      translate(x_offset, y_offset, 0);
+
+      //z-+fill(253, 255, 56);
+      //z-+stroke(253, 255, 56);
+      fill(245, 166, 35);
+      stroke(245, 166, 35);
+
+      translate(x_center, y_center, 0);
+      sphere(SUN_SIZE);
+
+      textSize(15);
+      fill(255, 255, 255);
+      stroke(255, 255, 255);
+      text("Sun",  -10, 16, 0);
+      popMatrix();
+
+      // Set projection parameters:
+      camera(camera_x, camera_y, camera_z, HALF_WIDTH, HALF_HEIGHT, 0, 0, 1, 0);
+      perspective(0.3333, WIDTH_OVER_HEIGHT, camera_z * 0.01, camera_z * 100.0);
+    
+      // Flip mapping so that Y-axis points up on the screen rather than down:
+      scale(1, -1, 1);
+    
+      // Place origin at the center of the sketch:
+      translate(x_center, -y_center, z_center);
+      translate(x_offset, -y_offset, 0);
+
+      // Set viewing angle:
+      z_view_angle = radians(uivars.yaw);
+      x_view_angle = radians(-uivars.roll);
+
+      // Set minimum allowable distance:
+      if (uivars.in_out < 0.1)
+        uivars.in_out   = 0.1;
+
+      camera_z = uivars.in_out * ONE_AU;
+      x_center = uivars.left_right + HALF_WIDTH;
+      y_center = uivars.up_down + HALF_HEIGHT;
+
+      rotateX(x_view_angle);
+      rotateZ(z_view_angle);
+
+      label_dist = sqrt((camera_x - obj_x) * (camera_x - obj_x) + (camera_y - obj_y) * (camera_y - obj_y) + (camera_z - obj_z) * (camera_z - obj_z));
+
+      pushMatrix();
+      translate(1.12 * obj_x, 1.12 * obj_y, 0 * obj_z);
+
+      rotateX(3.14159265 - x_view_angle);
+      rotateZ(z_view_angle);
+
+      fill(253, 255, 56);
+      stroke(253, 255, 56);
+      textSize(label_dist / 124.0);
+      text(name, -30, +3, 0);
+      popMatrix();
+
+      // Draw orbits:
+      for (int obj_id = 0; obj_id < OBJ_COUNT; obj_id++)  { draw_orbit(obj_id); }
+
+      fill(255, 240, 240);
+      stroke(255, 240, 240);
+
+     <%= render "/db_search/xyz/obj_#{@packed_desig}" %>
+    }
+
+
+    void draw_orbit(int obj_id) {
+      // Define some local vars to simplify equations:
+      float peri = elts_peri[obj_id];
+      float node = elts_node[obj_id];
+      float incl = elts_incl[obj_id];
+      float e = elts_e[obj_id];
+      float a = elts_a[obj_id];
+      float b = aux_b[obj_id];  // semi-major axis      
+      float c = aux_c[obj_id];  // focus
+      float alpha = aux_alpha[obj_id];
+      float beta = aux_beta[obj_id];
+
+      pushMatrix();
+      rotateZ(node + peri);
+      rotate_xyz(cos(peri), -sin(peri), 0.0, incl);
+
+      if (!peri_above[obj_id]) { rotateZ(PI); }
+
+      translate(-c, 0, 0);
+    
+      spacing = abs(beta - alpha) / 180;
+      if (spacing < 0.02)  { spacing = 0.02; }
+
+      // Draw below-ecliptic portion of orbit:
+      if (peri_above[OBJECT])  { stroke(253, 255, 56); }
+      else  { stroke(253, 255, 56); }
+
+      // Planet orbit:
+      if (obj_id != OBJECT) {
+        stroke(orb_red[obj_id], orb_grn[obj_id], orb_blu[obj_id]);
+      }
+    
+      noFill(); 
+
+      if (obj_id == OBJECT) {
+        strokeWeight(3.0);
+      }
+      else {
+        strokeWeight(3.0);
+      }
+
+      arc(0, 0, a, b, beta, TWO_PI - alpha);
+
+      // Draw above-ecliptic portion of orbit:
+      if (peri_above[OBJECT])  { stroke(253, 255, 56); }
+      else             { stroke(253, 255, 56); }
+
+      // Planet orbit:
+      if (obj_id != OBJECT) {
+        stroke(orb_red[obj_id], orb_grn[obj_id], orb_blu[obj_id]);
+      }
+    
+      noFill();
+
+      arc(0, 0, a, b, -alpha, beta);
+      popMatrix();
+    }
+
+
+    void rotate_xyz(float x, float y, float z, float angle) {
+      // Rotate around the normalized vector passing through [0, 0, 0] and [x, y, z]:
+      // N.B.: the vector *must* be provided normalized: sqrt(x*x + y*y + z*z) == 1
+
+      float ca = cos(angle);
+      float sa = sin(angle);
+      float da = 1 - ca;
+    
+      applyMatrix(     da * x * x + ca,  da * x * y - sa * z,  da * x * z + sa * y,  0,
+                   da * x * y + sa * z,      da * y * y + ca,  da * y * z - sa * x,  0,
+                   da * x * z - sa * y,  da * y * z + sa * x,      da * z * z + ca,  0,
+                                     0,                    0,                    0,  1);
+    }
+
+  </script>
+</head>
+    
+<body onload="sendImageDataToServer()">
+  <canvas id="orbit-sketch"></canvas>
+  <script type="text/javascript" src="/js/show-orbit.js"></script>
+</body>
+</html>
