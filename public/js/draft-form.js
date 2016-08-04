@@ -251,7 +251,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
     }
 
 // generate static flyby image
-function showFlybyImage(e){
+function showFlybyImage(){
     var designation = s.designation[0].value;
     var pdate = s.publishDay[0].value;
     if( designation === undefined || pdate === undefined ) {
@@ -262,15 +262,15 @@ function showFlybyImage(e){
 
     // open up a window and load a page
     var url ="http://mpc.eps.harvard.edu/db_search/show_orbit_png?designation="+designation +"&date="+pdate;
-    var width = $(this).attr('data-width') || 600; 
-    var height = $(this).attr('data-height') || 600; 
+    var width = 620; 
+    var height = 620; 
     
     $("#staticImageModal iframe").attr({
         'src': url,
         'height': height,
         'width': width
     });
-};
+}
 
 // fetch
 function fetchFlybyInfo(e){
@@ -335,7 +335,7 @@ function fetchFlybyInfo(e){
             publishAction: $('.publish'),
             unpublishAction: $('.unpublish'),
             fetchAction: $('#dmp-flyby-fetch'),
-            showFlybyImageAction: $('#show-flyby-image'),
+            showFlybyImageAction: $('#downloadImage'),
             publishDay: $('#publishDay'),
             publishTime: $('#publishTime'),
             tagLine: $('#tagline'),
@@ -380,7 +380,7 @@ function fetchFlybyInfo(e){
             });
 
             s.showFlybyImageAction.on("click", function(e) {
-                showFlybyImage(e);
+                showFlybyImage();
             });
         },
 
