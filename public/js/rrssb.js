@@ -221,9 +221,9 @@
 		});
 
 		// if first time running, put it through the magic layout
-		if (init === true) {
-			rrssbMagicLayout(sizeSmallBtns);
-		}
+		// if (init === true) {
+		// 	rrssbMagicLayout(sizeSmallBtns);
+		// }
 	};
 
 	var sizeSmallBtns = function() {

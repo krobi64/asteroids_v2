@@ -190,6 +190,11 @@ function webgl_detect(return_context)
     // WebGL not supported
     return false;
 }
+function applyMobileTheme(){
+    $('#share-buttons').css('opacity','1').show();    
+    $('.shares').css('opacity','0');
+    $('#share-buttons').css('top','0px');    
+}
 
 function modern_theme(){
     if(!$('#themeModern').hasClass('selected')){
