@@ -295,6 +295,7 @@ function fetchFlybyInfo(e){
                 s.flybyTile.val(title);
                 s.flybyContent.val(content);
                 s.flybyImageUrl.val(url);
+                $('#downloadCheck').html('');
             },
             error: function(res, status, error) {
                 console.log( "error: ", error );
