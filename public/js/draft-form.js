@@ -261,7 +261,15 @@ function showFlybyImage(e){
     pdate = pdate.replace('/', '-');
 
     // open up a window and load a page
-
+    var url ="http://mpc.eps.harvard.edu/db_search/show_orbit_png?designation="+designation +"&date="+pdate;
+    var width = $(this).attr('data-width') || 600; 
+    var height = $(this).attr('data-height') || 600; 
+    
+    $("#staticImageModal iframe").attr({
+        'src': url,
+        'height': height,
+        'width': width
+    });
 };
 
 // fetch

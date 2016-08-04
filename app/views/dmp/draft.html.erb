@@ -15,8 +15,6 @@
     <title>Editor View - Daily Minor Planet</title>
 </head>
 <body>
-<style>
-</style>
 <!-- Preview Modal -->
 <div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="width:90%;">
@@ -141,7 +139,7 @@
                     <h4>2. Flyby News</h4>
                     <div class="eachLine">
                         <div class="editLabel">Asteroid Designation Number</div>
-                        <div class="inputValue"> <input type="text" id="designation" style="width:70%">&nbsp;&nbsp;<button id="dmp-flyby-fetch" type="button" class="btn btn-default btn-sm">Fetch</button></div>
+                        <div class="inputValue"> <input type="text" id="designation" style="width:70%">&nbsp;&nbsp;<button id="dmp-flyby-fetch" type="button" class="btn btn-default btn-sm">Fetch Another</button></div>
                     </div>
 
                     <div class="eachLine">
@@ -152,6 +150,32 @@
                         <div class="editLabel">Flyby Content</div>
                         <div class="inputValue"> <textarea rows="6" id="flybyContent"></textarea></div>
                     </div>
+                    <div class="eachLine">
+                        <div class="editLabel">Flyby Image</div>
+
+                        <button type="button" class="modalButton btn btn-default btn-sm" data-toggle="modal" data-width="600" data-height="600" data-target="#staticImageModal" data-video-fullscreen="">Download Image</button>
+                        <div id="downloadCheck"></div>
+
+                        <div class="modal fade" id="staticImageModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-body">
+                              
+                              <div class="close-button">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Download Image</h4>
+                              </div>
+                              <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" frameborder="0" ></iframe>
+                              </div>
+                                    </div>
+
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </div>
+
                     <!--
                     <div class="eachLine">
                         <div class="editLabel">Flyby Image</div>
@@ -229,7 +253,14 @@
 <script type="text/javascript">
 //dropdown menu
 $('.dropdown-toggle').dropdown();
+$('.modalButton').on('click', function(e) {
+    showFlybyImage(e);
+});
 
+$('#staticImageModal').on('hidden.bs.modal', function(){
+    $(this).find('iframe').html("");
+    $(this).find('iframe').attr("src", "");
+});
 //scroll to top
 var amountScrolled = 300;
 
@@ -253,5 +284,6 @@ $('a.back-to-top').click(function() {
 $(document).ready(function() {
     dailyMinorPlanetDraftForm.init();
 });
+
 
 </script>
