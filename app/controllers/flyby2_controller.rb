@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-class FlybyController < ApplicationController
+class Flyby2Controller < ApplicationController
   respond_to :json
 
   def orbit_params

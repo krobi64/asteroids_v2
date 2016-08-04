@@ -3,8 +3,8 @@ Mpc::Application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  get 'flyby/search' => 'flyby#search'
-  get 'flyby/orbit_params/:designation' => 'flyby#orbit_params'
+  get 'flyby2/search' => 'flyby2#search'
+  get 'flyby2/orbit_params/:designation' => 'flyby2#orbit_params'
 
   post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe
   get 'unsubscribe', controller: :subscriptions, action: :unsubscribe, as: :unsubscribe

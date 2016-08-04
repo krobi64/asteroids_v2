@@ -274,7 +274,7 @@ function fetchFlybyInfo(e){
 
         $.ajax({
             type: 'GET',
-            url: "/flyby/search?designation="+formatted,
+            url: "/flyby2/search?designation="+formatted,
             contentType: "application/json; charset=UTF-8",
             dataType: "json",
             success: function(res, status, error) {
