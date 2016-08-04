@@ -10,19 +10,37 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 
-  <script src="/js/reimg.js"></script>
   <script type="text/javascript">
     function sendImageDataToServer() {
-      String desig = "<%= @desig %>";
-      String name = "<%= @name %>";
-      String date = "<%= @date %>";
+      var desig = "<%= @desig %>";
+      var date = "<%= @date %>";
+      var canvasElement = document.querySelector('canvas')
 
+      // form data
+      var payload = {};
+      payload.designation = "<%= @desig %>";
+      payload.date = "<%= @date %>";
+      payload.fileData = canvasElement.toDataURL();
 
+        $.ajax({
+                type: 'POST',
+                url: "/orbit_diagrams/static_image",
+                data: JSON.stringify(payload),
+                contentType: "application/json; charset=UTF-8",
+                dataType: "json",
+            success: function(res, status, error) {
+                console.log( "success ",  res );
+            }, 
+            error: function(res, status, error) {
+                console.log( "error: ", error );
+            }
+        });
     }
-
+    /*
     function downloadCanvasAsPng(fileName) {
       ReImg.fromCanvas(document.querySelector('canvas')).downloadPng(fileName);
     }
+    */
   </script>
 
   <script type="text/javascript">
