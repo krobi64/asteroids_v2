@@ -4,21 +4,32 @@ class OrbitDiagram < ActiveRecord::Base
   has_one :edition
   attr_accessible :title, :asteroid_designation
 
-  validates :title, presence: true
   validate :existing_asteroid, message: 'Invalid asteroid designation'
 
-  def self.most_relevant_asteroid
-    response = Net::HTTP.get URI('http://minorplanetcenter.net/next_close_approaches?asteroids=10')
-    list = JSON.parse response
-    list.find { |item| !published_asteroids.include?(item.second)}
-  end
+  class << self
+    def most_relevant_asteroid
+      response = Net::HTTP.get URI('http://minorplanetcenter.net/next_close_approaches?asteroids=10')
+      list = JSON.parse response
+      list.find { |item| !published_asteroids.include?(item.second)}
+    end
 
-  def self.published_asteroids
-    pluck(:asteroid_designation)
-  end
+    def published_asteroids
+      pluck(:asteroid_designation)
+    end
 
-  def create_static_image
-    DmpUtil.generate_image(edition.orbit_diagram.asteroid_designation, edition.publish_date)
+    def create_static_image(date, img_string)
+      date = Time.zone.parse(date) || Time.zone.now
+      file_name = "#{date.year}-#{date.month}-#{date.day}"
+      file = Tempfile.new([file_name, '.png'])
+      temp_file = file.path
+      file.binmode
+      imageBinary = Base64.strict_decode64(img_string.split(',')[1])
+      file.write(imageBinary)
+      file.rewind
+      file.close(unlink_now: true)
+      FileUtils.move(temp_file, "#{DmpUtil::FINAL_DIRECTORY_OF_IMG}/#{file_name}.png")
+      # DmpUtil.generate_image(edition.orbit_diagram.asteroid_designation, edition.publish_date)
+    end
   end
 
   def as_json(options_for_json={})

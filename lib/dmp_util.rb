@@ -4,7 +4,7 @@ class DmpUtil
   STATIC_IMG_DOWNLOAD_FILENAME = ENV['GENERATED_MPC_STATIC_IMG_LOCATION'].freeze
   FIREFOX_PATH = ENV['FIREFOX_EXECUTABLE_PATH'].freeze
   MPC_STATIC_IMG_SITE = ENV['MPC_STATIC_IMAGE_URL'].freeze
-  FINAL_DIRECTORY_OF_IMG = Rails.root.join('public/images/mpc_orbit_diagrams').freeze
+  FINAL_DIRECTORY_OF_IMG = Rails.root.join('public/images/orbit').freeze
 
   class << self
     def generate_image(designation, date)
@@ -22,17 +22,23 @@ class DmpUtil
     def monitor
       previous_size = 0
       size_matches = 0
-      100.times do
-        sleep 2
+      sleep_time = 1
+      15.times do
+        sleep sleep_time
         size = File.file?(STATIC_IMG_DOWNLOAD_FILENAME) ? File.size(STATIC_IMG_DOWNLOAD_FILENAME) : 0
         if size > 0
+          sleep_time = 1
           if previous_size == size
+            sleep_time = 1
             size_matches += 1
             break if size_matches >= 3
           else
             size_matches = 0
             previous_size = size
+            sleep_time *= 2 unless sleep_time == 4
           end
+        else
+          sleep_time *= 2 unless sleep_time == 4
         end
       end
     end

@@ -13,7 +13,7 @@ var interactiveUrl = "";
 
 // plugin live data into the display
 function displayNewspaper(data) {
-	// fixed 
+	// fixed
 	$('.tagline').html(fixdata.tagline);
 	$('.est').html(fixdata.est);
 
@@ -46,7 +46,7 @@ function displayNewspaper(data) {
     $('.year').html(data.year);
     $('.dayofweek').html(data.dayofweek);
 
-	// TODO: use the live image URL    
+	// TODO: use the live image URL
     // The image URL is generated at backend by commandline and named as "/images/orbit/2016-07-21.png" convention
     var static_image_url = "/images/orbit/" + data.publish_date.substring(0,10) + ".png";
     $('.diagram').css('background-image','url("'+ static_image_url +'")');
@@ -100,7 +100,7 @@ function showInteractive(orbit) {
             aURL = aURL + "&" + key + "=" + encodeURIComponent(val);
         }
     }
-    
+
     console.log("interactive url: " + aURL);
     interactiveUrl = aURL;
 
@@ -117,8 +117,7 @@ function getInteractiveUrl(designation) {
     var formatted = encodeURIComponent(designation);
     $.ajax({
         type: 'GET',
-        url: "/flyby/orbit_params?designation="+formatted,
-        url: "/flyby/orbit_params?designation="+formatted,
+        url: "/flyby2/orbit_params?designation="+formatted,
         contentType: "application/json; charset=UTF-8",
         dataType: "json",
         success: function(orbit, status, error) {
@@ -158,7 +157,7 @@ function shareNewspaper(channel) {
         error: function(res, status, error) {
             console.log( "error: ", error );
         }
-    });    
+    });
 }
 
 
@@ -201,7 +200,7 @@ function modern_theme(){
         if($('#modern iframe').length == 0) modernIframe(interactiveUrl);
     }
     $('#share-buttons').removeClass('classic');
-    $('#share-buttons').addClass('modern');     
+    $('#share-buttons').addClass('modern');
     $('#subscribe-btn').removeClass('classic');
     $('#subscribe-btn').addClass('modern');
     if( $('#modern .subHeaderline').position() !== undefined ) {
@@ -253,7 +252,7 @@ function classicIframe(diagramUrl){
 
 // subscribe
 $(function() { //shorthand document.ready function
-    $('#subscription_form').on('submit', function(e) { 
+    $('#subscription_form').on('submit', function(e) {
         console.log('submit');
         e.preventDefault();  //prevent form from submitting
 
@@ -263,10 +262,10 @@ $(function() { //shorthand document.ready function
         if( uname != null && uemail != null ) {
             data.username = uname;
             data.email = uemail;
-            console.log(data); 
+            console.log(data);
 
             var msgContent = $('.modal-content').html();
-                        
+
             // post to backend
             $.ajax({
                 type: 'POST',
@@ -279,12 +278,12 @@ $(function() { //shorthand document.ready function
 
                     // Confirmation message on popup UI
                     var title = "Confirm your email address";
-                    var content = "<div style='font-size:1em;'>" + 
-                        "Click on the link in the email to activate your subscription. We do this as a security precaution. " + 
-                        "If you don't see the email, please check your junk mail folder. <br><br>" + 
-                        "<strong>Thank you for subscribing Daily Minor Planet!</strong><br><br>" + 
+                    var content = "<div style='font-size:1em;'>" +
+                        "Click on the link in the email to activate your subscription. We do this as a security precaution. " +
+                        "If you don't see the email, please check your junk mail folder. <br><br>" +
+                        "<strong>Thank you for subscribing Daily Minor Planet!</strong><br><br>" +
                         "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>";
-                    
+
 
 
                     $('#subscription_form').parent().parent().find('.modal-title').text(title);
