@@ -48,7 +48,7 @@ function displayNewspaper(data) {
 
 	// TODO: use the live image URL
     // The image URL is generated at backend by commandline and named as "/images/orbit/2016-07-21.png" convention
-    var static_image_url = "/images/orbit/" + data.publish_date.substring(0,10) + ".png";
+    var static_image_url = "http://mpc.eps.harvard.edu/images/orbit/" + data.publish_date.substring(0,10) + ".png";
     $('.diagram').css('background-image','url("'+ static_image_url +'")');
     $('.mobile-diagram').css('background-image','url("' + static_image_url + '")');
 }
