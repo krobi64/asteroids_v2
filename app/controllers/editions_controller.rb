@@ -87,19 +87,19 @@ class EditionsController < ApplicationController
   end
 
   def edition_params
-    params.slice(:state, :title, :publish_date)
+    params.slice(:state, :title, :publish_date).merge(actor: current_user)
   end
 
   def flyby_params
-    params[:flyby]
+    params[:flyby].merge(actor: current_user)
   end
 
   def news_story_params
-    params[:news_story]
+    params[:news_story].merge(actor: current_user)
   end
 
   def orbit_diagram_params
-    params[:orbit_diagram]
+    params[:orbit_diagram].merge(actor: current_user)
   end
 
   def theme_from_params
