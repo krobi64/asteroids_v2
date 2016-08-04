@@ -288,8 +288,18 @@ function fetchFlybyInfo(e){
             success: function(res, status, error) {
                 console.log( "success ",  res );
 
-                var title = res[0].designation;
-                var content = "Approach date: " + res[0].close_app_date + ", Impact Probability: " + res[0].impact_prob;
+                var sd = res[0].speed_date;
+                var date = sd.substring(sd.indexOf('.'));
+                var dd = sd.substring(0,sd.toString().indexOf('.'));
+                var hour = date*24;
+                var hh = hour.toString().substring(0,hour.toString().indexOf('.'));
+                var min = hour%1*60;
+                var mm = min.toString().substring(0,min.toString().indexOf('.'));
+                var sec = min%1*60;
+                var ss = sec.toString().substring(0,sec.toString().indexOf('.'));
+
+                var title = "Asteroid "+res[0].designation +" was first observed by " + res[0].discovery_site + " on "+res[0].discovery_date +".";
+                var content = "It will fly by Earth harmlessly on "+dd +" at " + hh +":" mm +":" ss +"UT, at "+ res[0].dist+" times the distance to the Moon, at a speed of "+ res[0].speed+". It is estimated to be "+res[0].estimated_diameter+" in size.";
                 var url = res[0].url;
 
                 s.flybyTile.val(title);
