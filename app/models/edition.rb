@@ -3,13 +3,17 @@ class Edition < ActiveRecord::Base
   belongs_to :flyby
   belongs_to :orbit_diagram
   belongs_to :news_story
-  belongs_to :created_by
-  belongs_to :updated_by
+  belongs_to :created_by, class_name: User, primary_key: :id
+  belongs_to :updated_by, class_name: User, primary_key: :id
 
   has_many :social_engagements
+
   attr_accessible :publish_date, :state, :title, :news_story, :flyby, :orbit_diagram, :theme
 
   before_create :initialize_shares
+  before_create :set_create_user
+  before_save :set_update_user
+
   validates :theme, presence: true, inclusion: { in: Theme.all }
 
   default_scope -> { order('publish_date DESC') }
@@ -104,5 +108,15 @@ class Edition < ActiveRecord::Base
         theme: theme,
         shares: total_shares.nil? ? 0 : total_shares
     }
+  end
+
+  private
+
+  def set_create_user
+    self.created_by = actor if actor.present?
+  end
+
+  def set_update_user
+    self.updated_at = actor if actor.present?
   end
 end

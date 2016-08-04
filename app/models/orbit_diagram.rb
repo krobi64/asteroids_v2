@@ -1,8 +1,15 @@
 class OrbitDiagram < ActiveRecord::Base
   belongs_to :created_by, class_name: User, primary_key: :id
   belongs_to :updated_by, class_name: User, primary_key: :id
+
   has_one :edition
+
+  attr_accessor :actor
+
   attr_accessible :title, :asteroid_designation
+
+  before_create :set_create_user
+  before_save :set_update_user
 
   validate :existing_asteroid, message: 'Invalid asteroid designation'
 
@@ -45,6 +52,13 @@ class OrbitDiagram < ActiveRecord::Base
   end
 
   private
+  def set_create_user
+    self.created_by = actor if actor.present?
+  end
+
+  def set_update_user
+    self.updated_at = actor if actor.present?
+  end
 
   def existing_asteroid
     if Asteroid.find(asteroid_designation).blank?
