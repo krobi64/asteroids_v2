@@ -1,6 +1,6 @@
 class OrbitDiagram < ActiveRecord::Base
-  belongs_to :created_by
-  belongs_to :updated_by
+  belongs_to :created_by, class_name: User, primary_key: :id
+  belongs_to :updated_by, class_name: User, primary_key: :id
   has_one :edition
   attr_accessible :title, :asteroid_designation
 
@@ -18,17 +18,20 @@ class OrbitDiagram < ActiveRecord::Base
     end
 
     def create_static_image(date, img_string)
-      date = Time.zone.parse(date) || Time.zone.now
-      file_name = "#{date.year}-#{date.month}-#{date.day}"
-      file = Tempfile.new([file_name, '.png'])
+      file = Tempfile.new([date, '.png'])
       temp_file = file.path
       file.binmode
-      imageBinary = Base64.strict_decode64(img_string.split(',')[1])
-      file.write(imageBinary)
+      image_binary = Base64.strict_decode64(img_string.split(',')[1])
+      file.write(image_binary)
       file.rewind
-      file.close(unlink_now: true)
-      FileUtils.move(temp_file, "#{DmpUtil::FINAL_DIRECTORY_OF_IMG}/#{file_name}.png")
-      # DmpUtil.generate_image(edition.orbit_diagram.asteroid_designation, edition.publish_date)
+      file.close
+      target_file = "#{DmpUtil::FINAL_DIRECTORY_OF_IMG}/#{date}.png"
+      FileUtils.move(temp_file, target_file)
+      FileUtils.chmod 'u=wr,go=rr', target_file
+        # DmpUtil.generate_image(edition.orbit_diagram.asteroid_designation, edition.publish_date)
+    ensure
+      file.close
+      file.unlink
     end
   end
 
