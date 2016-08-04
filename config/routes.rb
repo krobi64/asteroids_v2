@@ -5,6 +5,7 @@ Mpc::Application.routes.draw do
 
   get 'flyby2/search' => 'flyby2#search'
   get 'flyby2/orbit_params/:designation' => 'flyby2#orbit_params'
+  post 'orbit_diagrams/static_image' => 'orbit_diagrams#static_image'
 
   post 'subscribe', controller: :subscriptions, action: :subscribe, as: :subscribe
   get 'unsubscribe', controller: :subscriptions, action: :unsubscribe, as: :unsubscribe
