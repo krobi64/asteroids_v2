@@ -218,20 +218,28 @@
 // Window Resize - make modern theme as default
 $(window).resize(function () {
 	if($(window).width() < 1024){
+		applyMobileTheme();
+	}else if ($('#themeModern').hasClass('selected')){
 		modern_theme();
+	}else{
+		classic_theme();
 	}
+	rrssbInit();
 });
-
 // Click Behavior - theme toggle
 $('body').click(function(event) {
-    $target = $(event.target);
-    if ($target.is('#themeModern')) {
-    	modern_theme();
-    } else if($target.is('#themeClassic')){
-		classic_theme();
-	} else{
-		$('#share-buttons').hide();  
-		$('.shares').css('opacity','1');
+	if($(window).width() >= 1024){
+	    $target = $(event.target);
+	    if ($target.is('#themeModern')) {
+	    	modern_theme();
+	    } else if($target.is('#themeClassic')){
+			classic_theme();
+		} else{
+			$('#share-buttons').hide();  
+			$('.shares').css('opacity','1');
+		}
+	}else{
+		applyMobileTheme();
 	}
 });
 
@@ -257,5 +265,8 @@ $(document).ready(function() {
     $('#share-buttons').hide();
     // get data from backend
 	getNewspaper();
+	if($(window).width() < 1024){
+		applyMobileTheme();
+	}	
 });
 </script>
