@@ -401,8 +401,8 @@ function fetchFlybyInfo(e){
 
             s.showFlybyImageAction.on("click", function(e) {
                 // comment this out, so all testing instance would be messing real server
-                // 
-                // showFlybyImage();
+                // REV: diabled through UI in draft.html.erb, but leave this function here, to avoid this goes to live site and disables image generation
+                showFlybyImage();
             });
         },
 
