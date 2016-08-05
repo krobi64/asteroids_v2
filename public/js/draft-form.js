@@ -134,6 +134,14 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
         var data = getFormData();
 
+        var pdate = s.publishDay[0].value;
+        if( pdate !== undefined ) {
+            // reformat pdate
+            pdate = pdate.replace('/', '-');
+        }
+ 
+        // pointing to Mike's server for now
+        var previewImageUrl = "http://mpc.eps.harvard.edu/images/orbit/" + pdate + ".png";
             // get default theme
         var previewTheme = $('input[name="themeType"]:checked').val();
 
@@ -144,8 +152,8 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         $('.flybyContents').html(data.flyby.content);
         $('.storyTitle').html(data.news_story.title);
         $('.storyContents').html(data.news_story.content);
-        $('.diagram').css('background-image','url(/images/'+data.diagram+')');
-        $('.mobile-diagram').css('background-image','url(/images/'+data.diagram+')');
+        $('.diagram').css('background-image','url('+previewImageUrl+')');
+        $('.mobile-diagram').css('background-image','url('+previewImageUrl+')');
 
         var today = new Date(data.publish_date);
 
@@ -244,6 +252,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         draft.publish_date = pGMT;
         draft.flyby = flyby;
         draft.news_story = news;
+
         draft.orbit_diagram = diagram;
         draft.theme = theme;
 
