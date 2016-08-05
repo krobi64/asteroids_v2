@@ -39,19 +39,21 @@ function displayNewspaper(data) {
         modern_theme();
     }
 
-    var now = new Date(data.publish_date);
-    // convert it to UTC time
-    var today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+    var today = new Date(data.publish_date);
 
-    data.year = today.getFullYear();
-    data.date = today.getDate();
-    data.dayofweek = dayOfWeek[today.getDay()];
-    data.month = monthNames[today.getMonth()];
+    // data.year = today.getFullYear();
+    // data.date = today.getDate();
+    // data.dayofweek = dayOfWeek[today.getDay()];
+    // data.month = monthNames[today.getMonth()];
 
-    $('.day').html(data.date);
+    // $('.day').html(data.date);
+    // $('.month').html(data.month);
+    // $('.year').html(data.year);
+    // $('.dayofweek').html(data.dayofweek);
+    $('.day').html(data.day);
     $('.month').html(data.month);
     $('.year').html(data.year);
-    $('.dayofweek').html(data.dayofweek);
+    $('.dayofweek').html(data.week_day);
 
 	// TODO: use the live image URL
     // The image URL is generated at backend by commandline and named as "/images/orbit/2016-07-21.png" convention
