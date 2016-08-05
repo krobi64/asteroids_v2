@@ -100,6 +100,10 @@ class Edition < ActiveRecord::Base
     {
         id: id,
         title: title,
+        week_day: publish_date.presence && publish_date.strftime('%A'),
+        month: publish_date.presence && publish_date.strftime('%B'),
+        day: publish_date.presence && publish_date.strftime('%-d'),
+        year: publish_date.presence && publish_date.strftime('%Y'),
         publish_date: publish_date,
         state: state,
         flyby: flyby,
