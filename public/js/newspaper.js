@@ -28,7 +28,11 @@ function displayNewspaper(data) {
     $('#entityId').val(data.id);
     $('.numberShares').html(data.shares);
     var theme = data.theme.name;
-    if( theme === "classic") {
+
+//!!!!!!!!!!!!!!!!
+    if($(window).width() < 1024){
+        applyMobileTheme();
+    }else if( theme === "classic") {
         classic_theme();
     }
     else if (theme === "modern") {
@@ -190,10 +194,22 @@ function webgl_detect(return_context)
     // WebGL not supported
     return false;
 }
+//!!!!!!!!!!!!!!!!
 function applyMobileTheme(){
+    if(!$('#themeModern').hasClass('selected')){
+        $('#modern').removeClass('hide');
+        $('#classic').addClass('hide');
+        $('#themeModern').addClass('selected');
+        $('#themeClassic').removeClass('selected');
+    }
+    $('#share-buttons').removeClass('classic');
+    $('#share-buttons').addClass('modern');
+    $('#subscribe-btn').removeClass('classic');
+    $('#subscribe-btn').addClass('modern');
+
+    $('#share-buttons').css('top','0px');    
     $('#share-buttons').css('opacity','1').show();    
     $('.shares').css('opacity','0');
-    $('#share-buttons').css('top','0px');    
 }
 
 function modern_theme(){
@@ -234,10 +250,11 @@ function classic_theme(){
     currentTheme = "classic";
 }
 
+//!!!! change to 105%
 function modernIframe(diagramUrl){
     if( webgl_detect()) {
         var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>Credit: Minor Planet Center</li> </ul> </div>';
-        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:100%;height:100%"></iframe>';
+        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:105%;height:105%"></iframe>';
         var newdiagramUrl = diagramUrl.replace('show_orbit_dmp','show_orbit');
         var linkToInteractive = '<a href="'+newdiagramUrl+'" target="_blank" class="interactiveLink"><span style="color:white;font-size:1em" class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span></a>';
         $('#modern .diagram').html(legendContent+linkToInteractive+iframeContent);
@@ -247,7 +264,7 @@ function modernIframe(diagramUrl){
 function classicIframe(diagramUrl){
     if( webgl_detect()) {
         var legendContent = '<div class="legendncredit"> <ul> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(139,69,19)"></div>Mecury</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(120,120,120)"></div>Venus</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(102,178,255)"></div>Earth</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(253,255,56)"></div>Asteroid</li> <li><div class="rect" style="width:10px;height:10px;background-color:rgb(170,0,0)"></div>Mars</li> <li>Credit: Minor Planet Center</li> </ul> </div>';
-        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:100%;height:100%"></iframe>';
+        var iframeContent = '<iframe scrolling="no" src="'+diagramUrl+'" style="width:105%;height:105%"></iframe>';
         var newdiagramUrl = diagramUrl.replace('show_orbit_dmp','show_orbit');
         var linkToInteractive = '<a href="'+newdiagramUrl+'" target="_blank" class="interactiveLink"><span style="color:white;font-size:1em" class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span></a>';
         $('#classic .diagram').html(legendContent+linkToInteractive+iframeContent);
