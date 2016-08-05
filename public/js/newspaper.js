@@ -35,7 +35,10 @@ function displayNewspaper(data) {
         modern_theme();
     }
 
-    var today = new Date(data.publish_date);
+    var now = new Date(data.publish_date);
+    // convert it to UTC time
+    var today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+
     data.year = today.getFullYear();
     data.date = today.getDate();
     data.dayofweek = dayOfWeek[today.getDay()];
