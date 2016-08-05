@@ -391,7 +391,9 @@ function fetchFlybyInfo(e){
             });
 
             s.showFlybyImageAction.on("click", function(e) {
-                showFlybyImage();
+                // comment this out, so all testing instance would be messing real server
+                // 
+                // showFlybyImage();
             });
         },
 
