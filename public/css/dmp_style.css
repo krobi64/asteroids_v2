@@ -385,13 +385,13 @@
 
 	}
 }
-
 /* Darft Editor */
 #dmp-editor-wrapper{
 	width:100%;
 	min-height:850px;
 	height:auto;	
-	margin-top:-50px;
+/*!!!!!!!!!!!!!!!!*/
+	margin-top:0px;
 }
 #dmp-editor-wrapper #newspaperContainer{
 	padding:0px;
