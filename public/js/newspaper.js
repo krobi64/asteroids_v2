@@ -23,6 +23,7 @@ function displayNewspaper(data) {
     $('.flybyContents').html(data.flyby.content);
     $('.flybyContents').append('&nbsp;<a href="http://minorplanetcenter.net/db_search/show_object?object_id='+data.orbit_diagram.asteroid_id+'" target="_blank" style="text-decoration:underline">More Details</a>');
     $('.storyTitle').html(data.news_story.title);
+    $('.storyTitle').append('<div style="font-size:14px;font-weight:bold">From <a class="storySource" href="'+data.news_story.story_url+'"  target="_blank" style="text-decoration:underline">'+data.news_story.source+'</a></div>');
     $('.storyContents').html(data.news_story.content);
     $('.storyContents').append('&nbsp;<a href="'+data.news_story.story_url+'" target="_blank" style="text-decoration:underline">Read More</a>');
     $('#entityId').val(data.id);
