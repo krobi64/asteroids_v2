@@ -233,6 +233,9 @@
 	width:100%;
 	padding:0;
 }
+#dmp-wrapper #classic div{
+	font-family: 'Brawler', serif;
+}
 #dmp-wrapper #classic:after {
   content: "";
   height: 98%;
