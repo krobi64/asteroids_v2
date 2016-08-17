@@ -21,6 +21,10 @@ var dailyMinorPlanetDraftForm = ( function() {
         s.tagLine.val( edition.title );
         s.flybyTile.val( edition.flyby.title );
         s.flybyContent.val( edition.flyby.content );
+        if( edition.flyby.content.startsWith("WARNING:")) {
+            document.getElementById("flybyContent").style = "color: red; background-color: lightyellow";
+        }
+
         s.flybyImageUrl.val( edition.orbit_diagram.url );
         s.newsTitle.val( edition.news_story.title );
         s.newsContent.val( edition.news_story.content );
